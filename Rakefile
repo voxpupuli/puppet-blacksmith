@@ -46,11 +46,11 @@ spec = Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 end
 
-def build_gem(spec)
+def build_gem(spec, pkgdir="pkg")
   g = Gem::Builder.new(spec).build
-  mkdir "pkg"
-  mv g, "pkg"
-  g
+  mkdir pkgdir
+  mv g, pkgdir
+  "#{pkgdir}/#{g}"
 end
 
 task :package do
