@@ -2,6 +2,7 @@ require 'rake'
 require 'rest-client'
 require 'puppet'
 require 'yaml'
+require 'nokogiri'
 
 namespace :module do
   desc "Bump module version to the next minor"
@@ -43,6 +44,7 @@ password: mypassword")
     forge = credentials['forge'] || "https://forge.puppetlabs.com"
 
     # login to the puppet forge
+    puts "Logging into Puppet Forge as user #{credentials['username']}"
     response = RestClient.post(
       "#{forge}/login",
       {'username' => credentials['username'], 'password' => credentials['password']}){
@@ -53,11 +55,13 @@ password: mypassword")
           response.return!(request, result, &block)
         end
     }
-    # TODO check response body for errors
+    fail("Failed to login to Puppet Forge: cookies not set correctly") unless response.cookies['auth']
 
     # upload the file
+    package = "pkg/#{m.username}-#{m.name}-#{m.version}.tar.gz"
+    puts "Uploading #{package} to Puppet Forge #{m.username}/#{m.name}"
     response = RestClient.post("#{forge}/#{m.username}/#{m.name}/upload",
-      {:notes => "Auto uploaded", :tarball => File.new("pkg/#{m.username}-#{m.name}-#{m.version}.tar.gz", 'rb') },
+      {:notes => "Auto uploaded", :tarball => File.new(package, 'rb') },
       {:cookies => response.cookies}){
         |response, request, result, &block|
         if [301, 302, 307].include? response.code
@@ -66,7 +70,9 @@ password: mypassword")
           response.return!(request, result, &block)
         end
     }
-    # TODO check response body for errors
+    page = Nokogiri::HTML(response.body)
+    errors = page.css('.errors')
+    fail("Error uploading module #{package} to Puppet Forge #{m.username}/#{m.name}:#{errors.text}") unless errors.empty?
   end
 end
 
