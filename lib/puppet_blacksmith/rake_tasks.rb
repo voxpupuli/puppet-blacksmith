@@ -56,9 +56,16 @@ password: mypassword")
     # TODO check response body for errors
 
     # upload the file
-    RestClient.post("#{forge}/#{m.username}/#{m.name}/upload",
+    response = RestClient.post("#{forge}/#{m.username}/#{m.name}/upload",
       {:notes => "Auto uploaded", :tarball => File.new("pkg/#{m.username}-#{m.name}-#{m.version}.tar.gz", 'rb') },
-      {:cookies => response.cookies})
+      {:cookies => response.cookies}){
+        |response, request, result, &block|
+        if [301, 302, 307].include? response.code
+          response
+        else
+          response.return!(request, result, &block)
+        end
+    }
     # TODO check response body for errors
   end
 end
