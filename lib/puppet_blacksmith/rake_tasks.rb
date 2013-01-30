@@ -28,6 +28,7 @@ namespace :module do
 
   desc "Push module to the Puppet Forge"
   task :push => :build do
+    RestClient.proxy = ENV['http_proxy']
     credentials_file = File.expand_path("~/.puppetforge.yml")
     unless File.exists?(credentials_file)
       fail("Could not find Puppet Forge credentials file '#{credentials_file}'
