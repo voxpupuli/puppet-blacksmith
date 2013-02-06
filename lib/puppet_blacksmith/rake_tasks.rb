@@ -61,7 +61,7 @@ password: mypassword")
     package = "pkg/#{m.username}-#{m.name}-#{m.version}.tar.gz"
     puts "Uploading #{package} to Puppet Forge #{m.username}/#{m.name}"
     response = RestClient.post("#{forge}/#{m.username}/#{m.name}/upload",
-      {:notes => "Auto uploaded", :tarball => File.new(package, 'rb') },
+      {:tarball => File.new(package, 'rb')},
       {:cookies => response.cookies}){
         |response, request, result, &block|
         if [301, 302, 307].include? response.code
