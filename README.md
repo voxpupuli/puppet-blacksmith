@@ -29,11 +29,15 @@ Configure your credentials in ~/.puppetforge.yml
     password: mypassword
 
 
-Build and push a module to the Forge
+Remember to [create the project at the Forge](http://forge.puppetlabs.com/modules/new)
+
+The Rakefile:
 
     # Rakefile
     require 'puppetlabs_spec_helper/rake_tasks'
     require 'puppet_blacksmith/rake_tasks'
+
+Run rake. Ensure you are doing it in a clean working folder or the puppet module tool will package all the unnecessary files.
 
     $ rake module:push
 
