@@ -7,6 +7,10 @@ Ruby Gem with several Puppet Module utilities
 
 ## Installation
 
+Install the gem
+
+	gem install puppet-blacksmith
+
 Add to your Rakefile
 
     require 'puppet_blacksmith/rake_tasks'
@@ -31,7 +35,7 @@ Configure your credentials in ~/.puppetforge.yml
 
 Remember to [create the project at the Forge](http://forge.puppetlabs.com/modules/new)
 
-The Rakefile:
+Add the require instructions for blacksmith and the puppetlabs_spec_helper to the Rakefile
 
     # Rakefile
     require 'puppetlabs_spec_helper/rake_tasks'
