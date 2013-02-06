@@ -52,7 +52,7 @@ DEPENDENCIES
   aruba
   cucumber
   nokogiri
-  puppet (~> 2.7.16)
+  puppet (>= 2.7.16)
   puppetlabs_spec_helper (>= 0.3.0)
   rake
   rest-client

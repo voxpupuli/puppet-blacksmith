@@ -7,7 +7,7 @@ source :rubygems
 
 gem 'rake'
 gem 'rest-client'
-gem 'puppet', '~>2.7.16'
+gem 'puppet', '>=2.7.16'
 gem 'puppetlabs_spec_helper', '>=0.3.0'
 gem 'nokogiri'
 
