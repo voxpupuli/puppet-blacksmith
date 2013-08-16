@@ -4,7 +4,6 @@ Feature: update_version
   Scenario: Bumping a module version
     Given a file named "Rakefile" with:
     """
-    require 'puppetlabs_spec_helper/rake_tasks'
     require "#{File.dirname(__FILE__)}/../../lib/puppet_blacksmith/rake_tasks"
     """
     And a file named "Modulefile" with:

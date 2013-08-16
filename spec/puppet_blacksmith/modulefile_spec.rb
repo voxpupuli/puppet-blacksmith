@@ -1,6 +1,15 @@
-require 'puppet_blacksmith/rake_tasks'
+require 'spec_helper'
 
-describe 'rake tasks' do
+describe 'Blacksmith::Modulefile' do
+
+  subject { Blacksmith::Modulefile.new(path) }
+  let(:path) { "spec/data/Modulefile" }
+
+  context 'when modulefile is parsed' do
+    it { subject.metadata.version.should eql("1.0.0") }
+    it { subject.metadata.username.should eql("maestrodev") }
+    it { subject.metadata.name.should eql("test") }
+  end
 
   describe 'replace_version' do
     it "should replace the version" do
@@ -28,25 +37,15 @@ summary 'version "1"'
 description "version '1'"
 eos
 
-      replace_version(original, "1.0.1").should eql(expected)
+      subject.replace_version(original, "1.0.1").should eql(expected)
     end
   end
 
   describe 'increase_version' do
-    it "should increase the version" do
-      increase_version("1.0").should eql("1.1")
-      increase_version("1.0.0").should eql("1.0.1")
-      increase_version("1.0.1").should eql("1.0.2")
-      expect { increase_version("1.0.12qwe") }.to raise_error
-    end
+    it { subject.increase_version("1.0").should eql("1.1") }
+    it { subject.increase_version("1.0.0").should eql("1.0.1") }
+    it { subject.increase_version("1.0.1").should eql("1.0.2") }
+    it { expect { subject.increase_version("1.0.12qwe") }.to raise_error }
   end
 
-  describe 'modulefile' do
-    it "should parse the modulefile" do
-      m = modulefile("spec/data/Modulefile")
-      m.version.should eql("1.0.0")
-      m.username.should eql("maestrodev")
-      m.name.should eql("test")
-    end
-  end
 end

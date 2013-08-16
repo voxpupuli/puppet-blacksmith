@@ -30,7 +30,7 @@ Bump your Modulefile to the next version
 Configure your credentials in ~/.puppetforge.yml
 
     --- 
-    forge: https://forge.puppetlabs.com
+    url: https://forge.puppetlabs.com
     username: myuser
     password: mypassword
 
