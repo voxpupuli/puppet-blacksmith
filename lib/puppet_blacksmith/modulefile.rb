@@ -1,14 +1,16 @@
 # Avoid loading everything Puppet when we only need the module tool
 # It causes trouble running it from jruby warbled jars
-module Puppet
-  def self.settings
-    {}
-  end
-  def self.[](param)
-  end
-end
-require 'puppet/error'
-require 'puppet/module_tool'
+# module Puppet
+#   def self.settings
+#     {}
+#   end
+#   def self.[](param)
+#   end
+# end
+# require 'puppet/error'
+# require 'puppet/module_tool'
+require 'puppet'
+Puppet[:confdir] = "."
 
 module Blacksmith
   class Modulefile
