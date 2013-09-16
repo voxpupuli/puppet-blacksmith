@@ -25,18 +25,26 @@ module Blacksmith
       s
     end
 
+    def git_cmd_with_path(cmd)
+      "git --git-dir=#{File.join(path, '.git')} --work-tree=#{path} #{cmd}"
+    end
+
     def exec_git(cmd)
       out = ""
       err = ""
+      exit_status = nil
+      new_cmd = git_cmd_with_path(cmd)
       # wait_thr is nil in JRuby < 1.7.5 see http://jira.codehaus.org/browse/JRUBY-6409
-      new_cmd = "git --git-dir=#{File.join(path, '.git')} --work-tree=#{path} #{cmd}"
       Open3.popen3(new_cmd) do |stdin, stdout, stderr, wait_thr|
         out = stdout.read
         err = stderr.read
-        # exit_status = wait_thr.value
+        exit_status = wait_thr.nil? ? nil : wait_thr.value
       end
-      exit_status = $?
-      raise Blacksmith::Error, err unless exit_status.success?
+      if exit_status.nil?
+        raise Blacksmith::Error, err unless err.empty?
+      elsif !exit_status.success?
+        raise Blacksmith::Error, err.empty? ? "Command #{new_cmd} failed with exit status #{exit_status}" : err
+      end
       return out
     end
   end
