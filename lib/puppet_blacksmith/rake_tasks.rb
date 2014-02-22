@@ -1,5 +1,5 @@
 require 'rake'
-require_relative '../puppet_blacksmith'
+require 'puppet_blacksmith'
 
 namespace :module do
   desc "Bump module version to the next minor"
