@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'rest-client'
   s.add_runtime_dependency 'puppet', '>=2.7.16'
-  s.add_runtime_dependency 'nokogiri', '~> 1.5.10'
+  s.add_runtime_dependency 'nokogiri'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'puppetlabs_spec_helper'
   s.add_development_dependency 'cucumber'

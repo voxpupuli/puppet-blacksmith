@@ -3,11 +3,13 @@ before_install:
   - gem --version
   - git config --global user.name "Travis CI"
   - git config --global user.email "user@example.com"
+  - rm -f Gemfile.lock
+
 rvm:
   - 1.8.7
   - 1.9.3
   - 2.0.0
-script: 'bundle exec rake spec'
+
 env:
   - PUPPET_VERSION="~> 2.7.0"
   - PUPPET_VERSION="~> 3.0.0"
@@ -15,11 +17,9 @@ env:
   - PUPPET_VERSION="~> 3.2.0"
   - PUPPET_VERSION="~> 3.3.0"
   - PUPPET_VERSION="~> 3.4.0"
+
 matrix:
   exclude:
-    # No support for Ruby 1.9 before Puppet 2.7
-    - rvm: 1.9.3
-      env: PUPPET_VERSION=2.6.0
     # No support for Ruby 2.0 before Puppet 3.2
     - rvm: 2.0.0
       env: PUPPET_VERSION="~> 2.7.0"
