@@ -72,8 +72,8 @@ module Blacksmith
         raise Blacksmith::Error, <<-eos
 Could not find Puppet Forge credentials file '#{credentials_file}'
 Please create it
---- 
-forge: https://forge.puppetlabs.com
+---
+url: https://forge.puppetlabs.com
 username: myuser
 password: mypassword
     eos
