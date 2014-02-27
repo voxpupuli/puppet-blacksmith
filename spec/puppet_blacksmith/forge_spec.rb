@@ -11,6 +11,23 @@ describe 'Blacksmith::Forge' do
   let(:version) { "1.0.0" }
   let(:package) { File.dirname(__FILE__) + '/../data/maestrodev-ant-1.0.4.tar.gz' }
 
+  describe 'missing credentials file' do
+    before do
+      File.stub(:expand_path => '/home/mr_puppet/.puppetforge.yml')
+    end
+
+    context "when the credentials file is missing" do
+      before do
+
+      end
+
+      it "should raise an error" do
+        expect { foo = Blacksmith::Forge.new(nil, password, forge) }.to raise_error(/Could not find Puppet Forge credentials file '\/home\/mr\_puppet\/.puppetforge.yml'\s*Please create it\s*---\s*url: https:\/\/forge.puppetlabs.com\s*username: myuser\s*password: mypassword/)
+      end
+    end
+
+  end
+
   describe 'push' do
 
     before do
@@ -29,7 +46,7 @@ describe 'Blacksmith::Forge' do
       end
 
       it "should push the module" do
-        
+
       end
     end
 
