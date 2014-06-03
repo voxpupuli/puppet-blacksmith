@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    puppet-blacksmith (2.0.2)
+    puppet-blacksmith (2.1.0)
       nokogiri
       puppet (>= 2.7.16)
       rest-client
@@ -34,12 +34,14 @@ GEM
       json_pure
     json_pure (1.8.1)
     metaclass (0.0.1)
-    mime-types (1.25.1)
+    mime-types (2.3)
+    mini_portile (0.6.0)
     mocha (0.14.0)
       metaclass (~> 0.0.1)
     multi_json (1.7.9)
     multi_test (0.0.2)
-    nokogiri (1.5.11)
+    nokogiri (1.6.2.1)
+      mini_portile (= 0.6.0)
     puppet (3.4.2)
       facter (~> 1.6)
       hiera (~> 1.0)
@@ -74,6 +76,7 @@ PLATFORMS
 DEPENDENCIES
   aruba
   cucumber
+  puppet (>= 2.7.16)
   puppet-blacksmith!
   puppetlabs_spec_helper
   rake

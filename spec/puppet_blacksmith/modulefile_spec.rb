@@ -7,7 +7,7 @@ describe 'Blacksmith::Modulefile' do
 
   context 'when modulefile is parsed' do
     it { subject.metadata.version.should eql("1.0.0") }
-    it { subject.metadata.username.should eql("maestrodev") }
+    it { subject.metadata.author.should eql("maestrodev") }
     it { subject.metadata.name.should eql("test") }
   end
 

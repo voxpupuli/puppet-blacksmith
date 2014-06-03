@@ -10,6 +10,8 @@
 # require 'puppet/error'
 # require 'puppet/module_tool'
 require 'puppet'
+require 'puppet/module_tool'
+
 Puppet[:confdir] = "."
 
 module Blacksmith
