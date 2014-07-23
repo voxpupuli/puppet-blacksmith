@@ -109,8 +109,5 @@ Feature: update_version
       "summary": "Puppet Module Standard Library",
       "description": "Standard Library for Puppet Modules",
       "project_page": "https://github.com/puppetlabs/puppetlabs-stdlib",
-      "dependencies": [
-      ]
-    }
     """
     And a file named "Modulefile" should not exist

@@ -6,12 +6,14 @@ describe 'Blacksmith::Modulefile' do
 
   subject { Blacksmith::Modulefile.new(path) }
 
+  shared_examples_for :metadata do
+    it { expect(subject.version).to eql("1.0.0") }
+    it { expect(subject.name).to eql("test") }
+  end
+
   context "using metadata.json" do
 
-    context 'when it is parsed' do
-      it { expect(subject.version).to eql("1.0.0") }
-      it { expect(subject.name).to eql("maestrodev-test") }
-    end
+    it_behaves_like :metadata
 
     describe 'replace_version' do
       it "should replace the version in metadata" do
@@ -61,10 +63,7 @@ describe 'Blacksmith::Modulefile' do
 
     let(:path) { "spec/data/Modulefile" }
 
-    context 'when it is parsed' do
-      it { expect(subject.version).to eql("1.0.0") }
-      it { expect(subject.name).to eql("test") }
-    end
+    it_behaves_like :metadata
 
     describe 'replace_version' do
       it "should replace the version in a Modulefile" do

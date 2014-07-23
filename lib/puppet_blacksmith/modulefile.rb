@@ -32,7 +32,7 @@ module Blacksmith
         if @modulefile
           metadata = Puppet::ModuleTool::Metadata.new
           Puppet::ModuleTool::ModulefileReader.evaluate(metadata, path)
-          @metadata = { 'name' => metadata.name, 'version' => metadata.version }
+          @metadata = { 'name' => metadata.name, 'version' => metadata.version, 'author' => metadata.author }
         else
           @metadata = JSON.parse(File.read(path))
         end
@@ -40,8 +40,12 @@ module Blacksmith
       @metadata
     end
 
+    # name in metadata.json is author-modulename
     def name
-      metadata['name']
+      @modulefile ? metadata['name'] : metadata['name'].split('-',2)[1]
+    end
+    def author
+      metadata['author'] || metadata['name'].split('-',2)[0]
     end
     def version
       metadata['version']

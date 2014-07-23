@@ -21,13 +21,13 @@ And you can start using the Rake tasks
 
 ## Bump the version of a module
 
-Bump your Modulefile to the next version
+Bump your `Modulefile` or `metadata.json` to the next version
 
     $ rake module:bump
 
 ## Push a module to the Puppet Forge
 
-Configure your credentials in ~/.puppetforge.yml
+Configure your credentials in `~/.puppetforge.yml`
 
     --- 
     url: https://forge.puppetlabs.com
