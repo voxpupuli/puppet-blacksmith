@@ -16,7 +16,11 @@ require 'puppet_blacksmith/version'
 task :default => [:clean, :spec, :cucumber, :build]
 
 RSpec::Core::RakeTask.new
-Cucumber::Rake::Task.new
+Cucumber::Rake::Task.new(:cucumber) do |t|
+  if Gem::Version.new(ENV['PUPPET_VERSION']) < Gem::Version.new("3.6.0")
+    t.cucumber_opts = "--tags ~@metadatajson"
+  end
+end
 
 task :bump do
   v = Gem::Version.new("#{Blacksmith::VERSION}.0")

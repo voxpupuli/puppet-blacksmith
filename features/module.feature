@@ -24,6 +24,7 @@ Feature: module
     And a file named "pkg/maestrodev-test-1.0.0.tar.gz" should exist
     And a file named "metadata.json" should not exist
 
+  @metadatajson
   Scenario: Building a module with metadata.json
     Given a file named "Rakefile" with:
     """
