@@ -17,7 +17,8 @@ task :default => [:clean, :spec, :cucumber, :build]
 
 RSpec::Core::RakeTask.new
 Cucumber::Rake::Task.new(:cucumber) do |t|
-  if Gem::Version.new(ENV['PUPPET_VERSION']) < Gem::Version.new("3.6.0")
+  require 'puppet/version'
+  if Gem::Version.new(Puppet.version) < Gem::Version.new("3.6.0")
     t.cucumber_opts = "--tags ~@metadatajson"
   end
 end
