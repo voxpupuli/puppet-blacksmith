@@ -1,6 +1,8 @@
 puppet-blacksmith
 =================
 
+[![Build Status](https://maestro.maestrodev.com/api/v1/projects/67/compositions/326/badge/icon)](https://maestro.maestrodev.com/projects/67/compositions/326)
+
 Ruby Gem with several Puppet Module utilities
 
 ![I don't always release my Puppet modules, but when I do I push them directly to the Forge](https://raw.github.com/maestrodev/puppet-blacksmith/gh-pages/dos-equis.jpg)
