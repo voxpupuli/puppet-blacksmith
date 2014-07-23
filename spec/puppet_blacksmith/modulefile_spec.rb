@@ -2,50 +2,93 @@ require 'spec_helper'
 
 describe 'Blacksmith::Modulefile' do
 
-  subject { Blacksmith::Modulefile.new(path) }
-  let(:path) { "spec/data/Modulefile" }
+  let(:path) { "spec/data/metadata.json" }
 
-  context 'when modulefile is parsed' do
-    it { expect(subject.metadata.version).to eql("1.0.0") }
-    it { expect(subject.metadata.author).to eql("maestrodev") }
-    it { expect(subject.metadata.name).to eql("test") }
+  subject { Blacksmith::Modulefile.new(path) }
+
+  context "using metadata.json" do
+
+    context 'when it is parsed' do
+      it { expect(subject.version).to eql("1.0.0") }
+      it { expect(subject.name).to eql("maestrodev-test") }
+    end
+
+    describe 'replace_version' do
+      it "should replace the version in metadata" do
+
+        expected = <<-eos
+          {
+            "operatingsystem_support": [
+              {
+                "operatingsystem": "CentOS",
+                "operatingsystemrelease": [
+                  "4",
+                  "5",
+                  "6"
+                ]
+              }
+            ],
+            "requirements": [
+              {
+                "name": "pe",
+                "version_requirement": "3.2.x"
+              },
+              {
+                "name": "puppet",
+                "version_requirement": ">=2.7.20 <4.0.0"
+              }
+            ],
+            "name": "maestrodev-test",
+            "version": "1.0.1",
+            "source": "git://github.com/puppetlabs/puppetlabs-stdlib",
+            "author": "maestrodev",
+            "license": "Apache 2.0",
+            "summary": "Puppet Module Standard Library",
+            "description": "Standard Library for Puppet Modules",
+            "project_page": "https://github.com/puppetlabs/puppetlabs-stdlib",
+            "dependencies": [
+            ]
+          }
+        eos
+
+        expect(JSON.parse(subject.replace_version(File.read(path), "1.0.1"))).to eql(JSON.parse(expected))
+      end
+    end
+
   end
 
-  describe 'replace_version' do
-    it "should replace the version" do
-      original = <<-eos
-name 'maestrodev-test'
-version '1.0.0'
+  context "using a Modulefile" do
 
-author 'maestrodev'
-license 'Apache License, Version 2.0'
-project_page 'http://github.com/maestrodev/puppet-blacksmith'
-source 'http://github.com/maestrodev/puppet-blacksmith'
-summary 'version "1"'
-description "version '1'"
-eos
+    let(:path) { "spec/data/Modulefile" }
 
-      expected = <<-eos
+    context 'when it is parsed' do
+      it { expect(subject.version).to eql("1.0.0") }
+      it { expect(subject.name).to eql("test") }
+    end
+
+    describe 'replace_version' do
+      it "should replace the version in a Modulefile" do
+        expected = <<-eos
 name 'maestrodev-test'
 version '1.0.1'
 
-author 'maestrodev'
 license 'Apache License, Version 2.0'
 project_page 'http://github.com/maestrodev/puppet-blacksmith'
 source 'http://github.com/maestrodev/puppet-blacksmith'
-summary 'version "1"'
-description "version '1'"
+summary 'Testing Puppet module operations'
+description 'Testing Puppet module operations'
 eos
 
-      subject.replace_version(original, "1.0.1").should eql(expected)
+        expect(subject.replace_version(File.read(path), "1.0.1")).to eql(expected)
+      end
     end
+
   end
 
   describe 'increase_version' do
-    it { subject.increase_version("1.0").should eql("1.1") }
-    it { subject.increase_version("1.0.0").should eql("1.0.1") }
-    it { subject.increase_version("1.0.1").should eql("1.0.2") }
+    it { expect(subject.increase_version("1.0")).to eql("1.1") }
+    it { expect(subject.increase_version("1.0.0")).to eql("1.0.1") }
+    it { expect(subject.increase_version("1.0.1")).to eql("1.0.2") }
     it { expect { subject.increase_version("1.0.12qwe") }.to raise_error }
   end
-
 end

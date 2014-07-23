@@ -17,26 +17,34 @@ Puppet[:confdir] = "."
 module Blacksmith
   class Modulefile
 
+    FILES = ["metadata.json", "Modulefile"]
+
     attr_reader :path
 
-    def initialize(path = "Modulefile")
-      @path = path
+    def initialize(path = nil)
+      @path = path.nil? ? FILES.find {|f| File.exists? f} : path
+      raise Blacksmith::Error, "Unable to find any of #{FILES}" unless @path
+      @modulefile = @path =~ /Modulefile$/
     end
 
     def metadata
       unless @metadata
-        metadata = Puppet::ModuleTool::Metadata.new
-        Puppet::ModuleTool::ModulefileReader.evaluate(metadata, path)
-        @metadata = metadata
+        if @modulefile
+          metadata = Puppet::ModuleTool::Metadata.new
+          Puppet::ModuleTool::ModulefileReader.evaluate(metadata, path)
+          @metadata = { 'name' => metadata.name, 'version' => metadata.version }
+        else
+          @metadata = JSON.parse(File.read(path))
+        end
       end
       @metadata
     end
 
     def name
-      metadata.name
+      metadata['name']
     end
     def version
-      metadata.version
+      metadata['version']
     end
 
     def bump!
@@ -48,7 +56,13 @@ module Blacksmith
     end
 
     def replace_version(text, version)
-      text.gsub(/\nversion[ ]+['"].*['"]/, "\nversion '#{version}'")
+      if @modulefile
+        text.gsub(/\nversion[ ]+['"].*['"]/, "\nversion '#{version}'")
+      else
+        json = JSON.parse(text)
+        json['version'] = version
+        JSON.pretty_generate(json)
+      end
     end
 
     def increase_version(version)
