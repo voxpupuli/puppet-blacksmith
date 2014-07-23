@@ -6,9 +6,9 @@ describe 'Blacksmith::Modulefile' do
   let(:path) { "spec/data/Modulefile" }
 
   context 'when modulefile is parsed' do
-    it { subject.metadata.version.should eql("1.0.0") }
-    it { subject.metadata.author.should eql("maestrodev") }
-    it { subject.metadata.name.should eql("test") }
+    it { expect(subject.metadata.version).to eql("1.0.0") }
+    it { expect(subject.metadata.author).to eql("maestrodev") }
+    it { expect(subject.metadata.name).to eql("test") }
   end
 
   describe 'replace_version' do

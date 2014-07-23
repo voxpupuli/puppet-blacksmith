@@ -18,7 +18,7 @@ describe 'Blacksmith::Git' do
     before { subject.tag!(version) }
     it "should have the tag" do
       out = `cd #{path} && git tag`
-      out.chomp.should match(/^v1.0.0$/)
+      expect(out.chomp).to match(/^v1.0.0$/)
     end
   end
 
@@ -32,7 +32,7 @@ describe 'Blacksmith::Git' do
 
     context 'when git succeeds' do
       before do
-        Open3.stub(:popen3).and_yield(nil, double(:read => stdout), double(:read => stderr), wait_thr)
+        allow(Open3).to receive(:popen3).and_yield(nil, double(:read => stdout), double(:read => stderr), wait_thr)
         expect { subject.exec_git(cmd) }.to_not raise_error
       end
 

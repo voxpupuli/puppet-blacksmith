@@ -13,7 +13,7 @@ describe 'Blacksmith::Forge' do
 
   describe 'missing credentials file' do
     before do
-      File.stub(:expand_path => '/home/mr_puppet/.puppetforge.yml')
+      allow(File).to receive(:expand_path) { '/home/mr_puppet/.puppetforge.yml' }
     end
 
     context "when the credentials file is missing" do
