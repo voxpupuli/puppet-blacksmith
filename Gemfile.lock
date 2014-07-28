@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    puppet-blacksmith (2.1.0)
+    puppet-blacksmith (2.2.0)
       nokogiri
       puppet (>= 2.7.16)
       rest-client
