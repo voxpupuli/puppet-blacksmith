@@ -5,11 +5,14 @@ describe 'Blacksmith::Git' do
   subject { Blacksmith::Git.new(path) }
   let(:path) { File.join(File.dirname(__FILE__), '../../tmp/git_test') }
   let(:version) { '1.0.0' }
+  let(:metadata_file) { "metadata.json" }
 
   before do
     FileUtils.rm_rf path
     FileUtils.mkdir_p(path)
     `git init #{path}`
+    FileUtils.touch(File.join(path, metadata_file))
+    `cd #{path} && git add #{metadata_file} && git commit -am "Init"`
   end
 
   shared_examples_for :git do
@@ -18,6 +21,18 @@ describe 'Blacksmith::Git' do
       it "should have the tag" do
         out = `cd #{path} && git tag`
         expect(out.chomp).to match(/^v1.0.0$/)
+      end
+    end
+
+    describe 'commit_modulefile' do
+      before do
+        open(File.join(subject.path, metadata_file), 'a') { |f|
+          f.puts "more text"
+        }
+      end
+
+      it "should commit the metadata file" do
+        expect(subject.commit_modulefile!).to match(/\[blacksmith\] Bump version/)
       end
     end
 
@@ -52,7 +67,7 @@ describe 'Blacksmith::Git' do
         # this spec fails on jruby, can't detect exit code of script
         context 'when stderr is empty' do
           let(:cmd) { "git" } # exits with 1
-          it { expect { subject.exec_git(cmd) }.to raise_error(Blacksmith::Error, /^Command .* failed with exit status.*1$/) }
+          it { expect { subject.exec_git(cmd) }.to raise_error(Blacksmith::Error, /^Command .* failed with exit status.*1.*$/) }
         end
 
         context 'when stderr is not empty' do
@@ -64,18 +79,11 @@ describe 'Blacksmith::Git' do
   end
 
   context "Using Modulefile" do
-    before do
-      FileUtils.touch(File.join(path, "Modulefile"))
-      `cd #{path} && git add Modulefile && git commit -am "Init"`
-    end
+    let(:metadata_file) { "Modulefile" }
     it_behaves_like :git
   end
 
   context "Using metadata.json" do
-    before do
-      FileUtils.touch(File.join(path, "metadata.json"))
-      `cd #{path} && git add metadata.json && git commit -am "Init"`
-    end
     it_behaves_like :git
   end
 end

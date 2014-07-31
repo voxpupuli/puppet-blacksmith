@@ -14,7 +14,8 @@ module Blacksmith
     end
 
     def commit_modulefile!
-      s = exec_git "add Modulefile"
+      files = Blacksmith::Modulefile::FILES.select {|f| File.exists?(File.join(@path,f))}
+      s = exec_git "add #{files.join(" ")}"
       s += exec_git "commit -m '[blacksmith] Bump version'"
       s
     end
@@ -43,7 +44,7 @@ module Blacksmith
       if exit_status.nil?
         raise Blacksmith::Error, err unless err.empty?
       elsif !exit_status.success?
-        raise Blacksmith::Error, err.empty? ? "Command #{new_cmd} failed with exit status #{exit_status}" : err
+        raise Blacksmith::Error, err.empty? ? "Command #{new_cmd} failed with exit status #{exit_status}#{"\n#{out}" unless out.empty?}" : err
       end
       return out
     end
