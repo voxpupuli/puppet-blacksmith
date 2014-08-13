@@ -42,9 +42,11 @@ module Blacksmith
         exit_status = wait_thr.nil? ? nil : wait_thr.value
       end
       if exit_status.nil?
-        raise Blacksmith::Error, err unless err.empty?
+        raise Blacksmith::Error, "Command #{new_cmd} failed with stderr:\n#{err}#{"\nstdout:\n" + out unless out.empty?}" unless err.empty?
       elsif !exit_status.success?
-        raise Blacksmith::Error, err.empty? ? "Command #{new_cmd} failed with exit status #{exit_status}#{"\n#{out}" unless out.empty?}" : err
+        msg = err.empty? ? out : err
+        msg = "\n#{msg}" unless msg.empty?
+        raise Blacksmith::Error, "Command #{new_cmd} failed with exit status #{exit_status}#{msg}"
       end
       return out
     end
