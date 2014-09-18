@@ -1,0 +1,341 @@
+{
+  "slug": "maestrodev/test/1.0.5165510",
+  "_links": {
+    "self": {
+      "href": null
+    }
+  },
+  "id": 11099,
+  "module": {
+    "id": 933,
+    "name": "test",
+    "homepage_url": "http://github.com/maestrodev/puppet-test",
+    "source_url": "http://github.com/maestrodev/puppetforge",
+    "issues_url": "",
+    "commit_feed_url": "",
+    "owner": {
+      "id": 1185,
+      "username": "maestrodev",
+      "email": "info@maestrodev.com",
+      "display_name": "MaestroDev",
+      "release_count": 377,
+      "module_count": 32,
+      "created_at": "2012-05-24T05:37:32-07:00",
+      "updated_at": "2012-11-09T22:11:21-08:00"
+    },
+    "tags": [],
+    "downloads": 30409,
+    "created_at": "2013-01-25T12:53:13-08:00",
+    "updated_at": "2014-09-18T10:47:45-07:00",
+    "current_release": {
+      "id": 11096,
+      "version": "1.0.8466228",
+      "metadata": {
+        "name": "maestrodev-test",
+        "version": "1.0.8466228",
+        "source": "http://github.com/maestrodev/puppet-test",
+        "author": "maestrodev",
+        "license": "Apache License, Version 2.0",
+        "summary": "Testing Puppet module operations",
+        "description": "Testing Puppet module operations",
+        "project_page": "http://github.com/maestrodev/puppet-test",
+        "dependencies": [],
+        "types": [],
+        "checksums": {}
+      },
+      "downloads": 0,
+      "file_size": 375,
+      "file_md5": "c8e550ca457983c92296eb99180b7052",
+      "created_at": "2014-09-18T09:48:56-07:00",
+      "updated_at": "2014-09-18T09:48:56-07:00",
+      "readme": null,
+      "changelog": null,
+      "license": null
+    },
+    "releases": [
+      {
+        "slug": "maestrodev-test-1.0.8466228",
+        "key": "1.0.8466228",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.7876831",
+        "key": "1.0.7876831",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.5165510",
+        "key": "1.0.5165510",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.3620912",
+        "key": "1.0.3620912",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.26",
+        "key": "1.0.26",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.25",
+        "key": "1.0.25",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.24",
+        "key": "1.0.24",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.23",
+        "key": "1.0.23",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.22",
+        "key": "1.0.22",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.21",
+        "key": "1.0.21",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.19",
+        "key": "1.0.19",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.18",
+        "key": "1.0.18",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.16",
+        "key": "1.0.16",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.15",
+        "key": "1.0.15",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.14",
+        "key": "1.0.14",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.13",
+        "key": "1.0.13",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.12",
+        "key": "1.0.12",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.11",
+        "key": "1.0.11",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.10",
+        "key": "1.0.10",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.9",
+        "key": "1.0.9",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.8",
+        "key": "1.0.8",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.7",
+        "key": "1.0.7",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.6",
+        "key": "1.0.6",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.5",
+        "key": "1.0.5",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.4",
+        "key": "1.0.4",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.3",
+        "key": "1.0.3",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.2",
+        "key": "1.0.2",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.1",
+        "key": "1.0.1",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      },
+      {
+        "slug": "maestrodev-test-1.0.0",
+        "key": "1.0.0",
+        "_links": {
+          "self": {
+            "href": null
+          }
+        }
+      }
+    ]
+  },
+  "version": "1.0.5165510",
+  "metadata": {
+    "name": "maestrodev-test",
+    "version": "1.0.5165510",
+    "source": "http://github.com/maestrodev/puppet-test",
+    "author": "maestrodev",
+    "license": "Apache License, Version 2.0",
+    "summary": "Testing Puppet module operations",
+    "description": "Testing Puppet module operations",
+    "project_page": "http://github.com/maestrodev/puppet-test",
+    "dependencies": [],
+    "types": [],
+    "checksums": {}
+  },
+  "downloads": 0,
+  "file_size": 374,
+  "file_md5": "181a8a83140de2bac9475f5c0142079a",
+  "created_at": "2014-09-18T10:47:45-07:00",
+  "updated_at": "2014-09-18T10:47:45-07:00",
+  "readme": null,
+  "changelog": null,
+  "license": null
+}
