@@ -1,0 +1,18 @@
+{
+  "name": "maestrodev-test",
+  "version": "",
+  "source": "http://github.com/maestrodev/puppet-test",
+  "author": "maestrodev",
+  "license": "Apache License, Version 2.0",
+  "summary": "Testing Puppet module operations",
+  "description": "Testing Puppet module operations",
+  "project_page": "http://github.com/maestrodev/puppet-test",
+  "dependencies": [
+
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+  }
+}
