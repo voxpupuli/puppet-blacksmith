@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.0
+
+* Use API to upload to the Forge instead of parsing the webpage
+* Use a custom Blacksmith `User-Agent`
+
 ## 2.3.1
 
 * [Issue #7](https://github.com/maestrodev/puppet-blacksmith/issues/7) `module:bump_commit` fails if `Modulefile` does not exist

@@ -4,6 +4,7 @@ module Blacksmith
   class Forge
 
     PUPPETLABS_FORGE = "https://forgeapi.puppetlabs.com"
+    HEADERS = { 'User-Agent' => "Blacksmith/#{Blacksmith::VERSION} Ruby/#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL} (#{RUBY_RELEASE_DATE}; #{RUBY_PLATFORM})" }
 
     attr_accessor :username, :password, :client_id, :client_secret
     attr_writer :url
@@ -42,14 +43,14 @@ module Blacksmith
         'username' => username,
         'password' => password,
         'grant_type' => 'password'
-      })
+      }, HEADERS)
       login_data = JSON.parse(response)
       access_token = login_data['access_token']
 
       # upload the file
       response = RestClient.post("#{url}/v2/releases",
         {:file => File.new(package, 'rb')},
-        {'Authorization' => "Bearer #{access_token}"})
+        HEADERS.merge({'Authorization' => "Bearer #{access_token}"}))
     end
 
     private
@@ -84,4 +85,5 @@ password: mypassword
       self.client_secret = credentials['client_secret']
     end
   end
+
 end
