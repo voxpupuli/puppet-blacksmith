@@ -2,6 +2,7 @@ puppet-blacksmith
 =================
 
 [![Build Status](https://maestro.maestrodev.com/api/v1/projects/67/compositions/326/badge/icon)](https://maestro.maestrodev.com/projects/67/compositions/326)
+[![Build Status](https://travis-ci.org/maestrodev/puppet-blacksmith.svg?branch=master)](https://travis-ci.org/maestrodev/puppet-blacksmith)
 
 Ruby Gem with several Puppet Module utilities
 
