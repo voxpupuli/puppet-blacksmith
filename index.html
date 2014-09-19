@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Puppet-Blacksmith by maestrodev</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Puppet-Blacksmith</h1>
+        <p>Ruby Gem with Puppet Module utilities</p>
+        <p class="view"><a href="https://github.com/maestrodev/puppet-blacksmith">View the Project on GitHub <small>maestrodev/puppet-blacksmith</small></a></p>
+        <ul>
+          <li><a href="https://github.com/maestrodev/puppet-blacksmith/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/maestrodev/puppet-blacksmith/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/maestrodev/puppet-blacksmith">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="puppet-blacksmith" class="anchor" href="#puppet-blacksmith"><span class="octicon octicon-link"></span></a>puppet-blacksmith</h1>
+
+<p><a href="https://maestro.maestrodev.com/projects/67/compositions/326"><img src="https://maestro.maestrodev.com/api/v1/projects/67/compositions/326/badge/icon" alt="Build Status"></a></p>
+
+<p>Ruby Gem with several Puppet Module utilities</p>
+
+<p><img src="https://raw.github.com/maestrodev/puppet-blacksmith/gh-pages/dos-equis.jpg" alt="I don't always release my Puppet modules, but when I do I push them directly to the Forge"></p>
+
+<h1>
+<a name="rake-tasks" class="anchor" href="#rake-tasks"><span class="octicon octicon-link"></span></a>Rake tasks</h1>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Install the gem</p>
+
+<pre><code>gem install puppet-blacksmith
+</code></pre>
+
+<p>Add to your Rakefile</p>
+
+<pre><code>require 'puppet_blacksmith/rake_tasks'
+</code></pre>
+
+<p>And you can start using the Rake tasks</p>
+
+<h2>
+<a name="bump-the-version-of-a-module" class="anchor" href="#bump-the-version-of-a-module"><span class="octicon octicon-link"></span></a>Bump the version of a module</h2>
+
+<p>Bump your <code>Modulefile</code> or <code>metadata.json</code> to the next version</p>
+
+<pre><code>$ rake module:bump
+</code></pre>
+
+<h2>
+<a name="push-a-module-to-the-puppet-forge" class="anchor" href="#push-a-module-to-the-puppet-forge"><span class="octicon octicon-link"></span></a>Push a module to the Puppet Forge</h2>
+
+<p>Configure your credentials in <code>~/.puppetforge.yml</code></p>
+
+<pre><code>--- 
+url: https://forge.puppetlabs.com
+username: myuser
+password: mypassword
+</code></pre>
+
+<p>Remember to <a href="http://forge.puppetlabs.com/modules/new">create the project at the Forge</a></p>
+
+<p>Add the require instructions for blacksmith and the puppetlabs_spec_helper to the Rakefile</p>
+
+<pre><code># Rakefile
+require 'puppetlabs_spec_helper/rake_tasks'
+require 'puppet_blacksmith/rake_tasks'
+</code></pre>
+
+<p>Run rake. Ensure you are doing it in a clean working folder or the puppet module tool will package all the unnecessary files.</p>
+
+<pre><code>$ rake module:push
+</code></pre>
+
+<h1>
+<a name="building-blacksmith" class="anchor" href="#building-blacksmith"><span class="octicon octicon-link"></span></a>Building blacksmith</h1>
+
+<pre><code>bundle install
+bundle exec rake
+</code></pre>
+
+<p>To cut a release: builds the gem, tags with git, pushes to rubygems and bumps the version number</p>
+
+<pre><code>bundle exec rake release
+</code></pre>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/maestrodev">maestrodev</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
