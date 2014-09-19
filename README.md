@@ -33,12 +33,10 @@ Bump your `Modulefile` or `metadata.json` to the next version
 Configure your credentials in `~/.puppetforge.yml`
 
     --- 
-    url: https://forge.puppetlabs.com
+    url: https://forgeapi.puppetlabs.com
     username: myuser
     password: mypassword
 
-
-Remember to [create the project at the Forge](http://forge.puppetlabs.com/modules/new)
 
 Add the require instructions for blacksmith and the puppetlabs_spec_helper to the Rakefile
 

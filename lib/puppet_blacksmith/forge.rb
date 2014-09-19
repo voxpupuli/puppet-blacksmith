@@ -62,7 +62,7 @@ module Blacksmith
 Could not find Puppet Forge credentials file '#{credentials_file}'
 Please create it
 ---
-url: https://forge.puppetlabs.com
+url: https://forgeapi.puppetlabs.com
 username: myuser
 password: mypassword
     eos

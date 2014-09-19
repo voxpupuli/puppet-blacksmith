@@ -27,7 +27,7 @@ describe 'Blacksmith::Forge' do
       end
 
       it "should raise an error" do
-        expect { foo = Blacksmith::Forge.new(nil, password, forge) }.to raise_error(/Could not find Puppet Forge credentials file '\/home\/mr\_puppet\/.puppetforge.yml'\s*Please create it\s*---\s*url: https:\/\/forge.puppetlabs.com\s*username: myuser\s*password: mypassword/)
+        expect { foo = Blacksmith::Forge.new(nil, password, forge) }.to raise_error(/Could not find Puppet Forge credentials file '\/home\/mr\_puppet\/.puppetforge.yml'\s*Please create it\s*---\s*url: https:\/\/forgeapi.puppetlabs.com\s*username: myuser\s*password: mypassword/)
       end
     end
 
