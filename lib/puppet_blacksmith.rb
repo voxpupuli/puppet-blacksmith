@@ -1,3 +1,4 @@
+require 'puppet_blacksmith/version'
 require 'puppet_blacksmith/error'
 require 'puppet_blacksmith/forge'
 require 'puppet_blacksmith/git'

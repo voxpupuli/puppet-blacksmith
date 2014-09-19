@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.1
+
+* Fix uninitialized constant Blacksmith::VERSION
+
 ## 3.0.0
 
 * Use API to upload to the Forge instead of parsing the webpage
