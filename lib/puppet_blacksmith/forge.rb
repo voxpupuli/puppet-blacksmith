@@ -37,20 +37,28 @@ module Blacksmith
       raise Errno::ENOENT, "File does not exist: #{package}" unless File.exists?(package)
 
       # login to the puppet forge
-      response = RestClient.post("#{url}/oauth/token", {
-        'client_id' => client_id,
-        'client_secret' => client_secret,
-        'username' => username,
-        'password' => password,
-        'grant_type' => 'password'
-      }, HEADERS)
+      begin
+        response = RestClient.post("#{url}/oauth/token", {
+          'client_id' => client_id,
+          'client_secret' => client_secret,
+          'username' => username,
+          'password' => password,
+          'grant_type' => 'password'
+        }, HEADERS)
+      rescue RestClient::Exception => e
+        raise Blacksmith::Error, "Error login to the forge #{url} as #{username} [#{e.message}]: #{e.response}"
+      end
       login_data = JSON.parse(response)
       access_token = login_data['access_token']
 
       # upload the file
-      response = RestClient.post("#{url}/v2/releases",
-        {:file => File.new(package, 'rb')},
-        HEADERS.merge({'Authorization' => "Bearer #{access_token}"}))
+      begin
+        response = RestClient.post("#{url}/v2/releases",
+          {:file => File.new(package, 'rb')},
+          HEADERS.merge({'Authorization' => "Bearer #{access_token}"}))
+      rescue RestClient::Exception => e
+        raise Blacksmith::Error, "Error uploading #{package} to the forge #{url} [#{e.message}]: #{e.response}"
+      end
     end
 
     private

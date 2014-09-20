@@ -15,7 +15,10 @@ require 'puppet_blacksmith/version'
 
 task :default => [:clean, :spec, :cucumber, :build]
 
-RSpec::Core::RakeTask.new
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.rspec_opts = "--tag ~live"
+end
+
 Cucumber::Rake::Task.new(:cucumber) do |t|
   require 'puppet/version'
   if Gem::Version.new(Puppet.version) < Gem::Version.new("3.6.0")

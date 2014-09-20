@@ -2,6 +2,10 @@
 
 ## 3.0.1
 
+* [Issue #9](https://github.com/maestrodev/puppet-blacksmith/issues/9) Better error messages when pushing to the Forge fails
+
+## 3.0.1
+
 * Fix uninitialized constant Blacksmith::VERSION
 
 ## 3.0.0
