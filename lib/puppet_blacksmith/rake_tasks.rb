@@ -17,7 +17,8 @@ namespace :module do
 
   desc "Bump version and git commit"
   task :bump_commit => :bump do
-    Blacksmith::Git.new.commit_modulefile!
+    m = Blacksmith::Modulefile.new
+    Blacksmith::Git.new.commit_modulefile!(m.version)
   end
 
   desc "Push module to the Puppet Forge"

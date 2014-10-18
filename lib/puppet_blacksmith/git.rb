@@ -13,10 +13,10 @@ module Blacksmith
       exec_git "tag v#{version}"
     end
 
-    def commit_modulefile!
+    def commit_modulefile!(version)
       files = Blacksmith::Modulefile::FILES.select {|f| File.exists?(File.join(@path,f))}
       s = exec_git "add #{files.join(" ")}"
-      s += exec_git "commit -m '[blacksmith] Bump version'"
+      s += exec_git "commit -m '[blacksmith] Bump version to #{version}'"
       s
     end
 
