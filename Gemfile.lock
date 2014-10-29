@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    puppet-blacksmith (3.0.2)
+    puppet-blacksmith (3.0.3)
       puppet (>= 2.7.16)
       rest-client
 
