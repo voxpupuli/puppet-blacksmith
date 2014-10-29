@@ -1,11 +1,11 @@
 # Changelog
 
-## 3.0.2
+## 3.0.3
 
 * [Issue #11](https://github.com/maestrodev/puppet-blacksmith/issues/11) Require json and yaml in forge.rb
 * [Issue #10](https://github.com/maestrodev/puppet-blacksmith/issues/10) Added support to git commit the version
 
-## 3.0.1
+## 3.0.2
 
 * [Issue #9](https://github.com/maestrodev/puppet-blacksmith/issues/9) Better error messages when pushing to the Forge fails
 
