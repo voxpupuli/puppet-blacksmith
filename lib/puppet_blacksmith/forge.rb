@@ -1,4 +1,6 @@
 require 'rest-client'
+require 'json'
+require 'yaml'
 
 module Blacksmith
   class Forge
