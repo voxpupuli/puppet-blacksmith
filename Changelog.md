@@ -1,5 +1,7 @@
 # Changelog
 
+## 3.0.4
+
 ## 3.0.3
 
 * [Issue #11](https://github.com/maestrodev/puppet-blacksmith/issues/11) Require json and yaml in forge.rb
