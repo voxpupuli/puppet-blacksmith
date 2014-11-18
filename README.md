@@ -22,13 +22,32 @@ Add to your Rakefile
 
 And you can start using the Rake tasks
 
-## Bump the version of a module
+## Tasks
+
+Rake tasks included:
+
+| task               | description |
+| ------------------ | ----------- |
+| module:bump        | Bump module version to the next minor |
+| module:bump_commit | Bump version and git commit |
+| module:clean       | Runs clean again |
+| module:push        | Push module to the Puppet Forge |
+| module:release     | Release the Puppet module, doing a clean, build, tag, push, bump_commit and git push |
+| module:tag         | Git tag with the current module version |
+
+### Full release
+
+Do everything needed to push to the Forge with just one command
+
+    $ rake release
+
+### Bump the version of a module
 
 Bump your `Modulefile` or `metadata.json` to the next version
 
     $ rake module:bump
 
-## Push a module to the Puppet Forge
+### Push a module to the Puppet Forge
 
 Configure your credentials in `~/.puppetforge.yml`
 
