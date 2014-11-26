@@ -59,6 +59,12 @@ module Blacksmith
       new_version
     end
 
+    def bump_dep!(module_name, version)
+      text = File.read(path)
+      text = replace_dependency_version(text, module_name, version)
+      File.open(path, "w") {|file| file.puts text}
+    end
+
     def replace_version(text, version)
       if @modulefile
         text.gsub(/\nversion[ ]+['"].*['"]/, "\nversion '#{version}'")
@@ -73,6 +79,24 @@ module Blacksmith
       v = Gem::Version.new("#{version}.0")
       raise Blacksmith::Error, "Unable to increase prerelease version #{version}" if v.prerelease?
       v.bump.to_s
+    end
+
+    def replace_dependency_version(text, module_name, version)
+      if @modulefile
+        # example: dependency 'puppetlabs/stdlib', '>= 2.3.0'
+        module_name = module_name.sub(/^([^\/-]+)-/, '\1/')
+        text.gsub(/\ndependency[ ]+['"].*#{module_name}['"],([ ]+['"].*['"]|)/, "\ndependency '#{module_name}', '#{version}'")
+      else
+        module_name = module_name.sub(/\//, '-')
+        json = JSON.parse(text)
+        new_dep_list = []
+        json['dependencies'].each do |dep|
+          dep['version_requirement'] = version if dep['name'] == module_name
+          new_dep_list << dep
+        end
+        json['dependencies'] = new_dep_list
+        JSON.pretty_generate(json)
+      end
     end
   end
 end
