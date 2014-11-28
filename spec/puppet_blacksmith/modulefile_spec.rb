@@ -49,11 +49,61 @@ describe 'Blacksmith::Modulefile' do
             "description": "Standard Library for Puppet Modules",
             "project_page": "https://github.com/puppetlabs/puppetlabs-stdlib",
             "dependencies": [
+                {
+                    "name": "puppetlabs-stdlib",
+                    "version_requirement": ">= 3.0.0"
+                }
             ]
           }
         eos
 
         expect(JSON.parse(subject.replace_version(File.read(path), "1.0.1"))).to eql(JSON.parse(expected))
+      end
+    end
+
+    describe 'replace_dependency_version' do
+      it "should replace the version in metadata" do
+
+        expected = <<-eos
+          {
+            "operatingsystem_support": [
+              {
+                "operatingsystem": "CentOS",
+                "operatingsystemrelease": [
+                  "4",
+                  "5",
+                  "6"
+                ]
+              }
+            ],
+            "requirements": [
+              {
+                "name": "pe",
+                "version_requirement": "3.2.x"
+              },
+              {
+                "name": "puppet",
+                "version_requirement": ">=2.7.20 <4.0.0"
+              }
+            ],
+            "name": "maestrodev-test",
+            "version": "1.0.0",
+            "source": "git://github.com/puppetlabs/puppetlabs-stdlib",
+            "author": "maestrodev",
+            "license": "Apache 2.0",
+            "summary": "Puppet Module Standard Library",
+            "description": "Standard Library for Puppet Modules",
+            "project_page": "https://github.com/puppetlabs/puppetlabs-stdlib",
+            "dependencies": [
+                {
+                    "name": "puppetlabs-stdlib",
+                    "version_requirement": ">= 4.0.0"
+                }
+            ]
+          }
+        eos
+
+        expect(JSON.parse(subject.replace_dependency_version(File.read(path), 'puppetlabs-stdlib', '>= 4.0.0'))).to eql(JSON.parse(expected))
       end
     end
 
@@ -76,12 +126,30 @@ project_page 'http://github.com/maestrodev/puppet-blacksmith'
 source 'http://github.com/maestrodev/puppet-blacksmith'
 summary 'Testing Puppet module operations'
 description 'Testing Puppet module operations'
+dependency 'puppetlabs/stdlib', '>= 3.0.0'
 eos
 
         expect(subject.replace_version(File.read(path), "1.0.1")).to eql(expected)
       end
     end
 
+    describe 'replace_dependency_version' do
+      it "should replace the dependency version in a Modulefile" do
+        expected = <<-eos
+name 'maestrodev-test'
+version '1.0.0'
+
+license 'Apache License, Version 2.0'
+project_page 'http://github.com/maestrodev/puppet-blacksmith'
+source 'http://github.com/maestrodev/puppet-blacksmith'
+summary 'Testing Puppet module operations'
+description 'Testing Puppet module operations'
+dependency 'puppetlabs/stdlib', '>= 4.0.0'
+eos
+
+        expect(subject.replace_dependency_version(File.read(path), 'puppetlabs-stdlib', '>= 4.0.0')).to eql(expected)
+      end
+    end
   end
 
   describe 'increase_version' do

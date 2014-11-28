@@ -41,4 +41,12 @@ namespace :module do
     Blacksmith::Git.new.push!
   end
 
+  desc "Set specific module dependency version"
+  task :dependency, [:module_name, :version] do |t, args|
+    mn = args[:module_name]
+    mv = args[:version]
+    m = Blacksmith::Modulefile.new
+    m.bump_dep! mn, mv
+    puts "Updated module dependency #{mn} to #{mv}"
+  end
 end

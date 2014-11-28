@@ -28,5 +28,9 @@
   "description": "Standard Library for Puppet Modules",
   "project_page": "https://github.com/puppetlabs/puppetlabs-stdlib",
   "dependencies": [
+      {
+          "name": "puppetlabs-stdlib",
+          "version_requirement": ">= 3.0.0"
+      }
   ]
 }
