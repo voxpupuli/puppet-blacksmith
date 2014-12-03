@@ -3,14 +3,21 @@ require 'open3'
 module Blacksmith
   class Git
 
-    attr_accessor :path
+    attr_accessor :path, :version_pattern
+    attr_writer :version_pattern
+
+    # Pattern to use for tags, %s is replaced with the actual version
+    def version_pattern
+      @version_pattern || 'v%s'
+    end
 
     def initialize(path = ".")
       @path = File.expand_path(path)
     end
 
     def tag!(version)
-      exec_git "tag v#{version}"
+      tag = version_pattern % version
+      exec_git "tag #{tag}"
     end
 
     def commit_modulefile!(version)
