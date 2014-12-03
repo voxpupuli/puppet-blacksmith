@@ -46,7 +46,7 @@ Feature: git
     require 'puppetlabs_spec_helper/rake_tasks'
     require "#{File.dirname(__FILE__)}/../../lib/puppet_blacksmith/rake_tasks"
     Blacksmith::RakeTask.new do |t|
-      t.version_pattern = "%s"
+      t.tag_pattern = "%s"
     end
     """
     And a file named "metadata.json" with:

@@ -5,7 +5,7 @@ require 'puppet_blacksmith'
 module Blacksmith
   class RakeTask < ::Rake::TaskLib
 
-    attr_accessor :version_pattern
+    attr_accessor :tag_pattern
 
     def initialize(*args, &task_block)
       @task_name = args.shift || "blacksmith"
@@ -36,7 +36,7 @@ module Blacksmith
         task :tag do
           m = Blacksmith::Modulefile.new
           git = Blacksmith::Git.new
-          git.version_pattern = @version_pattern
+          git.tag_pattern = @tag_pattern
           git.tag!(m.version)
         end
 
