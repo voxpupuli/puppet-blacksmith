@@ -10,7 +10,6 @@ module Blacksmith
     def initialize(*args, &task_block)
       @task_name = args.shift || "blacksmith"
       @desc = args.shift || "Puppet Forge utilities"
-      puts "INIT"
       define(args, &task_block)
     end
 

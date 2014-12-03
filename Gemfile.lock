@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    puppet-blacksmith (3.1.0)
+    puppet-blacksmith (3.1.1)
       puppet (>= 2.7.16)
       rest-client
 
@@ -40,7 +40,7 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.10.1)
     multi_test (0.1.1)
-    netrc (0.8.0)
+    netrc (0.9.0)
     puppet (3.7.3)
       facter (> 1.6, < 3)
       hiera (~> 1.0)
