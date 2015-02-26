@@ -11,6 +11,7 @@
 # require 'puppet/module_tool'
 require 'puppet'
 require 'puppet/module_tool'
+require 'puppet_blacksmith/version_helper'
 
 Puppet[:confdir] = "."
 
@@ -51,12 +52,16 @@ module Blacksmith
       metadata['version']
     end
 
-    def bump!
-      new_version = increase_version(version)
+    def bump!(level = :patch)
+      new_version = increase_version(version, level)
       text = File.read(path)
       text = replace_version(text, new_version)
       File.open(path, "w") {|file| file.puts text}
       new_version
+    end
+
+    [:major, :minor, :patch].each do |level|
+      define_method("bump_#{level}!") { bump!(level) }
     end
 
     def bump_dep!(module_name, version)
@@ -75,10 +80,9 @@ module Blacksmith
       end
     end
 
-    def increase_version(version)
-      v = Gem::Version.new("#{version}.0")
-      raise Blacksmith::Error, "Unable to increase prerelease version #{version}" if v.prerelease?
-      v.bump.to_s
+    def increase_version(version, level = :patch)
+      v = VersionHelper::Version.new(version)
+      v.send("#{level}!").to_s
     end
 
     def replace_dependency_version(text, module_name, version)

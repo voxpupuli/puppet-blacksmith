@@ -29,7 +29,10 @@ Rake tasks included:
 
 | task               | description |
 | ------------------ | ----------- |
-| module:bump        | Bump module version to the next minor |
+| module:bump        | Bump module version to the next patch |
+| module:bump:patch  | Bump module version to the next patch |
+| module:bump:minor  | Bump module version to the next minor version |
+| module:bump:major  | Bump module version to the next major version |
 | module:bump_commit | Bump version and git commit |
 | module:clean       | Runs clean again |
 | module:dependency[modulename, version] | Updates the module version of a specific dependency |
@@ -53,7 +56,7 @@ Bump your `Modulefile` or `metadata.json` to the next version
 
 Configure your credentials in `~/.puppetforge.yml`
 
-    --- 
+    ---
     url: https://forgeapi.puppetlabs.com
     username: myuser
     password: mypassword
