@@ -153,9 +153,27 @@ eos
   end
 
   describe 'increase_version' do
-    it { expect(subject.increase_version("1.0")).to eql("1.1") }
     it { expect(subject.increase_version("1.0.0")).to eql("1.0.1") }
     it { expect(subject.increase_version("1.0.1")).to eql("1.0.2") }
+    it { expect { subject.increase_version("1.0") }.to raise_error }
     it { expect { subject.increase_version("1.0.12qwe") }.to raise_error }
+  end
+
+  describe 'bump patch version' do
+    it { expect(subject.increase_version("1.0.0", :patch)).to eql("1.0.1") }
+    it { expect(subject.increase_version("1.1.0", :patch)).to eql("1.1.1") }
+    it { expect(subject.increase_version("1.1.1", :patch)).to eql("1.1.2") }
+  end
+
+  describe 'bump minor version' do
+    it { expect(subject.increase_version("1.0.0", :minor)).to eql("1.1.0") }
+    it { expect(subject.increase_version("1.1.0", :minor)).to eql("1.2.0") }
+    it { expect(subject.increase_version("1.1.1", :minor)).to eql("1.2.0") }
+  end
+
+  describe 'bump major version' do
+    it { expect(subject.increase_version("1.0.0", :major)).to eql("2.0.0") }
+    it { expect(subject.increase_version("1.1.0", :major)).to eql("2.0.0") }
+    it { expect(subject.increase_version("1.1.1", :major)).to eql("2.0.0") }
   end
 end

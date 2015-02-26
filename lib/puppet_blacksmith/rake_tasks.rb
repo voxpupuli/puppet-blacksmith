@@ -18,16 +18,38 @@ module Blacksmith
       task_block.call(*[self, args].slice(0, task_block.arity)) if task_block
 
       # clear any (auto-)pre-existing task
-      [:bump, :tag, :bump_commit, :push, :clean, :release, :dependency].each do |t|
+      [
+        :bump,
+        :bump_major,
+        :bump_minor,
+        :bump_patch,
+        :tag,
+        :bump_commit,
+        :push,
+        :clean,
+        :release,
+        :dependency
+      ].each do |t|
         Rake::Task.task_defined?("module:#{t}") && Rake::Task["module:#{t}"].clear
       end
 
       namespace :module do
 
-        desc "Bump module version to the next minor"
+        namespace :bump do
+          [:major, :minor, :patch].each do |level|
+            desc "Bump module version to the next #{level.upcase} version"
+            task level do
+              m = Blacksmith::Modulefile.new
+              v = m.send("bump_#{level}!")
+              puts "Bumping version from #{m.version} to #{v}"
+            end
+          end
+        end
+
+        desc "Bump module version to the next patch"
         task :bump do
           m = Blacksmith::Modulefile.new
-          v = m.bump!
+          v = m.bump_patch!
           puts "Bumping version from #{m.version} to #{v}"
         end
 
