@@ -1,6 +1,13 @@
 # Changelog
 
-## 3.0.4
+## 3.2.0
+
+* Enable bumping semantic version elements with `module:bump:` plus `patch`, `minor`, `major`
+
+## 3.1.0
+
+* Added feature to bump dependencies `module:dependency[modulename, version]`
+* Add support for custom tag patterns
 
 ## 3.0.3
 
