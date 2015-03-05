@@ -44,7 +44,7 @@ Rake tasks included:
 
 Do everything needed to push to the Forge with just one command
 
-    $ rake release
+    $ rake module:release
 
 ### Bump the version of a module
 
