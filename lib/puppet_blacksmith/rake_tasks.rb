@@ -21,9 +21,9 @@ module Blacksmith
       # clear any (auto-)pre-existing task
       [
         :bump,
-        :bump_major,
-        :bump_minor,
-        :bump_patch,
+        'bump:major',
+        'bump:minor',
+        'bump:patch',
         :tag,
         :bump_commit,
         :push,

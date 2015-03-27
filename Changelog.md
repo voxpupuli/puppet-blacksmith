@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.1
+
+* `bump:*` runs twice if task is defined in `Rakefile`
+
 ## 3.3.0
 
 * Allow releasing without building nor pushing to the forge, just git tagging [:clean, :tag, :bump_commit], using `build = false`
