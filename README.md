@@ -91,4 +91,4 @@ In your Rakefile:
 
 To cut a release: builds the gem, tags with git, pushes to rubygems and bumps the version number
 
-    bundle exec rake release
+    bundle exec rake module:release
