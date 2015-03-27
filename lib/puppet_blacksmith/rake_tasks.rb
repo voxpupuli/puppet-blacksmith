@@ -5,9 +5,10 @@ require 'puppet_blacksmith'
 module Blacksmith
   class RakeTask < ::Rake::TaskLib
 
-    attr_accessor :tag_pattern
+    attr_accessor :tag_pattern, :build
 
     def initialize(*args, &task_block)
+      @build = true
       @task_name = args.shift || "blacksmith"
       @desc = args.shift || "Puppet Forge utilities"
       define(args, &task_block)
@@ -82,7 +83,8 @@ module Blacksmith
         end
 
         desc "Release the Puppet module, doing a clean, build, tag, push, bump_commit and git push."
-        task :release => [:clean, :build, :tag, :push, :bump_commit] do
+        release_dependencies = @build ? [:clean, :build, :tag, :push, :bump_commit] : [:clean, :tag, :bump_commit]
+        task :release => release_dependencies do
           puts "Pushing to remote git repo"
           Blacksmith::Git.new.push!
         end

@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.0
+
+* Allow releasing without building nor pushing to the forge, just git tagging [:clean, :tag, :bump_commit], using `build = false`
+
 ## 3.2.0
 
 * Enable bumping semantic version elements with `module:bump:` plus `patch`, `minor`, `major`
