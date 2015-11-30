@@ -60,7 +60,7 @@ module Blacksmith
       new_version
     end
 
-    [:major, :minor, :patch].each do |level|
+    [:major, :minor, :patch, :full].each do |level|
       define_method("bump_#{level}!") { bump!(level) }
     end
 

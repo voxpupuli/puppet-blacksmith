@@ -104,6 +104,15 @@ module Blacksmith
         define_method("#{term}!") { increment!(term) }
       end
 
+      def full!
+        env_var = "BLACKSMITH_FULL_VERSION"
+        begin
+          ENV.fetch env_var
+        rescue KeyError
+          raise Exception, "Setting the full version requires setting the #{env_var} environment variable to the new version"
+        end
+      end
+
       def increment!(term)
         new_version = clone
         new_value = send(term) + 1

@@ -24,6 +24,7 @@ module Blacksmith
         'bump:major',
         'bump:minor',
         'bump:patch',
+        'bump:full',
         :tag,
         :bump_commit,
         :push,
@@ -37,7 +38,7 @@ module Blacksmith
       namespace :module do
 
         namespace :bump do
-          [:major, :minor, :patch].each do |level|
+          [:major, :minor, :patch, :full].each do |level|
             desc "Bump module version to the next #{level.upcase} version"
             task level do
               m = Blacksmith::Modulefile.new
