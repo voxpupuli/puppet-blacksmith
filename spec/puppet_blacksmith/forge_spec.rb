@@ -6,18 +6,37 @@ require 'webmock/rspec'
 describe 'Blacksmith::Forge' do
   include_context 'forge'
 
-  describe 'missing credentials file' do
+  describe 'resolving credentials' do
     before do
       allow(File).to receive(:expand_path) { '/home/mr_puppet/.puppetforge.yml' }
     end
 
-    context "when the credentials file is missing" do
-      before do
+    it 'prefers env vars to file values' do
+      stubbed_forge_password = 'asdf1234'
 
-      end
+      allow(File).to receive(:exists?).
+                      with('/home/mr_puppet/.puppetforge.yml').
+                      and_return(true)
+      allow(YAML).to receive(:load_file).
+                      with('/home/mr_puppet/.puppetforge.yml').
+                      and_return({'username' => username,
+                                  'password' => password})
+      allow(ENV).to receive(:[]).
+                      with(any_args)
+      allow(ENV).to receive(:[]).
+                      with('BLACKSMITH_FORGE_PASSWORD').
+                      and_return(stubbed_forge_password)
 
+      forge = Blacksmith::Forge.new()
+
+      expect(forge.url).to eq(Blacksmith::Forge::PUPPETLABS_FORGE)
+      expect(forge.password).to eq(stubbed_forge_password)
+      expect(forge.username).to eq(username)
+    end
+
+    context 'when the credentials values are unset' do
       it "should raise an error" do
-        expect { foo = Blacksmith::Forge.new(nil, password, forge) }.to raise_error(/Could not find Puppet Forge credentials file '\/home\/mr\_puppet\/.puppetforge.yml'\s*Please create it\s*---\s*url: https:\/\/forgeapi.puppetlabs.com\s*username: myuser\s*password: mypassword/)
+        expect { foo = Blacksmith::Forge.new(nil, password, forge) }.to raise_error(/Could not find Puppet Forge credentials/)
       end
     end
 

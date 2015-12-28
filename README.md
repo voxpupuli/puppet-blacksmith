@@ -63,6 +63,13 @@ Configure your credentials in `~/.puppetforge.yml`
     password: mypassword
 
 
+Or set the equivalent environment variables in your shell
+
+    export BLACKSMITH_FORGE_URL=https://forgeapi.puppetlabs.com
+    export BLACKSMITH_FORGE_USERNAME=myuser
+    export BLACKSMITH_FORGE_PASSWORD=mypassword
+
+
 Add the require instructions for blacksmith and the puppetlabs_spec_helper to the Rakefile
 
     # Rakefile
