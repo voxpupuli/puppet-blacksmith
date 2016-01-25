@@ -8,12 +8,21 @@ describe 'Blacksmith::Forge' do
 
   describe 'resolving credentials' do
     before do
-      allow(File).to receive(:expand_path) { '/home/mr_puppet/.puppetforge.yml' }
+      allow(Dir).to receive(:pwd) { '/home/mr_puppet/puppet-some-module' }
+      allow(File).to receive(:expand_path).with('~/.puppetforge.yml') { '/home/mr_puppet/.puppetforge.yml' }
+      allow(File).to receive(:expand_path).with(/credentials.yml/) { '/home/mr_puppet/puppet-blacksmith/credentials.yml' }
+      allow(YAML).to receive(:load_file).with('/home/mr_puppet/puppet-blacksmith/credentials.yml') { {
+          "client_id" => "b93eb708fd942cfc7b4ed71db6ce219b814954619dbe537ddfd208584e8cff8d",
+          "client_secret" => "216648059ad4afec3e4d77bd9e67817c095b2dcf94cdec18ac3d00584f863180",
+      } }
     end
 
     it 'prefers env vars to file values' do
       stubbed_forge_password = 'asdf1234'
 
+      allow(File).to receive(:exists?).
+                      with('/home/mr_puppet/puppet-some-module/.puppetforge.yml').
+                      and_return(false)
       allow(File).to receive(:exists?).
                       with('/home/mr_puppet/.puppetforge.yml').
                       and_return(true)
@@ -38,6 +47,24 @@ describe 'Blacksmith::Forge' do
       it "should raise an error" do
         expect { foo = Blacksmith::Forge.new(nil, password, forge) }.to raise_error(/Could not find Puppet Forge credentials/)
       end
+    end
+
+    it 'loads credentials from home dir' do
+      allow(File).to receive(:exists?).with('/home/mr_puppet/puppet-some-module/.puppetforge.yml') { false }
+      allow(File).to receive(:exists?).with('/home/mr_puppet/.puppetforge.yml') { true }
+      allow(YAML).to receive(:load_file).with('/home/mr_puppet/.puppetforge.yml') { {'username'=> 'puppet-user'} }
+
+      subject = Blacksmith::Forge.new(nil, password, forge)
+      expect(subject.username).to eq('puppet-user')
+    end
+
+    it 'loads credentials from project dir' do
+      allow(File).to receive(:exists?).with('/home/mr_puppet/puppet-some-module/.puppetforge.yml') { true }
+      allow(File).to receive(:exists?).with('/home/mr_puppet/.puppetforge.yml') { true }
+      allow(YAML).to receive(:load_file).with('/home/mr_puppet/puppet-some-module/.puppetforge.yml') { {'username'=> 'puppet-other-user'} }
+
+      subject = Blacksmith::Forge.new(nil, password, forge)
+      expect(subject.username).to eq('puppet-other-user')
     end
 
   end

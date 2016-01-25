@@ -6,7 +6,8 @@ module Blacksmith
   class Forge
 
     PUPPETLABS_FORGE = "https://forgeapi.puppetlabs.com"
-    CREDENTIALS_FILE = "~/.puppetforge.yml"
+    CREDENTIALS_FILE_HOME = "~/.puppetforge.yml"
+    CREDENTIALS_FILE_PROJECT = '.puppetforge.yml'
     DEFAULT_CREDENTIALS = { 'url' => PUPPETLABS_FORGE }
     HEADERS = { 'User-Agent' => "Blacksmith/#{Blacksmith::VERSION} Ruby/#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL} (#{RUBY_RELEASE_DATE}; #{RUBY_PLATFORM})" }
 
@@ -87,7 +88,7 @@ BLACKSMITH_FORGE_URL
 BLACKSMITH_FORGE_USERNAME
 BLACKSMITH_FORGE_PASSWORD
 
-or create the file '#{CREDENTIALS_FILE}'
+or create the file '#{CREDENTIALS_FILE_PROJECT}' or '#{CREDENTIALS_FILE_HOME}'
 with content similiar to:
 
 ---
@@ -100,10 +101,15 @@ password: mypassword
     end
 
     def load_credentials_from_file
-      file = File.expand_path(CREDENTIALS_FILE)
+      credentials_file = [
+          File.join(Dir.pwd, CREDENTIALS_FILE_PROJECT),
+          File.expand_path(CREDENTIALS_FILE_HOME)
+      ]
+                             .select { |file| File.exists?(file) }
+                             .first
 
-      if File.exists?(file)
-        credentials = YAML.load_file(file)
+      if credentials_file
+        credentials = YAML.load_file(credentials_file)
       else
         credentials = Hash.new
       end
