@@ -6,26 +6,23 @@ module Blacksmith
   class Forge
 
     PUPPETLABS_FORGE = "https://forgeapi.puppetlabs.com"
+    CREDENTIALS_FILE = "~/.puppetforge.yml"
+    DEFAULT_CREDENTIALS = { 'url' => PUPPETLABS_FORGE }
     HEADERS = { 'User-Agent' => "Blacksmith/#{Blacksmith::VERSION} Ruby/#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL} (#{RUBY_RELEASE_DATE}; #{RUBY_PLATFORM})" }
 
-    attr_accessor :username, :password, :client_id, :client_secret
-    attr_writer :url
+    attr_accessor :username, :password, :url, :client_id, :client_secret
 
     def initialize(username = nil, password = nil, url = nil)
       self.username = username
       self.password = password
       RestClient.proxy = ENV['http_proxy']
-      load_credentials_from_file if username.nil?
+      load_credentials
       load_client_credentials_from_file
       self.url = url unless url.nil?
       if self.url =~ %r{http(s)?://forge.puppetlabs.com}
         puts "Ignoring url entry in .puppetforge.yml: must point to the api server at #{PUPPETLABS_FORGE}, not the Forge webpage"
         self.url = PUPPETLABS_FORGE
       end
-    end
-
-    def url
-      @url || PUPPETLABS_FORGE
     end
 
     def push!(name, package = nil)
@@ -65,27 +62,71 @@ module Blacksmith
 
     private
 
-    def load_credentials_from_file
-      credentials_file = File.expand_path("~/.puppetforge.yml")
-      unless File.exists?(credentials_file)
-        raise Blacksmith::Error, <<-eos
-Could not find Puppet Forge credentials file '#{credentials_file}'
-Please create it
----
-url: https://forgeapi.puppetlabs.com
-username: myuser
-password: mypassword
-    eos
-      end
-      credentials = YAML.load_file(credentials_file)
-      self.username = credentials['username']
-      self.password = credentials['password']
+    def load_credentials
+      file_credentials = load_credentials_from_file
+      env_credentials = load_credentials_from_env
+
+      credentials = DEFAULT_CREDENTIALS.merge file_credentials
+      credentials = credentials.merge env_credentials
+
+      self.username = credentials['username'] if credentials['username']
+      self.password = credentials['password'] if credentials['password']
       if credentials['forge']
         # deprecated
         puts "'forge' entry is deprecated in .puppetforge.yml, use 'url'"
         self.url = credentials['forge']
       end
       self.url = credentials['url'] if credentials['url']
+
+      unless self.username && self.password
+        raise Blacksmith::Error, <<-eos
+Could not find Puppet Forge credentials!
+
+Please set the environment variables
+BLACKSMITH_FORGE_URL
+BLACKSMITH_FORGE_USERNAME
+BLACKSMITH_FORGE_PASSWORD
+
+or create the file '#{CREDENTIALS_FILE}'
+with content similiar to:
+
+---
+url: https://forgeapi.puppetlabs.com
+username: myuser
+password: mypassword
+
+    eos
+      end
+    end
+
+    def load_credentials_from_file
+      file = File.expand_path(CREDENTIALS_FILE)
+
+      if File.exists?(file)
+        credentials = YAML.load_file(file)
+      else
+        credentials = Hash.new
+      end
+
+      return credentials
+    end
+
+    def load_credentials_from_env
+      credentials = Hash.new
+
+      if ENV['BLACKSMITH_FORGE_USERNAME']
+        credentials['username'] = ENV['BLACKSMITH_FORGE_USERNAME']
+      end
+
+      if ENV['BLACKSMITH_FORGE_PASSWORD']
+        credentials['password'] = ENV['BLACKSMITH_FORGE_PASSWORD']
+      end
+
+      if ENV['BLACKSMITH_FORGE_URL']
+        credentials['url'] = ENV['BLACKSMITH_FORGE_URL']
+      end
+
+      return credentials
     end
 
     def load_client_credentials_from_file
