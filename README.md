@@ -44,6 +44,11 @@ Rake tasks included:
 | module:push        | Push module to the Puppet Forge |
 | module:release     | Release the Puppet module, doing a clean, build, tag, push, bump_commit and git push |
 | module:tag         | Git tag with the current module version |
+| module:version     | Get the current module version |
+| module:version:next | Get the next patch module version |
+| module:version:next:patch | Get the next patch module version |
+| module:version:next:minor | Get the next minor module version |
+| module:version:next:major | Get the next major module version |
 
 ### Full release
 
