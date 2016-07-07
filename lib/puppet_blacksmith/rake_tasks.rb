@@ -27,6 +27,10 @@ module Blacksmith
         'bump:full',
         :tag,
         :bump_commit,
+        'bump_commit:major',
+        'bump_commit:minor',
+        'bump_commit:patch',
+        'bump_commit:full',
         :push,
         :clean,
         :release,
@@ -61,6 +65,16 @@ module Blacksmith
           git = Blacksmith::Git.new
           git.tag_pattern = @tag_pattern
           git.tag!(m.version)
+        end
+
+        namespace :bump_commit do
+          [:major, :minor, :patch, :full].each do |level|
+            desc "Bump module version to the next #{level.upcase} version and git commit"
+            task level => "bump:#{level}".to_sym do
+              m = Blacksmith::Modulefile.new
+              Blacksmith::Git.new.commit_modulefile!(m.version)
+            end
+          end
         end
 
         desc "Bump version and git commit"

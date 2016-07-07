@@ -35,6 +35,10 @@ Rake tasks included:
 | module:bump:major  | Bump module version to the next major version |
 | module:bump:full   | Bump module version to the version set in the BLACKSMITH_FULL_VERSION env variable |
 | module:bump_commit | Bump version and git commit |
+| module:bump_commit:patch  | Bump module version to the next patch and git commit |
+| module:bump_commit:minor  | Bump module version to the next minor version and git commit |
+| module:bump_commit:major  | Bump module version to the next major version and git commit |
+| module:bump_commit:full   | Bump module version to the version set in the BLACKSMITH_FULL_VERSION env variable and git commit |
 | module:clean       | Runs clean again |
 | module:dependency[modulename, version] | Updates the module version of a specific dependency |
 | module:push        | Push module to the Puppet Forge |
