@@ -9,7 +9,6 @@ rvm:
   # 2.2 is not supported by puppet https://tickets.puppetlabs.com/browse/PUP-3796
   - '2.1'
   - '2.0'
-  - '1.9'
 
 env:
   - PUPPET_VERSION="~> 3.7.0"
