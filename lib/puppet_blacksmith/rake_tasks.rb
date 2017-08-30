@@ -5,7 +5,7 @@ require 'puppet_blacksmith'
 module Blacksmith
   class RakeTask < ::Rake::TaskLib
 
-    attr_accessor :tag_pattern, :commit_message_pattern, :build
+    attr_accessor :tag_pattern, :tag_message_pattern, :commit_message_pattern, :build
 
     def initialize(*args, &task_block)
       @build = true
@@ -69,6 +69,7 @@ module Blacksmith
           m = Blacksmith::Modulefile.new
           git = Blacksmith::Git.new
           git.tag_pattern = @tag_pattern
+          git.tag_message_pattern = @tag_message_pattern
           git.commit_message_pattern = @commit_message_pattern
           git.tag!(m.version)
         end
@@ -102,6 +103,7 @@ module Blacksmith
               m = Blacksmith::Modulefile.new
               git = Blacksmith::Git.new
               git.tag_pattern = @tag_pattern
+              git.tag_message_pattern = @tag_message_pattern
               git.commit_message_pattern = @commit_message_pattern
               git.commit_modulefile!(m.version)
             end
@@ -113,6 +115,7 @@ module Blacksmith
           m = Blacksmith::Modulefile.new
           git = Blacksmith::Git.new
           git.tag_pattern = @tag_pattern
+          git.tag_message_pattern = @tag_message_pattern
           git.commit_message_pattern = @commit_message_pattern
           git.commit_modulefile!(m.version)
         end
@@ -137,6 +140,7 @@ module Blacksmith
           puts "Pushing to remote git repo"
           git = Blacksmith::Git.new
           git.tag_pattern = @tag_pattern
+          git.tag_message_pattern = @tag_message_pattern
           git.commit_message_pattern = @commit_message_pattern
           git.push!
         end

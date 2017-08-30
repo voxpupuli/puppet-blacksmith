@@ -35,6 +35,8 @@ Feature: git
     Then the output should match /^v1\.0\.1$/
     When I run `git show --format=%s`
     Then the output should match /^\[blacksmith\] Bump version to 1\.0\.2$/
+    When I run `git describe`
+    Then the output should match /^fatal: No annotated tags can describe/
 
   Scenario: Tagging and commiting with custom patterns
     Given I run `git clone https://github.com/maestrodev/puppet-test.git .`
@@ -47,6 +49,7 @@ Feature: git
     require "#{File.dirname(__FILE__)}/../../lib/puppet_blacksmith/rake_tasks"
     Blacksmith::RakeTask.new do |t|
       t.tag_pattern = "%s"
+      t.tag_message_pattern = "Version %s"
       t.commit_message_pattern = "New version %s"
     end
     """
@@ -75,3 +78,5 @@ Feature: git
     And the output should not match /^v1\.0\.1$/
     When I run `git show --format=%s`
     Then the output should match /^New version 1\.0\.2$/
+    When I run `git describe`
+    Then the output should match /^1\.0\.1$/
