@@ -5,7 +5,7 @@ require 'puppet_blacksmith'
 module Blacksmith
   class RakeTask < ::Rake::TaskLib
 
-    attr_accessor :tag_pattern, :build
+    attr_accessor :tag_pattern, :commit_message_pattern, :build
 
     def initialize(*args, &task_block)
       @build = true
@@ -69,6 +69,7 @@ module Blacksmith
           m = Blacksmith::Modulefile.new
           git = Blacksmith::Git.new
           git.tag_pattern = @tag_pattern
+          git.commit_message_pattern = @commit_message_pattern
           git.tag!(m.version)
         end
 
@@ -99,7 +100,10 @@ module Blacksmith
             desc "Bump module version to the next #{level.upcase} version and git commit"
             task level => "bump:#{level}".to_sym do
               m = Blacksmith::Modulefile.new
-              Blacksmith::Git.new.commit_modulefile!(m.version)
+              git = Blacksmith::Git.new
+              git.tag_pattern = @tag_pattern
+              git.commit_message_pattern = @commit_message_pattern
+              git.commit_modulefile!(m.version)
             end
           end
         end
@@ -107,7 +111,10 @@ module Blacksmith
         desc "Bump version and git commit"
         task :bump_commit => :bump do
           m = Blacksmith::Modulefile.new
-          Blacksmith::Git.new.commit_modulefile!(m.version)
+          git = Blacksmith::Git.new
+          git.tag_pattern = @tag_pattern
+          git.commit_message_pattern = @commit_message_pattern
+          git.commit_modulefile!(m.version)
         end
 
         desc "Push module to the Puppet Forge"
@@ -128,7 +135,10 @@ module Blacksmith
         release_dependencies = @build ? [:clean, :build, :bump_commit, :tag, :push] : [:clean, :bump_commit, :tag]
         task :release => release_dependencies do
           puts "Pushing to remote git repo"
-          Blacksmith::Git.new.push!
+          git = Blacksmith::Git.new
+          git.tag_pattern = @tag_pattern
+          git.commit_message_pattern = @commit_message_pattern
+          git.push!
         end
 
         desc "Set specific module dependency version"

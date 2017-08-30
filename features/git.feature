@@ -33,10 +33,10 @@ Feature: git
     """
     When I run `git tag`
     Then the output should match /^v1\.0\.1$/
-    When I run `git log -1`
-    Then the output should match /\[blacksmith\] Bump version to 1\.0\.2$/
+    When I run `git show --format=%s`
+    Then the output should match /^\[blacksmith\] Bump version to 1\.0\.2$/
 
-  Scenario: Tagging and commiting with custom pattern
+  Scenario: Tagging and commiting with custom patterns
     Given I run `git clone https://github.com/maestrodev/puppet-test.git .`
     And I run `git checkout -b test v1.0.0`
     When I run `git tag`
@@ -47,6 +47,7 @@ Feature: git
     require "#{File.dirname(__FILE__)}/../../lib/puppet_blacksmith/rake_tasks"
     Blacksmith::RakeTask.new do |t|
       t.tag_pattern = "%s"
+      t.commit_message_pattern = "New version %s"
     end
     """
     And a file named "metadata.json" with:
@@ -72,5 +73,5 @@ Feature: git
     When I run `git tag`
     Then the output should match /^1\.0\.1$/
     And the output should not match /^v1\.0\.1$/
-    When I run `git log -1`
-    Then the output should match /\[blacksmith\] Bump version to 1\.0\.2$/
+    When I run `git show --format=%s`
+    Then the output should match /^New version 1\.0\.2$/
