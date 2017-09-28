@@ -3,12 +3,20 @@ require 'open3'
 module Blacksmith
   class Git
 
-    attr_accessor :path, :tag_pattern
-    attr_writer :tag_pattern
+    attr_accessor :path, :tag_pattern, :tag_message_pattern, :commit_message_pattern
+    attr_writer :tag_pattern, :tag_message_pattern, :commit_message_pattern
 
     # Pattern to use for tags, %s is replaced with the actual version
+    def commit_message_pattern
+      @commit_message_pattern || "[blacksmith] Bump version to %s"
+    end
+
     def tag_pattern
       @tag_pattern || 'v%s'
+    end
+
+    def tag_message_pattern
+      @tag_message_pattern
     end
 
     def initialize(path = ".")
@@ -17,13 +25,19 @@ module Blacksmith
 
     def tag!(version)
       tag = tag_pattern % version
-      exec_git "tag #{tag}"
+      command = "tag #{tag}"
+      if tag_message_pattern
+        tag_message = tag_message_pattern % version
+        command += " -m '#{tag_message}'"
+      end
+      exec_git command
     end
 
     def commit_modulefile!(version)
       files = Blacksmith::Modulefile::FILES.select {|f| File.exists?(File.join(@path,f))}
+      message = commit_message_pattern % version
       s = exec_git "add #{files.join(" ")}"
-      s += exec_git "commit -m '[blacksmith] Bump version to #{version}'"
+      s += exec_git "commit -m '#{message}'"
       s
     end
 
