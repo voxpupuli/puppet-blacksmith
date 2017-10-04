@@ -17,14 +17,14 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.24"
 
-  s.add_runtime_dependency 'rest-client', '~>1.8.0'
+  s.add_runtime_dependency 'rest-client', '~>2.0'
   s.add_runtime_dependency 'puppet', '>=2.7.16'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'puppetlabs_spec_helper'
   s.add_development_dependency 'cucumber'
   s.add_development_dependency 'aruba'
   s.add_development_dependency 'rspec', '>=3.0.0'
-  s.add_development_dependency 'webmock', '~>1.23.0'
+  s.add_development_dependency 'webmock', '~>2.0'
 
   s.files         = Dir.glob("lib/**/*") + %w(LICENSE)
   s.test_files    = Dir.glob("spec/**/*")
