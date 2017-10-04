@@ -3,43 +3,10 @@ before_install:
   - gem --version
   - git config --global user.name "Travis CI"
   - git config --global user.email "user@example.com"
-  - rm -f Gemfile.lock
 
 rvm:
-  # 2.2 is not supported by puppet https://tickets.puppetlabs.com/browse/PUP-3796
+  - '2.4'
+  - '2.3'
+  - '2.2'
   - '2.1'
   - '2.0'
-
-env:
-  - PUPPET_VERSION="~> 3.7.0"
-  - PUPPET_VERSION="~> 3.6.0"
-  - PUPPET_VERSION="~> 3.5.0"
-  - PUPPET_VERSION="~> 3.4.0"
-  - PUPPET_VERSION="~> 3.3.0"
-  - PUPPET_VERSION="~> 3.2.0"
-  - PUPPET_VERSION="~> 3.1.0"
-  - PUPPET_VERSION="~> 3.0.0"
-  - PUPPET_VERSION="~> 2.7.0"
-
-matrix:
-  exclude:
-    # No support for Ruby 2.0 before Puppet 3.2
-    - rvm: '2.0'
-      env: PUPPET_VERSION="~> 2.7.0"
-    - rvm: '2.0'
-      env: PUPPET_VERSION="~> 3.0.0"
-    - rvm: '2.0'
-      env: PUPPET_VERSION="~> 3.1.0"
-    # Puppet < 3.5.0 is broken under ruby 2.1 https://tickets.puppetlabs.com/browse/PUP-1243
-    - rvm: '2.1'
-      env: PUPPET_VERSION="~> 2.7.0"
-    - rvm: '2.1'
-      env: PUPPET_VERSION="~> 3.0.0"
-    - rvm: '2.1'
-      env: PUPPET_VERSION="~> 3.1.0"
-    - rvm: '2.1'
-      env: PUPPET_VERSION="~> 3.2.0"
-    - rvm: '2.1'
-      env: PUPPET_VERSION="~> 3.3.0"
-    - rvm: '2.1'
-      env: PUPPET_VERSION="~> 3.4.0"

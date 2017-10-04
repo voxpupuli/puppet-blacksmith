@@ -78,11 +78,6 @@ describe 'Blacksmith::Git' do
     end
   end
 
-  context "Using Modulefile" do
-    let(:metadata_file) { "Modulefile" }
-    it_behaves_like :git
-  end
-
   context "Using metadata.json" do
     it_behaves_like :git
   end
