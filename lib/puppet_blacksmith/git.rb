@@ -25,10 +25,10 @@ module Blacksmith
 
     def tag!(version)
       tag = tag_pattern % version
-      command = "tag #{tag}"
+      command = ["tag", tag]
       if tag_message_pattern
         tag_message = tag_message_pattern % version
-        command += " -m '#{tag_message}'"
+        command += ["-m", tag_message]
       end
       exec_git command
     end
@@ -36,19 +36,19 @@ module Blacksmith
     def commit_modulefile!(version)
       files = Blacksmith::Modulefile::FILES.select {|f| File.exists?(File.join(@path,f))}
       message = commit_message_pattern % version
-      s = exec_git "add #{files.join(" ")}"
-      s += exec_git "commit -m '#{message}'"
+      s = exec_git ["add"] + files
+      s += exec_git ["commit", "-m", message]
       s
     end
 
     def push!
-      s = exec_git "push"
-      s += exec_git "push --tags"
+      s = exec_git ["push"]
+      s += exec_git ["push", "--tags"]
       s
     end
 
     def git_cmd_with_path(cmd)
-      "git --git-dir=#{File.join(path, '.git')} --work-tree=#{path} #{cmd}"
+      ["git", "--git-dir", File.join(path, '.git'), "--work-tree", path] + cmd
     end
 
     def exec_git(cmd)
@@ -57,7 +57,7 @@ module Blacksmith
       exit_status = nil
       new_cmd = git_cmd_with_path(cmd)
       # wait_thr is nil in JRuby < 1.7.5 see http://jira.codehaus.org/browse/JRUBY-6409
-      Open3.popen3(new_cmd) do |stdin, stdout, stderr, wait_thr|
+      Open3.popen3(*new_cmd) do |stdin, stdout, stderr, wait_thr|
         out = stdout.read
         err = stderr.read
         exit_status = wait_thr.nil? ? nil : wait_thr.value

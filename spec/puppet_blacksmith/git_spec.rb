@@ -37,7 +37,7 @@ describe 'Blacksmith::Git' do
     end
 
     describe 'exec_git' do
-      let(:cmd) { 'log' }
+      let(:cmd) { ['log'] }
       let(:stdin) { nil }
       let(:stdout) { '' }
       let(:stderr) { '' }
@@ -66,12 +66,12 @@ describe 'Blacksmith::Git' do
 
         # this spec fails on jruby, can't detect exit code of script
         context 'when stderr is empty' do
-          let(:cmd) { "git" } # exits with 1
+          let(:cmd) { ["git"] } # exits with 1
           it { expect { subject.exec_git(cmd) }.to raise_error(Blacksmith::Error, /^Command .* failed with exit status.*1.*$/) }
         end
 
         context 'when stderr is not empty' do
-          let(:cmd) { "git help xxxx" } # exits with 1 and prints to stdout
+          let(:cmd) { ["git", "help", "xxxx"] } # exits with 1 and prints to stdout
           it { expect { subject.exec_git(cmd) }.to raise_error(Blacksmith::Error, /No manual entry for gitxxx/) }
         end
       end
