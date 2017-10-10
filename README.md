@@ -57,7 +57,7 @@ Do everything needed to push to the Forge with just one command
 
 ### Bump the version of a module
 
-Bump your `Modulefile` or `metadata.json` to the next version
+Bump your `metadata.json` to the next version
 
     $ rake module:bump
 

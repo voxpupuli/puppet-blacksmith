@@ -109,49 +109,6 @@ describe 'Blacksmith::Modulefile' do
 
   end
 
-  context "using a Modulefile" do
-
-    let(:path) { "spec/data/Modulefile" }
-
-    it_behaves_like :metadata
-
-    describe 'replace_version' do
-      it "should replace the version in a Modulefile" do
-        expected = <<-eos
-name 'maestrodev-test'
-version '1.0.1'
-
-license 'Apache License, Version 2.0'
-project_page 'http://github.com/maestrodev/puppet-blacksmith'
-source 'http://github.com/maestrodev/puppet-blacksmith'
-summary 'Testing Puppet module operations'
-description 'Testing Puppet module operations'
-dependency 'puppetlabs/stdlib', '>= 3.0.0'
-eos
-
-        expect(subject.replace_version(File.read(path), "1.0.1")).to eql(expected)
-      end
-    end
-
-    describe 'replace_dependency_version' do
-      it "should replace the dependency version in a Modulefile" do
-        expected = <<-eos
-name 'maestrodev-test'
-version '1.0.0'
-
-license 'Apache License, Version 2.0'
-project_page 'http://github.com/maestrodev/puppet-blacksmith'
-source 'http://github.com/maestrodev/puppet-blacksmith'
-summary 'Testing Puppet module operations'
-description 'Testing Puppet module operations'
-dependency 'puppetlabs/stdlib', '>= 4.0.0'
-eos
-
-        expect(subject.replace_dependency_version(File.read(path), 'puppetlabs-stdlib', '>= 4.0.0')).to eql(expected)
-      end
-    end
-  end
-
   describe 'increase_version' do
     it { expect(subject.increase_version("1.0.0")).to eql("1.0.1") }
     it { expect(subject.increase_version("1.0.1")).to eql("1.0.2") }

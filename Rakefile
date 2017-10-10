@@ -20,10 +20,6 @@ RSpec::Core::RakeTask.new(:spec) do |t|
 end
 
 Cucumber::Rake::Task.new(:cucumber) do |t|
-  require 'puppet/version'
-  if Gem::Version.new(Puppet.version) < Gem::Version.new("3.6.0")
-    t.cucumber_opts = "--tags ~@metadatajson"
-  end
 end
 
 task :bump do

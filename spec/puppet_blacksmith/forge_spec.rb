@@ -91,9 +91,10 @@ describe 'Blacksmith::Forge' do
             :headers => {})
 
         stub_request(:post, "#{forge}/v2/releases").with(
-            :body => %r{Content-Disposition: form-data; name=\"file\"; filename=\"maestrodev-test.tar.gz\"\r\nContent-Type: application/gzip},
-            :headers => headers.merge({'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'Authorization'=>'Bearer e52f78b62e97cb8d8db6659a73aa522cca0f5c74d4714e0ed0bdd10000000000', 'Content-Type'=>%r{multipart/form-data;}})
-          ).to_return(:status => 200, :body => File.read(File.join(spec_data, "response.json")), :headers => {})
+            :headers => headers.merge({'Accept'=>'*/*', 'Accept-Encoding'=>'gzip, deflate', 'Authorization'=>'Bearer e52f78b62e97cb8d8db6659a73aa522cca0f5c74d4714e0ed0bdd10000000000', 'Content-Type'=>%r{\Amultipart/form-data;}})
+          ) { |request |
+            request.body =~ %r{Content-Disposition: form-data; name=\"file\"; filename=\"maestrodev-test.tar.gz\"\r\nContent-Type: application/gzip}
+          }.to_return(:status => 200, :body => File.read(File.join(spec_data, "response.json")), :headers => {})
 
       end
 

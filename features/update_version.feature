@@ -1,40 +1,6 @@
 Feature: update_version
   puppet-blacksmith needs to update module versions
 
-  Scenario: Bumping a module version when using Modulefile
-    Given a file named "Rakefile" with:
-    """
-    require "#{File.dirname(__FILE__)}/../../lib/puppet_blacksmith/rake_tasks"
-    """
-    And a file named "Modulefile" with:
-    """
-    name 'maestrodev-test'
-    version '1.0.0'
-
-    author 'maestrodev'
-    license 'Apache License, Version 2.0'
-    project_page 'http://github.com/maestrodev/puppet-blacksmith'
-    source 'http://github.com/maestrodev/puppet-blacksmith'
-    summary 'Testing Puppet module operations'
-    description 'Testing Puppet module operations'
-    """
-    When I run `rake module:bump`
-    Then the exit status should be 0
-    And the file "Modulefile" should contain:
-    """
-    name 'maestrodev-test'
-    version '1.0.1'
-
-    author 'maestrodev'
-    license 'Apache License, Version 2.0'
-    project_page 'http://github.com/maestrodev/puppet-blacksmith'
-    source 'http://github.com/maestrodev/puppet-blacksmith'
-    summary 'Testing Puppet module operations'
-    description 'Testing Puppet module operations'
-    """
-    And a file named "metadata.json" should not exist
-
-
   Scenario: Bumping a module version when using metadata.json
     Given a file named "Rakefile" with:
     """
@@ -110,40 +76,6 @@ Feature: update_version
       "description": "Standard Library for Puppet Modules",
       "project_page": "https://github.com/puppetlabs/puppetlabs-stdlib",
     """
-    And a file named "Modulefile" should not exist
-
-  Scenario: Bumping a module patch version when using Modulefile
-    Given a file named "Rakefile" with:
-    """
-    require "#{File.dirname(__FILE__)}/../../lib/puppet_blacksmith/rake_tasks"
-    """
-    And a file named "Modulefile" with:
-    """
-    name 'maestrodev-test'
-    version '1.0.0'
-
-    author 'maestrodev'
-    license 'Apache License, Version 2.0'
-    project_page 'http://github.com/maestrodev/puppet-blacksmith'
-    source 'http://github.com/maestrodev/puppet-blacksmith'
-    summary 'Testing Puppet module operations'
-    description 'Testing Puppet module operations'
-    """
-    When I run `rake module:bump:patch`
-    Then the exit status should be 0
-    And the file "Modulefile" should contain:
-    """
-    name 'maestrodev-test'
-    version '1.0.1'
-
-    author 'maestrodev'
-    license 'Apache License, Version 2.0'
-    project_page 'http://github.com/maestrodev/puppet-blacksmith'
-    source 'http://github.com/maestrodev/puppet-blacksmith'
-    summary 'Testing Puppet module operations'
-    description 'Testing Puppet module operations'
-    """
-    And a file named "metadata.json" should not exist
 
 
   Scenario: Bumping a module patch version when using metadata.json
@@ -221,40 +153,6 @@ Feature: update_version
       "description": "Standard Library for Puppet Modules",
       "project_page": "https://github.com/puppetlabs/puppetlabs-stdlib",
     """
-    And a file named "Modulefile" should not exist
-
-  Scenario: Bumping a module minor version when using Modulefile
-    Given a file named "Rakefile" with:
-    """
-    require "#{File.dirname(__FILE__)}/../../lib/puppet_blacksmith/rake_tasks"
-    """
-    And a file named "Modulefile" with:
-    """
-    name 'maestrodev-test'
-    version '1.0.0'
-
-    author 'maestrodev'
-    license 'Apache License, Version 2.0'
-    project_page 'http://github.com/maestrodev/puppet-blacksmith'
-    source 'http://github.com/maestrodev/puppet-blacksmith'
-    summary 'Testing Puppet module operations'
-    description 'Testing Puppet module operations'
-    """
-    When I run `rake module:bump:minor`
-    Then the exit status should be 0
-    And the file "Modulefile" should contain:
-    """
-    name 'maestrodev-test'
-    version '1.1.0'
-
-    author 'maestrodev'
-    license 'Apache License, Version 2.0'
-    project_page 'http://github.com/maestrodev/puppet-blacksmith'
-    source 'http://github.com/maestrodev/puppet-blacksmith'
-    summary 'Testing Puppet module operations'
-    description 'Testing Puppet module operations'
-    """
-    And a file named "metadata.json" should not exist
 
 
   Scenario: Bumping a module minor version when using metadata.json
@@ -332,40 +230,6 @@ Feature: update_version
       "description": "Standard Library for Puppet Modules",
       "project_page": "https://github.com/puppetlabs/puppetlabs-stdlib",
     """
-    And a file named "Modulefile" should not exist
-
-  Scenario: Bumping a module major version when using Modulefile
-    Given a file named "Rakefile" with:
-    """
-    require "#{File.dirname(__FILE__)}/../../lib/puppet_blacksmith/rake_tasks"
-    """
-    And a file named "Modulefile" with:
-    """
-    name 'maestrodev-test'
-    version '1.0.0'
-
-    author 'maestrodev'
-    license 'Apache License, Version 2.0'
-    project_page 'http://github.com/maestrodev/puppet-blacksmith'
-    source 'http://github.com/maestrodev/puppet-blacksmith'
-    summary 'Testing Puppet module operations'
-    description 'Testing Puppet module operations'
-    """
-    When I run `rake module:bump:major`
-    Then the exit status should be 0
-    And the file "Modulefile" should contain:
-    """
-    name 'maestrodev-test'
-    version '2.0.0'
-
-    author 'maestrodev'
-    license 'Apache License, Version 2.0'
-    project_page 'http://github.com/maestrodev/puppet-blacksmith'
-    source 'http://github.com/maestrodev/puppet-blacksmith'
-    summary 'Testing Puppet module operations'
-    description 'Testing Puppet module operations'
-    """
-    And a file named "metadata.json" should not exist
 
 
   Scenario: Bumping a module major version when using metadata.json
@@ -443,7 +307,6 @@ Feature: update_version
       "description": "Standard Library for Puppet Modules",
       "project_page": "https://github.com/puppetlabs/puppetlabs-stdlib",
     """
-    And a file named "Modulefile" should not exist
 
 
     Scenario: Bumping to exact module version when using metadata.json
@@ -524,7 +387,6 @@ Feature: update_version
         "description": "Standard Library for Puppet Modules",
         "project_page": "https://github.com/puppetlabs/puppetlabs-stdlib",
       """
-      And a file named "Modulefile" should not exist
 
 
       Scenario: Bumping to exact module version but not setting the environment variable when using metadata.json
@@ -603,41 +465,3 @@ Feature: update_version
           "description": "Standard Library for Puppet Modules",
           "project_page": "https://github.com/puppetlabs/puppetlabs-stdlib",
         """
-        And a file named "Modulefile" should not exist
-
-
-      Scenario: Bumping to exact module version when using Modulefile
-        Given a file named "Rakefile" with:
-        """
-        require "#{File.dirname(__FILE__)}/../../lib/puppet_blacksmith/rake_tasks"
-        """
-        And I set the environment variables to:
-          | variable | value |
-          | BLACKSMITH_FULL_VERSION | 2.1.3 |
-        And a file named "Modulefile" with:
-        """
-        name 'maestrodev-test'
-        version '1.0.0'
-
-        author 'maestrodev'
-        license 'Apache License, Version 2.0'
-        project_page 'http://github.com/maestrodev/puppet-blacksmith'
-        source 'http://github.com/maestrodev/puppet-blacksmith'
-        summary 'Testing Puppet module operations'
-        description 'Testing Puppet module operations'
-        """
-        When I run `rake module:bump:full`
-        Then the exit status should be 0
-        And the file "Modulefile" should contain:
-        """
-        name 'maestrodev-test'
-        version '2.1.3'
-
-        author 'maestrodev'
-        license 'Apache License, Version 2.0'
-        project_page 'http://github.com/maestrodev/puppet-blacksmith'
-        source 'http://github.com/maestrodev/puppet-blacksmith'
-        summary 'Testing Puppet module operations'
-        description 'Testing Puppet module operations'
-        """
-        And a file named "metadata.json" should not exist
