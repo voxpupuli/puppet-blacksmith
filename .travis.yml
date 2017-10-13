@@ -10,3 +10,14 @@ rvm:
   - '2.2'
   - '2.1'
   - '2.0'
+deploy:
+  provider: rubygems
+  api_key:
+    secure: RsR04kqSyrLTgUW+4y5pz0izdWirwtPKDW1WBQgOCYPlt9aD05FmIZx3ya+ErN1fYSf01yVAueswV90CpkyFbzEugO0Xl7fUl+P9Ky4kp+GcIE094PwWQAJfGeqOYMLGVk7a4FOJnqXcajJZ8KR0/EKif4KLPaO9F4VZ3uySbwE=
+  gem: puppet-blacksmith
+  on:
+    tags: true
+    repo: voxpupuli/puppet-blacksmith
+
+notifications:
+  email: false
