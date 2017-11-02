@@ -47,15 +47,13 @@ module Blacksmith
       s
     end
 
-    def git_cmd_with_path(cmd)
-      ["git", "--git-dir", File.join(path, '.git'), "--work-tree", path] + cmd
-    end
+    private
 
     def exec_git(cmd)
       out = ""
       err = ""
       exit_status = nil
-      new_cmd = git_cmd_with_path(cmd)
+      new_cmd = ["git", "--git-dir", File.join(@path, '.git'), "--work-tree", @path] + cmd
       # wait_thr is nil in JRuby < 1.7.5 see http://jira.codehaus.org/browse/JRUBY-6409
       Open3.popen3(*new_cmd) do |stdin, stdout, stderr, wait_thr|
         out = stdout.read
