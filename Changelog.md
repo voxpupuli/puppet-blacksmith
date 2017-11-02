@@ -1,5 +1,29 @@
 # Changelog
 
+## 4.0.0
+
+This version drops Modulefile support. Upstream Puppet has removed the support from the code and we used that. It means we no longer use the Puppet gem which greatly reduces the profile of the module.
+
+* Add has_tag? and has_version_tag? methods
+* Make exec_git a private method
+* Support Ruby 2.2 - 2.4
+* Rip out Modulefile support
+* Allow using newer rest-client and webmock versions
+* Handle spaces in git paths
+* Allow creating annotated git commits
+* Make commit message configurable
+* Fix rake module release order
+* Drop ruby 1.9 support
+
+## 3.4.0
+
+* Pin rest-client and webmock for ruby 1.9 support
+* Add 'version', 'version:next' and 'version:next:[patch|major|minor]'
+* Allow loading forge credentials from project dir
+* Add bump_commit commands for patch, minor, major and full
+* Allow setting credentials via env vars
+* Add bump:full rake task
+
 ## 3.3.1
 
 * `bump:*` runs twice if task is defined in `Rakefile`

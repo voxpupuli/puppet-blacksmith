@@ -1,3 +1,3 @@
 module Blacksmith
-  VERSION = '3.4.0'
+  VERSION = '4.0.0'
 end
