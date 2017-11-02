@@ -48,6 +48,7 @@ module Blacksmith
     end
 
     def git_cmd_with_path(cmd)
+      cmd = cmd.split(' ') if cmd.is_a?String
       ["git", "--git-dir", File.join(path, '.git'), "--work-tree", path] + cmd
     end
 
