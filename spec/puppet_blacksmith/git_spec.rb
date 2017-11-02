@@ -16,6 +16,33 @@ describe 'Blacksmith::Git' do
   end
 
   shared_examples_for :git do
+    describe 'has_tag?' do
+      context 'with a tag' do
+        before { subject.tag!(version) }
+        it { expect(subject.has_tag?("v#{version}")).to be true }
+      end
+
+      context 'with a partial match' do
+        before { subject.tag!(version) }
+        it { expect(subject.has_tag?(version)).to be false }
+      end
+
+      context 'without a tag' do
+        it { expect(subject.has_tag?('something')).to be false }
+      end
+    end
+
+    describe 'has_tag?' do
+      context 'with a tag' do
+        before { subject.tag!(version) }
+        it { expect(subject.has_version_tag?(version)).to be true }
+      end
+
+      context 'without a tag' do
+        it { expect(subject.has_version_tag?('something')).to be false }
+      end
+    end
+
     describe 'tag!' do
       before { subject.tag!(version) }
       it "should have the tag" do

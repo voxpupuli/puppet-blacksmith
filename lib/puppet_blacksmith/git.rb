@@ -23,6 +23,15 @@ module Blacksmith
       @path = File.expand_path(path)
     end
 
+    def has_tag?(tag)
+      exec_git(['tag', '--list', tag]).strip == tag
+    end
+
+    def has_version_tag?(version)
+      tag = tag_pattern % version
+      has_tag? tag
+    end
+
     def tag!(version)
       tag = tag_pattern % version
       command = ["tag", tag]
