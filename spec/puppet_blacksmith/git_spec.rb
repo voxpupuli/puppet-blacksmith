@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Blacksmith::Git' do
 
   subject { Blacksmith::Git.new(path) }
-  let(:path) { File.join(File.dirname(__FILE__), '../../tmp/git_test') }
+  let(:path) { File.expand_path(File.join(File.dirname(__FILE__), '../../tmp/git_test')) }
   let(:version) { '1.0.0' }
   let(:metadata_file) { "metadata.json" }
 
@@ -46,8 +46,10 @@ describe 'Blacksmith::Git' do
 
       context 'when git succeeds' do
         before do
-          allow(Open3).to receive(:popen3).and_yield(nil, double(:read => stdout), double(:read => stderr), wait_thr)
-          expect { subject.exec_git(cmd) }.to_not raise_error
+          allow(Open3).to receive(:popen3). \
+            with('git', '--git-dir', File.join(path, '.git'), '--work-tree', path, *cmd). \
+            and_yield(nil, double(:read => stdout), double(:read => stderr), wait_thr)
+          expect { subject.send(:exec_git, cmd) }.to_not raise_error
         end
 
         context 'when stderr is empty' do
@@ -62,17 +64,15 @@ describe 'Blacksmith::Git' do
       end
 
       context 'when git fails' do
-        before { allow(subject).to receive(:git_cmd_with_path) {cmd} }
-
         # this spec fails on jruby, can't detect exit code of script
         context 'when stderr is empty' do
-          let(:cmd) { ["git"] } # exits with 1
-          it { expect { subject.exec_git(cmd) }.to raise_error(Blacksmith::Error, /^Command .* failed with exit status.*1.*$/) }
+          let(:cmd) { [] } # exits with 1
+          it { expect { subject.send(:exec_git, cmd) }.to raise_error(Blacksmith::Error, /^Command .* failed with exit status.*1.*$/) }
         end
 
         context 'when stderr is not empty' do
-          let(:cmd) { ["git", "help", "xxxx"] } # exits with 1 and prints to stdout
-          it { expect { subject.exec_git(cmd) }.to raise_error(Blacksmith::Error, /No manual entry for gitxxx/) }
+          let(:cmd) { ["help", "xxxx"] } # exits with 1 and prints to stdout
+          it { expect { subject.send(:exec_git, cmd) }.to raise_error(Blacksmith::Error, /No manual entry for gitxxx/) }
         end
       end
     end
