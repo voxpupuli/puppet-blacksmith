@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/voxpupuli/puppet-blacksmith"
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.24"
+  s.required_ruby_version = '>= 2.0.0'
 
   s.add_runtime_dependency 'rest-client', '~>2.0'
   s.add_development_dependency 'rake'
