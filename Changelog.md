@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.1
+
+This version is a fixup release since the 4.0.0 release broke the CI of a user which was still using Ruby 1.9.3.
+
+* Require ruby >= 2.0.0 in the gemspec
+
 ## 4.0.0
 
 This version drops Modulefile support. Upstream Puppet has removed the support from the code and we used that. It means we no longer use the Puppet gem which greatly reduces the profile of the module.
