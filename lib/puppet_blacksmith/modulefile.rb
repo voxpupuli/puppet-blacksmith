@@ -28,12 +28,16 @@ module Blacksmith
       metadata['version']
     end
 
-    def bump!(level = :patch)
-      new_version = increase_version(version, level)
+    def bump_to_version!(new_version)
       text = File.read(path)
       text = replace_version(text, new_version)
-      File.open(path, "w") {|file| file.puts text}
+      File.open(path,"w") { |file| file.puts text }
       new_version
+    end
+
+    def bump!(level = :patch)
+      new_version = increase_version(version, level)
+      bump_to_version!(new_version)
     end
 
     [:major, :minor, :patch, :full].each do |level|

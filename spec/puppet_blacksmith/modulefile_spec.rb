@@ -109,6 +109,10 @@ describe 'Blacksmith::Modulefile' do
 
   end
 
+  describe 'bump_to_version' do
+    it { expect(subject.bump_to_version!("1.0.0")).to eql("1.0.0") }
+  end
+
   describe 'increase_version' do
     it { expect(subject.increase_version("1.0.0")).to eql("1.0.1") }
     it { expect(subject.increase_version("1.0.1")).to eql("1.0.2") }

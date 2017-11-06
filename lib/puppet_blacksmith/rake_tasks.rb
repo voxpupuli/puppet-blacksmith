@@ -57,6 +57,13 @@ module Blacksmith
           end
         end
 
+        desc "Bump module to specific version number"
+        task :bump_to_version, [:new_version] do |t, args|
+          m = Blacksmith::Modulefile.new
+          v = m.bump_to_version!(args[:new_version])
+          puts "Bumping version to #{args[:new_version]}"
+        end
+
         desc "Bump module version to the next patch"
         task :bump do
           m = Blacksmith::Modulefile.new
