@@ -44,10 +44,31 @@ describe 'Blacksmith::Git' do
     end
 
     describe 'tag!' do
-      before { subject.tag!(version) }
-      it "should have the tag" do
-        out = `cd #{path} && git tag`
-        expect(out.chomp).to match(/^v1.0.0$/)
+      context 'basic tag' do
+        before { subject.tag!(version) }
+        it "should have the tag" do
+          out = `cd #{path} && git tag`
+          expect(out.chomp).to match(/^v1.0.0$/)
+        end
+      end
+
+      context 'signed tag without pattern' do
+        before do
+          subject.tag_message_pattern = nil
+          subject.tag_sign = true
+        end
+
+        it { expect { subject.tag!(version) }.to raise_error(Blacksmith::Error, /Signed tags require messages/)}
+      end
+
+      context 'signed tag with pattern' do
+        before do
+          subject.tag_message_pattern = 'Version %s'
+          subject.tag_sign = true
+          allow(subject).to receive(:exec_git).with(['tag', 'v1.0.0', '-m', 'Version 1.0.0', '-s']).and_return(true)
+        end
+
+        it { expect(subject.tag!(version)).to be true }
       end
     end
 
