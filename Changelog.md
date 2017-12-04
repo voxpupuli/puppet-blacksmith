@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.0
+
+* Allow creating signed tags
+
 ## 4.0.1
 
 This version is a fixup release since the 4.0.0 release broke the CI of a user which was still using Ruby 1.9.3.
