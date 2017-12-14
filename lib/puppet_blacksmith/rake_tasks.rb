@@ -58,10 +58,10 @@ module Blacksmith
         end
 
         desc "Bump module to specific version number"
-        task :bump_to_version, [:new_version] do |t, args|
+        task :bump_to_version, [:new_version] do |t, targs|
           m = Blacksmith::Modulefile.new
-          v = m.bump_to_version!(args[:new_version])
-          puts "Bumping version to #{args[:new_version]}"
+          m.bump_to_version!(targs[:new_version])
+          puts "Bumping version to #{targs[:new_version]}"
         end
 
         desc "Bump module version to the next patch"
@@ -153,9 +153,9 @@ module Blacksmith
         end
 
         desc "Set specific module dependency version"
-        task :dependency, [:module_name, :version] do |t, args|
-          mn = args[:module_name]
-          mv = args[:version]
+        task :dependency, [:module_name, :version] do |t, targs|
+          mn = targs[:module_name]
+          mv = targs[:version]
           m = Blacksmith::Modulefile.new
           m.bump_dep! mn, mv
           puts "Updated module dependency #{mn} to #{mv}"
