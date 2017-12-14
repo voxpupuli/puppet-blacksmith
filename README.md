@@ -100,6 +100,16 @@ In your Rakefile:
       t.build = false # do not build the module nor push it to the Forge, just do the tagging [:clean, :tag, :bump_commit]
     end
 
+# GPG signed tags
+
+In your Rakefile:
+
+    require 'puppetlabs_spec_helper/rake_tasks'
+    require 'puppet_blacksmith/rake_tasks'
+    Blacksmith::RakeTask.new do |t|
+      t.tag_message_pattern = "Version %s" # Signed tags must have a message
+      t.tag_sign = true # enable GPG signing
+    end
 
 # Building blacksmith
 

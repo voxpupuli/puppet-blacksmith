@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.1
+
+* Expose `tag_sign` option in the RakeTask
+
 ## 4.1.0
 
 * Allow creating signed tags
