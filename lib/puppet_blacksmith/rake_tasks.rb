@@ -14,6 +14,15 @@ module Blacksmith
       define(args, &task_block)
     end
 
+    def git
+      git = Blacksmith::Git.new
+      git.tag_pattern = @tag_pattern
+      git.tag_message_pattern = @tag_message_pattern
+      git.commit_message_pattern = @commit_message_pattern
+
+      git
+    end
+
     def define(args, &task_block)
 
       task_block.call(*[self, args].slice(0, task_block.arity)) if task_block
@@ -74,10 +83,6 @@ module Blacksmith
         desc "Git tag with the current module version"
         task :tag do
           m = Blacksmith::Modulefile.new
-          git = Blacksmith::Git.new
-          git.tag_pattern = @tag_pattern
-          git.tag_message_pattern = @tag_message_pattern
-          git.commit_message_pattern = @commit_message_pattern
           git.tag!(m.version)
         end
 
@@ -108,10 +113,6 @@ module Blacksmith
             desc "Bump module version to the next #{level.upcase} version and git commit"
             task level => "bump:#{level}".to_sym do
               m = Blacksmith::Modulefile.new
-              git = Blacksmith::Git.new
-              git.tag_pattern = @tag_pattern
-              git.tag_message_pattern = @tag_message_pattern
-              git.commit_message_pattern = @commit_message_pattern
               git.commit_modulefile!(m.version)
             end
           end
@@ -120,10 +121,6 @@ module Blacksmith
         desc "Bump version and git commit"
         task :bump_commit => :bump do
           m = Blacksmith::Modulefile.new
-          git = Blacksmith::Git.new
-          git.tag_pattern = @tag_pattern
-          git.tag_message_pattern = @tag_message_pattern
-          git.commit_message_pattern = @commit_message_pattern
           git.commit_modulefile!(m.version)
         end
 
@@ -145,10 +142,6 @@ module Blacksmith
         release_dependencies = @build ? [:clean, :build, :bump_commit, :tag, :push] : [:clean, :bump_commit, :tag]
         task :release => release_dependencies do
           puts "Pushing to remote git repo"
-          git = Blacksmith::Git.new
-          git.tag_pattern = @tag_pattern
-          git.tag_message_pattern = @tag_message_pattern
-          git.commit_message_pattern = @commit_message_pattern
           git.push!
         end
 
