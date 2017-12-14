@@ -5,7 +5,7 @@ require 'puppet_blacksmith'
 module Blacksmith
   class RakeTask < ::Rake::TaskLib
 
-    attr_accessor :tag_pattern, :tag_message_pattern, :commit_message_pattern, :build
+    attr_accessor :tag_pattern, :tag_message_pattern, :tag_sign, :commit_message_pattern, :build
 
     def initialize(*args, &task_block)
       @build = true
@@ -19,6 +19,7 @@ module Blacksmith
       git.tag_pattern = @tag_pattern
       git.tag_message_pattern = @tag_message_pattern
       git.commit_message_pattern = @commit_message_pattern
+      git.tag_sign = @tag_sign
 
       git
     end
