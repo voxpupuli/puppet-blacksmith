@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.2
+
+* Fix an incorrect checksum on rubygems
+
 ## 4.1.1
 
 * Expose `tag_sign` option in the RakeTask
