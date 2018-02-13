@@ -30,7 +30,7 @@ module Blacksmith
       unless package
         regex = /^#{username}-#{name}-.*\.tar\.gz$/
         pkg = File.expand_path("pkg")
-        f = Dir.new(pkg).select{|f| f.match(regex)}.last
+        f = Dir.new(pkg).select{|fn| fn.match(regex)}.last
         raise Errno::ENOENT, "File not found in #{pkg} with regex #{regex}" if f.nil?
         package = File.join(pkg, f)
       end
