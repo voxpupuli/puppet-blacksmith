@@ -61,7 +61,7 @@ module Blacksmith
             desc "Bump module version to the next #{level.upcase} version"
             task level do
               m = Blacksmith::Modulefile.new
-              v = m.send("bump_#{level}!")
+              v = m.bump!(level)
               puts "Bumping version from #{m.version} to #{v}"
             end
           end
