@@ -115,9 +115,11 @@ module Blacksmith
 
       def increment!(term)
         new_version = clone
-        new_value = send(term) + 1
 
-        new_version.send("#{term}=", new_value)
+        if term != :patch || @pre.nil?
+          new_version.send("#{term}=", send(term) + 1)
+        end
+
         new_version.minor = 0 if term == :major
         new_version.patch = 0 if term == :major || term == :minor
         new_version.build = new_version.pre = nil

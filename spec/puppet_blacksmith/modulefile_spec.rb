@@ -124,17 +124,20 @@ describe 'Blacksmith::Modulefile' do
     it { expect(subject.increase_version("1.0.0", :patch)).to eql("1.0.1") }
     it { expect(subject.increase_version("1.1.0", :patch)).to eql("1.1.1") }
     it { expect(subject.increase_version("1.1.1", :patch)).to eql("1.1.2") }
+    it { expect(subject.increase_version("1.1.2-rc0", :patch)).to eql("1.1.2") }
   end
 
   describe 'bump minor version' do
     it { expect(subject.increase_version("1.0.0", :minor)).to eql("1.1.0") }
     it { expect(subject.increase_version("1.1.0", :minor)).to eql("1.2.0") }
     it { expect(subject.increase_version("1.1.1", :minor)).to eql("1.2.0") }
+    it { expect(subject.increase_version("1.1.1-rc0", :minor)).to eql("1.2.0") }
   end
 
   describe 'bump major version' do
     it { expect(subject.increase_version("1.0.0", :major)).to eql("2.0.0") }
     it { expect(subject.increase_version("1.1.0", :major)).to eql("2.0.0") }
     it { expect(subject.increase_version("1.1.1", :major)).to eql("2.0.0") }
+    it { expect(subject.increase_version("1.1.1-rc0", :major)).to eql("2.0.0") }
   end
 end
