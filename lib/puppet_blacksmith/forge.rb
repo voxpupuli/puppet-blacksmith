@@ -36,7 +36,28 @@ module Blacksmith
       end
       raise Errno::ENOENT, "File does not exist: #{package}" unless File.exists?(package)
 
-      # login to the puppet forge
+      upload(package)
+    end
+
+    private
+
+    def upload(file)
+      begin
+        RestClient.post(http_url, {:file => File.new(file, 'rb')}, http_headers)
+      rescue RestClient::Exception => e
+        raise Blacksmith::Error, "Error uploading #{package} to the forge #{url} [#{e.message}]: #{e.response}"
+      end
+    end
+
+    def http_url
+      "#{url}/v2/releases"
+    end
+
+    def http_headers
+      HEADERS.merge({'Authorization' => "Bearer #{oauth_access_token}"})
+    end
+
+    def oauth_access_token
       begin
         response = RestClient.post("#{url}/oauth/token", {
           'client_id' => client_id,
@@ -49,19 +70,8 @@ module Blacksmith
         raise Blacksmith::Error, "Error login to the forge #{url} as #{username} [#{e.message}]: #{e.response}"
       end
       login_data = JSON.parse(response)
-      access_token = login_data['access_token']
-
-      # upload the file
-      begin
-        response = RestClient.post("#{url}/v2/releases",
-          {:file => File.new(package, 'rb')},
-          HEADERS.merge({'Authorization' => "Bearer #{access_token}"}))
-      rescue RestClient::Exception => e
-        raise Blacksmith::Error, "Error uploading #{package} to the forge #{url} [#{e.message}]: #{e.response}"
-      end
+      login_data['access_token']
     end
-
-    private
 
     def load_credentials
       file_credentials = load_credentials_from_file
