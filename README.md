@@ -42,7 +42,7 @@ Rake tasks included:
 | module:clean       | Runs clean again |
 | module:dependency[modulename, version] | Updates the module version of a specific dependency |
 | module:push        | Push module to the Puppet Forge |
-| module:release     | Release the Puppet module, doing a clean, build, tag, push, bump_commit and git push |
+| module:release     | Release the Puppet module, doing a clean, build, bump_commit, tag, push and git push |
 | module:tag         | Git tag with the current module version |
 | module:version     | Get the current module version |
 | module:version:next | Get the next patch module version |

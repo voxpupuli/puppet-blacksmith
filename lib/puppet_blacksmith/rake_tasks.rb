@@ -139,7 +139,7 @@ module Blacksmith
           Rake::Task["clean"].execute
         end
 
-        desc "Release the Puppet module, doing a clean, build, tag, push, bump_commit and git push."
+        desc "Release the Puppet module, doing a clean, build, bump_commit, tag, push and git push."
         release_dependencies = @build ? [:clean, :build, :bump_commit, :tag, :push] : [:clean, :bump_commit, :tag]
         task :release => release_dependencies do
           puts "Pushing to remote git repo"
