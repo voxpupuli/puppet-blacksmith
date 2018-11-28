@@ -21,7 +21,7 @@ Add to your Rakefile
     require 'puppet_blacksmith/rake_tasks'
 
 And you can start using the Rake tasks. Note that you might have to delete `.rake_t_cache`
-before the tasks in the output of `rake -T`.
+before the tasks appear in the output of `rake -T`.
 
 ## Tasks
 
