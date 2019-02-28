@@ -1,18 +1,16 @@
-sudo: false
 before_install:
   - gem --version
   - git config --global user.name "Travis CI"
   - git config --global user.email "user@example.com"
 
 rvm:
+  - '2.6'
+  - '2.5'
+  - '2.4'
   - '2.3'
   - '2.2'
   - '2.1'
   - '2.0'
-matrix:
-  include:
-    - rvm: '2.4'
-      env: DEPLOY_TO_FORGE=yes
 deploy:
   provider: rubygems
   api_key:
@@ -20,8 +18,8 @@ deploy:
   gem: puppet-blacksmith
   on:
     tags: true
+    rvm: '2.6'
     repo: voxpupuli/puppet-blacksmith
-    condition: "$DEPLOY_TO_FORGE = yes"
 
 notifications:
   email: false
