@@ -27,7 +27,7 @@ Feature: module
         },
         {
           "name": "puppet",
-          "version_requirement": ">=2.7.20 <4.0.0"
+          "version_requirement": ">=2.7.20 <7.0.0"
         }
       ],
       "name": "maestrodev-test",
