@@ -1,6 +1,7 @@
 require 'rest-client'
 require 'json'
 require 'yaml'
+require 'base64'
 
 module Blacksmith
   class Forge
@@ -8,14 +9,18 @@ module Blacksmith
     PUPPETLABS_FORGE = "https://forgeapi.puppetlabs.com"
     CREDENTIALS_FILE_HOME = "~/.puppetforge.yml"
     CREDENTIALS_FILE_PROJECT = '.puppetforge.yml'
-    DEFAULT_CREDENTIALS = { 'url' => PUPPETLABS_FORGE }
+    FORGE_TYPE_PUPPET = 'puppet'
+    FORGE_TYPE_ARTIFACTORY = 'artifactory'
+    SUPPORTED_FORGE_TYPES = [FORGE_TYPE_PUPPET, FORGE_TYPE_ARTIFACTORY]
+    DEFAULT_CREDENTIALS = { 'url' => PUPPETLABS_FORGE, 'forge_type' => FORGE_TYPE_PUPPET }
     HEADERS = { 'User-Agent' => "Blacksmith/#{Blacksmith::VERSION} Ruby/#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL} (#{RUBY_RELEASE_DATE}; #{RUBY_PLATFORM})" }
 
-    attr_accessor :username, :password, :url, :client_id, :client_secret
+    attr_accessor :username, :password, :url, :client_id, :client_secret, :forge_type, :token
 
-    def initialize(username = nil, password = nil, url = nil)
+    def initialize(username = nil, password = nil, url = nil, forge_type = nil, token = nil)
       self.username = username
       self.password = password
+      self.token = token
       RestClient.proxy = ENV['http_proxy']
       load_credentials
       load_client_credentials_from_file
@@ -24,11 +29,15 @@ module Blacksmith
         puts "Ignoring url entry in .puppetforge.yml: must point to the api server at #{PUPPETLABS_FORGE}, not the Forge webpage"
         self.url = PUPPETLABS_FORGE
       end
+      self.forge_type = forge_type unless forge_type.nil?
+      raise Blacksmith::Error, "Unsupported forge type: #{self.forge_type}" unless SUPPORTED_FORGE_TYPES.include?(self.forge_type)
     end
 
-    def push!(name, package = nil)
+    def push!(name, package = nil, author = nil, version = nil)
+      user = author || username
       unless package
-        regex = /^#{username}-#{name}-.*\.tar\.gz$/
+        v = version ? Regexp.escape(version) : '.*'
+        regex = /^#{user}-#{name}-#{v}\.tar\.gz$/
         pkg = File.expand_path("pkg")
         f = Dir.new(pkg).select{|fn| fn.match(regex)}.last
         raise Errno::ENOENT, "File not found in #{pkg} with regex #{regex}" if f.nil?
@@ -36,25 +45,42 @@ module Blacksmith
       end
       raise Errno::ENOENT, "File does not exist: #{package}" unless File.exists?(package)
 
-      upload(package)
+      upload(user, name, package)
     end
 
     private
 
-    def upload(file)
-      begin
-        RestClient.post(http_url, {:file => File.new(file, 'rb')}, http_headers)
-      rescue RestClient::Exception => e
-        raise Blacksmith::Error, "Error uploading #{package} to the forge #{url} [#{e.message}]: #{e.response}"
+    def upload(author, name, file)
+      case forge_type
+      when FORGE_TYPE_ARTIFACTORY
+        RestClient::Request.execute(:method => :put, :url => http_url(author, name, file), :payload => File.new(file, 'rb'), :headers => http_headers)
+      else
+        RestClient::Request.execute(:method => :post, :url => http_url(author, name, file), :payload => {:file => File.new(file, 'rb')}, :headers => http_headers)
+      end
+    rescue RestClient::Exception => e
+      raise Blacksmith::Error, "Error uploading #{package} to the forge #{url} [#{e.message}]: #{e.response}"
+    end
+
+    def http_url(author, name, file)
+      case forge_type
+      when FORGE_TYPE_ARTIFACTORY
+        "#{url}/#{author}/#{name}/#{File.basename(file)}"
+      else
+        "#{url}/v2/releases"
       end
     end
 
-    def http_url
-      "#{url}/v2/releases"
-    end
-
     def http_headers
-      HEADERS.merge({'Authorization' => "Bearer #{oauth_access_token}"})
+      case forge_type
+      when FORGE_TYPE_ARTIFACTORY
+        if token
+          HEADERS.merge({'Authorization' => "Bearer #{token}"})
+        else
+          HEADERS.merge({'Authorization' => "Basic " + Base64.strict_encode64("#{username}:#{password}")})
+        end
+      else
+        HEADERS.merge({'Authorization' => "Bearer #{token || oauth_access_token}"})
+      end
     end
 
     def oauth_access_token
@@ -82,21 +108,25 @@ module Blacksmith
 
       self.username = credentials['username'] if credentials['username']
       self.password = credentials['password'] if credentials['password']
+      self.token = credentials['token'] if credentials['token']
       if credentials['forge']
         # deprecated
         puts "'forge' entry is deprecated in .puppetforge.yml, use 'url'"
         self.url = credentials['forge']
       end
       self.url = credentials['url'] if credentials['url']
+      self.forge_type = credentials['forge_type'] if credentials['forge_type']
 
-      unless self.username && self.password
+      unless (self.username && self.password) || self.token
         raise Blacksmith::Error, <<-eos
 Could not find Puppet Forge credentials!
 
 Please set the environment variables
 BLACKSMITH_FORGE_URL
+BLACKSMITH_FORGE_TYPE
 BLACKSMITH_FORGE_USERNAME
 BLACKSMITH_FORGE_PASSWORD
+BLACKSMITH_FORGE_TOKEN
 
 or create the file '#{CREDENTIALS_FILE_PROJECT}' or '#{CREDENTIALS_FILE_HOME}'
 with content similiar to:
@@ -140,6 +170,14 @@ password: mypassword
 
       if ENV['BLACKSMITH_FORGE_URL']
         credentials['url'] = ENV['BLACKSMITH_FORGE_URL']
+      end
+
+      if ENV['BLACKSMITH_FORGE_TYPE']
+        credentials['forge_type'] = ENV['BLACKSMITH_FORGE_TYPE']
+      end
+
+      if ENV['BLACKSMITH_FORGE_TOKEN']
+        credentials['token'] = ENV['BLACKSMITH_FORGE_TOKEN']
       end
 
       return credentials
