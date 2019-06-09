@@ -20,7 +20,8 @@ Add to your Rakefile
     require 'puppetlabs_spec_helper/rake_tasks' # needed for some module packaging tasks
     require 'puppet_blacksmith/rake_tasks'
 
-And you can start using the Rake tasks
+And you can start using the Rake tasks. Note that you might have to delete `.rake_t_cache`
+before the tasks appear in the output of `rake -T`.
 
 ## Tasks
 
