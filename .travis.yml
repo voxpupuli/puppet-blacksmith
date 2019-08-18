@@ -7,10 +7,6 @@ rvm:
   - '2.6'
   - '2.5'
   - '2.4'
-  - '2.3'
-  - '2.2'
-  - '2.1'
-  - '2.0'
 deploy:
   provider: rubygems
   api_key:
@@ -23,3 +19,8 @@ deploy:
 
 notifications:
   email: false
+  irc:
+    on_success: always
+    on_failure: always
+    channels:
+      - "chat.freenode.org#voxpupuli-notifications"

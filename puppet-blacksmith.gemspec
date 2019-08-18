@@ -8,15 +8,14 @@ Gem::Specification.new do |s|
   s.version = Blacksmith::VERSION
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["MaestroDev"]
+  s.authors = ["MaestroDev", "Vox Pupuli"]
   s.date = Time.now.getutc.strftime "%Y-%m-%d"
   s.summary = "Tasks to manage Puppet module builds"
   s.description = "Puppet module tools for development and Puppet Forge management"
-  s.email = ["info@maestrodev.com"]
+  s.email = ["voxpupuli@groups.io"]
   s.homepage = "http://github.com/voxpupuli/puppet-blacksmith"
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.24"
-  s.required_ruby_version = '>= 2.0.0'
+  s.required_ruby_version = '>= 2.4.0'
 
   s.add_runtime_dependency 'rest-client', '~>2.0'
   s.add_development_dependency 'rake'
