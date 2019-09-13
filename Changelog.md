@@ -1,5 +1,18 @@
 # Changelog
 
+## 5.0.0
+
+Note: The gemspec got updated to require at least Ruby 2.4 or newer. Older
+versions are end of life and unsupported.
+
+* Add note about clearing the rake task cache
+* Add support for Artifactory uploads
+* Update the maximum allows puppet versions
+* Update description for module:release task
+* Factor out uploading to separate functions
+* Handle RC versions while patching
+* Improve testing code
+
 ## 4.1.2
 
 * Fix an incorrect checksum on rubygems
