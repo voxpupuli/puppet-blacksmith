@@ -58,7 +58,7 @@ module Blacksmith
         RestClient::Request.execute(:method => :post, :url => http_url(author, name, file), :payload => {:file => File.new(file, 'rb')}, :headers => http_headers)
       end
     rescue RestClient::Exception => e
-      raise Blacksmith::Error, "Error uploading #{package} to the forge #{url} [#{e.message}]: #{e.response}"
+      raise Blacksmith::Error, "Error uploading #{file} to the forge #{url} [#{e.message}]: #{e.response}"
     end
 
     def http_url(author, name, file)
