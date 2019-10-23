@@ -51,14 +51,15 @@ module Blacksmith
     private
 
     def upload(author, name, file)
+      url = http_url(author, name, file)
       case forge_type
       when FORGE_TYPE_ARTIFACTORY
-        RestClient::Request.execute(:method => :put, :url => http_url(author, name, file), :payload => File.new(file, 'rb'), :headers => http_headers)
+        RestClient::Request.execute(:method => :put, :url => url, :payload => File.new(file, 'rb'), :headers => http_headers)
       else
-        RestClient::Request.execute(:method => :post, :url => http_url(author, name, file), :payload => {:file => File.new(file, 'rb')}, :headers => http_headers)
+        RestClient::Request.execute(:method => :post, :url => url, :payload => {:file => File.new(file, 'rb')}, :headers => http_headers)
       end
     rescue RestClient::Exception => e
-      raise Blacksmith::Error, "Error uploading #{package} to the forge #{url} [#{e.message}]: #{e.response}"
+      raise Blacksmith::Error, "Error uploading #{name} to the forge #{url} [#{e.message}]: #{e.response}"
     end
 
     def http_url(author, name, file)
