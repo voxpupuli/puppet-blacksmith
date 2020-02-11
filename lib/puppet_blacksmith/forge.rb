@@ -15,12 +15,13 @@ module Blacksmith
     DEFAULT_CREDENTIALS = { 'url' => PUPPETLABS_FORGE, 'forge_type' => FORGE_TYPE_PUPPET }
     HEADERS = { 'User-Agent' => "Blacksmith/#{Blacksmith::VERSION} Ruby/#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL} (#{RUBY_RELEASE_DATE}; #{RUBY_PLATFORM})" }
 
-    attr_accessor :username, :password, :url, :client_id, :client_secret, :forge_type, :token
+    attr_accessor :username, :password, :url, :client_id, :client_secret, :forge_type, :token, :api_key
 
-    def initialize(username = nil, password = nil, url = nil, forge_type = nil, token = nil)
+    def initialize(username = nil, password = nil, url = nil, forge_type = nil, token = nil, api_key = nil)
       self.username = username
       self.password = password
       self.token = token
+      self.api_key = api_key
       RestClient.proxy = ENV['http_proxy']
       load_credentials
       load_client_credentials_from_file
@@ -74,7 +75,9 @@ module Blacksmith
     def http_headers
       case forge_type
       when FORGE_TYPE_ARTIFACTORY
-        if token
+        if api_key
+          HEADERS.merge({'X-JFrog-Art-Api' => api_key})
+        elsif token
           HEADERS.merge({'Authorization' => "Bearer #{token}"})
         else
           HEADERS.merge({'Authorization' => "Basic " + Base64.strict_encode64("#{username}:#{password}")})
@@ -110,6 +113,7 @@ module Blacksmith
       self.username = credentials['username'] if credentials['username']
       self.password = credentials['password'] if credentials['password']
       self.token = credentials['token'] if credentials['token']
+      self.api_key = credentials['api_key'] if credentials['api_key']
       if credentials['forge']
         # deprecated
         puts "'forge' entry is deprecated in .puppetforge.yml, use 'url'"
@@ -118,7 +122,7 @@ module Blacksmith
       self.url = credentials['url'] if credentials['url']
       self.forge_type = credentials['forge_type'] if credentials['forge_type']
 
-      unless (self.username && self.password) || self.token
+      unless (self.username && self.password) || self.token || self.api_key
         raise Blacksmith::Error, <<-eos
 Could not find Puppet Forge credentials!
 
@@ -128,6 +132,7 @@ BLACKSMITH_FORGE_TYPE
 BLACKSMITH_FORGE_USERNAME
 BLACKSMITH_FORGE_PASSWORD
 BLACKSMITH_FORGE_TOKEN
+BLACKSMITH_FORGE_API_KEY
 
 or create the file '#{CREDENTIALS_FILE_PROJECT}' or '#{CREDENTIALS_FILE_HOME}'
 with content similiar to:
@@ -179,6 +184,10 @@ password: mypassword
 
       if ENV['BLACKSMITH_FORGE_TOKEN']
         credentials['token'] = ENV['BLACKSMITH_FORGE_TOKEN']
+      end
+
+      if ENV['BLACKSMITH_FORGE_API_KEY']
+        credentials['api_key'] = ENV['BLACKSMITH_FORGE_API_KEY']
       end
 
       return credentials
