@@ -113,7 +113,7 @@ Alternatively to username and password, artifactory allows to use a API Key obta
     forge_type: artifactory
     api_key: myAPIkey
 
-Or via environment variable:
+Or via an environment variable:
 
     export BLACKSMITH_FORGE_API_KEY=myAPIkey
 
