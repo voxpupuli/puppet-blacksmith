@@ -115,7 +115,7 @@ Alternatively to username and password, artifactory allows to use a API Key obta
 
 Or via environment variable:
 
-    export BLACKSMITH_FORGE_API_KEY=https://artifactory.example.com
+    export BLACKSMITH_FORGE_API_KEY=myAPIkey
 
 # Customizing tasks
 
