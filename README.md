@@ -63,22 +63,7 @@ Bump your `metadata.json` to the next version
 
     $ rake module:bump
 
-### Push a module to the Puppet Forge
-
-Configure your credentials in `~/.puppetforge.yml`
-
-    ---
-    url: https://forgeapi.puppetlabs.com
-    username: myuser
-    password: mypassword
-
-
-Or set the equivalent environment variables in your shell
-
-    export BLACKSMITH_FORGE_URL=https://forgeapi.puppetlabs.com
-    export BLACKSMITH_FORGE_USERNAME=myuser
-    export BLACKSMITH_FORGE_PASSWORD=mypassword
-
+### Push a module to a repository
 
 Add the require instructions for blacksmith and the puppetlabs_spec_helper to the Rakefile
 
@@ -89,6 +74,48 @@ Add the require instructions for blacksmith and the puppetlabs_spec_helper to th
 Run rake. Ensure you are doing it in a clean working folder or the puppet module tool will package all the unnecessary files.
 
     $ rake module:push
+
+#### Configuring to push a module to the Puppet Forge
+
+Configure your credentials in `~/.puppetforge.yml`
+
+    ---
+    username: myuser
+    password: mypassword
+
+
+Or set the equivalent environment variables in your shell
+
+    export BLACKSMITH_FORGE_USERNAME=myuser
+    export BLACKSMITH_FORGE_PASSWORD=mypassword
+
+#### Configuring to push a module to a JFrog Artifactory
+
+Configure your credentials in `~/.puppetforge.yml` or within the project's root directory in `./puppetforge.yml`
+
+    ---
+    url: https://artifactory.example.com
+    forge_type: artifactory
+    username: myuser
+    password: mypassword
+
+Or set the equivalent environment variables in your shell
+
+    export BLACKSMITH_FORGE_URL=https://artifactory.example.com
+    export BLACKSMITH_FORGE_TYPE=artifactory
+    export BLACKSMITH_FORGE_USERNAME=myuser
+    export BLACKSMITH_FORGE_PASSWORD=mypassword
+
+Alternatively to username and password, Artifactory supports using an API Key obtained from its front-end. This can be set in the `puppetforge.yml`
+
+    ---
+    url: https://artifactory.example.com
+    forge_type: artifactory
+    api_key: myAPIkey
+
+Or via an environment variable:
+
+    export BLACKSMITH_FORGE_API_KEY=myAPIkey
 
 # Customizing tasks
 
