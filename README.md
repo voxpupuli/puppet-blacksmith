@@ -63,7 +63,19 @@ Bump your `metadata.json` to the next version
 
     $ rake module:bump
 
-### Push a module to the Puppet Forge
+### Push a module to a repository
+
+Add the require instructions for blacksmith and the puppetlabs_spec_helper to the Rakefile
+
+    # Rakefile
+    require 'puppetlabs_spec_helper/rake_tasks'
+    require 'puppet_blacksmith/rake_tasks'
+
+Run rake. Ensure you are doing it in a clean working folder or the puppet module tool will package all the unnecessary files.
+
+    $ rake module:push
+
+#### Configuring to push a module to the Puppet Forge
 
 Configure your credentials in `~/.puppetforge.yml`
 
@@ -79,16 +91,33 @@ Or set the equivalent environment variables in your shell
     export BLACKSMITH_FORGE_USERNAME=myuser
     export BLACKSMITH_FORGE_PASSWORD=mypassword
 
+#### Configuring to push a module to a JFrog Artifactory
 
-Add the require instructions for blacksmith and the puppetlabs_spec_helper to the Rakefile
+Configure your credentials in `~/.puppetforge.yml` or within the project's root directory in `./puppetforge.yml`
 
-    # Rakefile
-    require 'puppetlabs_spec_helper/rake_tasks'
-    require 'puppet_blacksmith/rake_tasks'
+    ---
+    url: https://artifactory.example.com
+    forge_type: artifactory
+    username: myuser
+    password: mypassword
 
-Run rake. Ensure you are doing it in a clean working folder or the puppet module tool will package all the unnecessary files.
+Or set the equivalent environment variables in your shell
 
-    $ rake module:push
+    export BLACKSMITH_FORGE_URL=https://artifactory.example.com
+    export BLACKSMITH_FORGE_TYPE=artifactory
+    export BLACKSMITH_FORGE_USERNAME=myuser
+    export BLACKSMITH_FORGE_PASSWORD=mypassword
+
+Alternatively to username and password, artifactory allows to use a API Key obtained from its front-end. This can be set in the `puppetforge.yml`
+
+    ---
+    url: https://artifactory.example.com
+    forge_type: artifactory
+    api_key: myAPIkey
+
+Or via environment variable:
+
+    export BLACKSMITH_FORGE_API_KEY=https://artifactory.example.com
 
 # Customizing tasks
 
