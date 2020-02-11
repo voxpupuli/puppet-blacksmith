@@ -80,14 +80,12 @@ Run rake. Ensure you are doing it in a clean working folder or the puppet module
 Configure your credentials in `~/.puppetforge.yml`
 
     ---
-    url: https://forgeapi.puppetlabs.com
     username: myuser
     password: mypassword
 
 
 Or set the equivalent environment variables in your shell
 
-    export BLACKSMITH_FORGE_URL=https://forgeapi.puppetlabs.com
     export BLACKSMITH_FORGE_USERNAME=myuser
     export BLACKSMITH_FORGE_PASSWORD=mypassword
 
