@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.1.0
+
+* Enable Artifactory access via API key. This provides an additional authentication mechanism besides a password
+* Remove outdated variable reference. This fixes a regression in Artifactory upload exception handling
+
 ## 5.0.0
 
 Note: The gemspec got updated to require at least Ruby 2.4 or newer. Older
