@@ -10,9 +10,9 @@ describe 'Blacksmith::Git' do
   before do
     FileUtils.rm_rf path
     FileUtils.mkdir_p(path)
-    `git init #{path}`
+    `git init '#{path}'`
     FileUtils.touch(File.join(path, metadata_file))
-    `cd #{path} && git add #{metadata_file} && git commit -am "Init"`
+    `cd '#{path}' && git add #{metadata_file} && git commit -am "Init"`
   end
 
   shared_examples_for :git do
@@ -47,7 +47,7 @@ describe 'Blacksmith::Git' do
       context 'basic tag' do
         before { subject.tag!(version) }
         it "should have the tag" do
-          out = `cd #{path} && git tag`
+          out = `cd '#{path}' && git tag`
           expect(out.chomp).to match(/^v1.0.0$/)
         end
       end

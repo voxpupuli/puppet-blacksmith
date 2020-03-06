@@ -32,6 +32,6 @@ RSpec.shared_context "forge" do
     File.open(File.join(target, "metadata.json"),"w") do |file|
       file.write(JSON.pretty_generate(metadata))
     end
-    `cd #{target}/..; tar -czf #{module_name}.tar.gz #{module_name}`
+    `cd '#{target}/..'; tar -czf #{module_name}.tar.gz #{module_name}`
   end
 end
