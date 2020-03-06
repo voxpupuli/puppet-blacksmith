@@ -3,3 +3,7 @@ pkg/
 tmp/
 .bundle/
 .rspec
+*.tar.gz
+.ruby-gemset
+.ruby-version
+*.code-workspace
