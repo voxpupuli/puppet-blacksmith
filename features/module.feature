@@ -1,10 +1,9 @@
 Feature: module
-  puppet-blacksmith needs to work well with puppetlabs_spec_helper
+  puppet-blacksmith needs to build a module
 
   Scenario: Building a module with metadata.json
     Given a file named "Rakefile" with:
     """
-    require 'puppetlabs_spec_helper/rake_tasks'
     require "#{__dir__}/../../lib/puppet_blacksmith/rake_tasks"
     """
     And a file named "metadata.json" with:
@@ -42,6 +41,6 @@ Feature: module
       ]
     }
     """
-    When I run `rake build`
+    When I run `rake module:build`
     Then the exit status should be 0
     And a file named "pkg/maestrodev-test-1.0.0.tar.gz" should exist

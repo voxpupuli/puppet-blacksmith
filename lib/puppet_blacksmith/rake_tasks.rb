@@ -30,6 +30,7 @@ module Blacksmith
 
       # clear any (auto-)pre-existing task
       [
+        :build,
         :bump,
         'bump:major',
         'bump:minor',
@@ -55,6 +56,14 @@ module Blacksmith
       end
 
       namespace :module do
+
+        desc 'Build the module using puppet-modulebuilder'
+        task :build do
+          require 'puppet/modulebuilder'
+          builder = Puppet::Modulebuilder::Builder.new(Dir.pwd, nil, nil)
+          package_file = builder.build
+          puts "Built #{package_file}"
+        end
 
         namespace :bump do
           [:major, :minor, :patch, :full].each do |level|
@@ -126,7 +135,7 @@ module Blacksmith
         end
 
         desc "Push module to the Puppet Forge"
-        task :push => :build do
+        task :push => :'module:build' do
           m = Blacksmith::Modulefile.new
           forge = Blacksmith::Forge.new
           puts "Uploading to Puppet Forge #{m.author}/#{m.name}"
@@ -140,7 +149,7 @@ module Blacksmith
         end
 
         desc "Release the Puppet module, doing a clean, build, bump_commit, tag, push and git push."
-        release_dependencies = @build ? [:clean, :build, :bump_commit, :tag, :push] : [:clean, :bump_commit, :tag]
+        release_dependencies = @build ? [:clean, :'module:build', :bump_commit, :tag, :push] : [:clean, :bump_commit, :tag]
         task :release => release_dependencies do
           puts "Pushing to remote git repo"
           git.push!

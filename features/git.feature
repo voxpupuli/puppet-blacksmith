@@ -9,7 +9,6 @@ Feature: git
     Then the output should not match /^v1\.0\.1$/
     Given a file named "Rakefile" with:
     """
-    require 'puppetlabs_spec_helper/rake_tasks'
     require "#{__dir__}/../../lib/puppet_blacksmith/rake_tasks"
     """
     And a file named "metadata.json" with:
@@ -50,7 +49,6 @@ Feature: git
     Then the output should not match /^v1\.0\.1$/
     Given a file named "Rakefile" with:
     """
-    require 'puppetlabs_spec_helper/rake_tasks'
     require "#{__dir__}/../../../lib/puppet_blacksmith/rake_tasks"
     """
     And a file named "metadata.json" with:
@@ -87,7 +85,6 @@ Feature: git
     Then the output should not match /^1\.0\.1$/
     Given a file named "Rakefile" with:
     """
-    require 'puppetlabs_spec_helper/rake_tasks'
     require "#{__dir__}/../../lib/puppet_blacksmith/rake_tasks"
     Blacksmith::RakeTask.new do |t|
       t.tag_pattern = "%s"

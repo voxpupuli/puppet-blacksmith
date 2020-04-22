@@ -4,7 +4,6 @@ Feature: update_version
   Scenario: Bumping a module version when using metadata.json
     Given a file named "Rakefile" with:
     """
-    require 'puppetlabs_spec_helper/rake_tasks'
     require "#{__dir__}/../../lib/puppet_blacksmith/rake_tasks"
     """
     And a file named "metadata.json" with:
@@ -81,7 +80,6 @@ Feature: update_version
   Scenario: Bumping a module patch version when using metadata.json
     Given a file named "Rakefile" with:
     """
-    require 'puppetlabs_spec_helper/rake_tasks'
     require "#{__dir__}/../../lib/puppet_blacksmith/rake_tasks"
     """
     And a file named "metadata.json" with:
@@ -158,7 +156,6 @@ Feature: update_version
   Scenario: Bumping a module minor version when using metadata.json
     Given a file named "Rakefile" with:
     """
-    require 'puppetlabs_spec_helper/rake_tasks'
     require "#{__dir__}/../../lib/puppet_blacksmith/rake_tasks"
     """
     And a file named "metadata.json" with:
@@ -235,7 +232,6 @@ Feature: update_version
   Scenario: Bumping a module major version when using metadata.json
     Given a file named "Rakefile" with:
     """
-    require 'puppetlabs_spec_helper/rake_tasks'
     require "#{__dir__}/../../lib/puppet_blacksmith/rake_tasks"
     """
     And a file named "metadata.json" with:
@@ -312,7 +308,6 @@ Feature: update_version
     Scenario: Bumping to exact module version when using metadata.json
       Given a file named "Rakefile" with:
       """
-      require 'puppetlabs_spec_helper/rake_tasks'
       require "#{__dir__}/../../lib/puppet_blacksmith/rake_tasks"
       """
       And I set the environment variables to:
@@ -392,7 +387,6 @@ Feature: update_version
       Scenario: Bumping to exact module version but not setting the environment variable when using metadata.json
         Given a file named "Rakefile" with:
         """
-        require 'puppetlabs_spec_helper/rake_tasks'
         require "#{__dir__}/../../lib/puppet_blacksmith/rake_tasks"
         """
         And a file named "metadata.json" with:

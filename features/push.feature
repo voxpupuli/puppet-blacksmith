@@ -5,7 +5,6 @@ Feature: push
   Scenario: Pushing a module
     Given a file named "Rakefile" with:
     """
-    require 'puppetlabs_spec_helper/rake_tasks'
     require "#{__dir__}/../../lib/puppet_blacksmith/rake_tasks"
     """
     And a file named "metadata.json" with:

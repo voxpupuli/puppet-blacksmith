@@ -20,7 +20,6 @@ $ gem install puppet-blacksmith
 Add to your Rakefile
 
 ```ruby
-require 'puppetlabs_spec_helper/rake_tasks' # needed for some module packaging tasks
 require 'puppet_blacksmith/rake_tasks'
 ```
 
@@ -33,6 +32,7 @@ Rake tasks included:
 
 | task               | description |
 | ------------------ | ----------- |
+| module:build       | Build the module using puppet-modulebuilder |
 | module:bump        | Bump module version to the next patch |
 | module:bump:patch  | Bump module version to the next patch |
 | module:bump:minor  | Bump module version to the next minor version |
@@ -73,15 +73,7 @@ $ rake module:bump
 
 ### Push a module to a repository
 
-Add the require instructions for blacksmith and the puppetlabs_spec_helper to the Rakefile
-
-```ruby
-# Rakefile
-require 'puppetlabs_spec_helper/rake_tasks'
-require 'puppet_blacksmith/rake_tasks'
-```
-
-Run rake. Ensure you are doing it in a clean working folder or the puppet module tool will package all the unnecessary files.
+Run rake. Ensure you are doing it in a clean working folder or the puppet module builder will package all the unnecessary files.
 
 ```console
 $ rake module:push
