@@ -9,7 +9,7 @@ Feature: git
     Given a file named "Rakefile" with:
     """
     require 'puppetlabs_spec_helper/rake_tasks'
-    require "#{File.dirname(__FILE__)}/../../lib/puppet_blacksmith/rake_tasks"
+    require "#{__dir__}/../../lib/puppet_blacksmith/rake_tasks"
     """
     And a file named "metadata.json" with:
     """
@@ -48,7 +48,7 @@ Feature: git
     Given a file named "Rakefile" with:
     """
     require 'puppetlabs_spec_helper/rake_tasks'
-    require "#{File.dirname(__FILE__)}/../../../lib/puppet_blacksmith/rake_tasks"
+    require "#{__dir__}/../../../lib/puppet_blacksmith/rake_tasks"
     """
     And a file named "metadata.json" with:
     """
@@ -83,7 +83,7 @@ Feature: git
     Given a file named "Rakefile" with:
     """
     require 'puppetlabs_spec_helper/rake_tasks'
-    require "#{File.dirname(__FILE__)}/../../lib/puppet_blacksmith/rake_tasks"
+    require "#{__dir__}/../../lib/puppet_blacksmith/rake_tasks"
     Blacksmith::RakeTask.new do |t|
       t.tag_pattern = "%s"
       t.tag_message_pattern = "Version %s"

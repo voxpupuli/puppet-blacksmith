@@ -15,9 +15,9 @@ RSpec.shared_context "forge" do
   let(:module_name) { "test" }
   let(:version) { "1.0.0" }
   let(:module_name) { "maestrodev-test" }
-  let(:spec_data) { File.join(File.dirname(__FILE__), '/../data') }
+  let(:spec_data) { File.join(__dir__, '..', 'data') }
   let(:spec_module) { File.join(spec_data, module_name) }
-  let(:target) { File.expand_path(File.join(__FILE__, "../../..", "pkg", module_name)) }
+  let(:target) { File.expand_path(File.join(__dir__, "..", "..", "pkg", module_name)) }
   let(:package) { "#{target}.tar.gz" }
 
   let(:headers) { { 'User-Agent' => %r{^Blacksmith/#{Blacksmith::VERSION} Ruby/.* \(.*\)$} } }
