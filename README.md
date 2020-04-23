@@ -13,12 +13,16 @@ Ruby Gem with several Puppet Module utilities
 
 Install the gem
 
-	gem install puppet-blacksmith
+```console
+$ gem install puppet-blacksmith
+```
 
 Add to your Rakefile
 
-    require 'puppetlabs_spec_helper/rake_tasks' # needed for some module packaging tasks
-    require 'puppet_blacksmith/rake_tasks'
+```ruby
+require 'puppetlabs_spec_helper/rake_tasks' # needed for some module packaging tasks
+require 'puppet_blacksmith/rake_tasks'
+```
 
 And you can start using the Rake tasks. Note that you might have to delete `.rake_t_cache`
 before the tasks appear in the output of `rake -T`.
@@ -55,95 +59,120 @@ Rake tasks included:
 
 Do everything needed to push to the Forge with just one command
 
-    $ rake module:release
+```console
+$ rake module:release
+```
 
 ### Bump the version of a module
 
 Bump your `metadata.json` to the next version
 
-    $ rake module:bump
+```console
+$ rake module:bump
+```
 
 ### Push a module to a repository
 
 Add the require instructions for blacksmith and the puppetlabs_spec_helper to the Rakefile
 
-    # Rakefile
-    require 'puppetlabs_spec_helper/rake_tasks'
-    require 'puppet_blacksmith/rake_tasks'
+```ruby
+# Rakefile
+require 'puppetlabs_spec_helper/rake_tasks'
+require 'puppet_blacksmith/rake_tasks'
+```
 
 Run rake. Ensure you are doing it in a clean working folder or the puppet module tool will package all the unnecessary files.
 
-    $ rake module:push
+```console
+$ rake module:push
+```
 
 #### Configuring to push a module to the Puppet Forge
 
 Configure your credentials in `~/.puppetforge.yml`
 
-    ---
-    username: myuser
-    password: mypassword
-
+```yaml
+---
+username: myuser
+password: mypassword
+```
 
 Or set the equivalent environment variables in your shell
 
-    export BLACKSMITH_FORGE_USERNAME=myuser
-    export BLACKSMITH_FORGE_PASSWORD=mypassword
+```bash
+export BLACKSMITH_FORGE_USERNAME=myuser
+export BLACKSMITH_FORGE_PASSWORD=mypassword
+```
 
 #### Configuring to push a module to a JFrog Artifactory
 
 Configure your credentials in `~/.puppetforge.yml` or within the project's root directory in `./puppetforge.yml`
 
-    ---
-    url: https://artifactory.example.com
-    forge_type: artifactory
-    username: myuser
-    password: mypassword
+```yaml
+---
+url: https://artifactory.example.com
+forge_type: artifactory
+username: myuser
+password: mypassword
+```
 
 Or set the equivalent environment variables in your shell
 
-    export BLACKSMITH_FORGE_URL=https://artifactory.example.com
-    export BLACKSMITH_FORGE_TYPE=artifactory
-    export BLACKSMITH_FORGE_USERNAME=myuser
-    export BLACKSMITH_FORGE_PASSWORD=mypassword
+```bash
+export BLACKSMITH_FORGE_URL=https://artifactory.example.com
+export BLACKSMITH_FORGE_TYPE=artifactory
+export BLACKSMITH_FORGE_USERNAME=myuser
+export BLACKSMITH_FORGE_PASSWORD=mypassword
+```
 
 Alternatively to username and password, Artifactory supports using an API Key obtained from its front-end. This can be set in the `puppetforge.yml`
 
-    ---
-    url: https://artifactory.example.com
-    forge_type: artifactory
-    api_key: myAPIkey
+```yaml
+---
+url: https://artifactory.example.com
+forge_type: artifactory
+api_key: myAPIkey
+````
 
 Or via an environment variable:
 
-    export BLACKSMITH_FORGE_API_KEY=myAPIkey
+```bash
+export BLACKSMITH_FORGE_API_KEY=myAPIkey
+```
 
 # Customizing tasks
 
 In your Rakefile:
 
-    require 'puppetlabs_spec_helper/rake_tasks'
-    require 'puppet_blacksmith/rake_tasks'
-    Blacksmith::RakeTask.new do |t|
-      t.tag_pattern = "v%s" # Use a custom pattern with git tag. %s is replaced with the version number.
-      t.build = false # do not build the module nor push it to the Forge, just do the tagging [:clean, :tag, :bump_commit]
-    end
+```ruby
+require 'puppet_blacksmith/rake_tasks'
+Blacksmith::RakeTask.new do |t|
+  t.tag_pattern = "v%s" # Use a custom pattern with git tag. %s is replaced with the version number.
+  t.build = false # do not build the module nor push it to the Forge, just do the tagging [:clean, :tag, :bump_commit]
+end
+````
 
 # GPG signed tags
 
 In your Rakefile:
 
-    require 'puppetlabs_spec_helper/rake_tasks'
-    require 'puppet_blacksmith/rake_tasks'
-    Blacksmith::RakeTask.new do |t|
-      t.tag_message_pattern = "Version %s" # Signed tags must have a message
-      t.tag_sign = true # enable GPG signing
-    end
+```ruby
+require 'puppet_blacksmith/rake_tasks'
+Blacksmith::RakeTask.new do |t|
+  t.tag_message_pattern = "Version %s" # Signed tags must have a message
+  t.tag_sign = true # enable GPG signing
+end
+```
 
 # Building blacksmith
 
-    bundle install
-    bundle exec rake
+```bash
+bundle install
+bundle exec rake
+```
 
 To cut a release: builds the gem, tags with git, pushes to rubygems and bumps the version number
 
-    bundle exec rake module:release
+```bash
+bundle exec rake module:release
+```
