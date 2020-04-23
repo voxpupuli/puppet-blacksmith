@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Blacksmith::Git' do
 
   subject { Blacksmith::Git.new(path) }
-  let(:path) { File.expand_path(File.join(File.dirname(__FILE__), '../../tmp/git_test')) }
+  let(:path) { File.expand_path(File.join(__dir__, '../../tmp/git_test')) }
   let(:version) { '1.0.0' }
   let(:metadata_file) { "metadata.json" }
 
