@@ -2,10 +2,10 @@ Feature: git
   puppet-blacksmith needs to commit and tag git sources
 
   Scenario: Tagging and commiting
-    Given I run `git clone https://github.com/maestrodev/puppet-test.git .`
-    And I run `git checkout -b test v1.0.0`
+    Given I run `git clone https://github.com/voxpupuli/puppet-blacksmith-integration-test .`
+    And I run `git checkout -b test v2.0.0`
     When I run `git tag`
-    Then the output should not match /^v1\.0\.1$/
+    Then the output should not match /^v2\.0\.1$/
     Given a file named "Rakefile" with:
     """
     require 'puppetlabs_spec_helper/rake_tasks'
@@ -14,8 +14,8 @@ Feature: git
     And a file named "metadata.json" with:
     """
     {
-      "name": "maestrodev-test",
-      "version": "1.0.1",
+      "name": "puppet-blacksmith-integration-test",
+      "version": "2.0.1",
       "dependencies": []
     }
     """
@@ -24,27 +24,27 @@ Feature: git
     And the file "metadata.json" should contain:
     """
     {
-      "name": "maestrodev-test",
-      "version": "1.0.2",
+      "name": "puppet-blacksmith-integration-test",
+      "version": "2.0.2",
       "dependencies": [
 
       ]
     }
     """
     When I run `git tag`
-    Then the output should match /^v1\.0\.1$/
+    Then the output should match /^v2\.0\.1$/
     When I run `git show --format=%s`
-    Then the output should match /^\[blacksmith\] Bump version to 1\.0\.2$/
+    Then the output should match /^\[blacksmith\] Bump version to 2\.0\.2$/
     When I run `git describe`
     Then the output should match /^fatal: No annotated tags can describe/
 
   Scenario: Tagging and commiting in a path with spaces
     Given a directory named "path with spaces"
     When I cd to "path with spaces"
-    Given I run `git clone https://github.com/maestrodev/puppet-test.git .`
-    And I run `git checkout -b test v1.0.0`
+    Given I run `git clone https://github.com/voxpupuli/puppet-blacksmith-integration-test .`
+    And I run `git checkout -b test v2.0.0`
     When I run `git tag`
-    Then the output should not match /^v1\.0\.1$/
+    Then the output should not match /^v2\.0\.1$/
     Given a file named "Rakefile" with:
     """
     require 'puppetlabs_spec_helper/rake_tasks'
@@ -53,8 +53,8 @@ Feature: git
     And a file named "metadata.json" with:
     """
     {
-      "name": "maestrodev-test",
-      "version": "1.0.1",
+      "name": "puppet-blacksmith-integration-test",
+      "version": "2.0.1",
       "dependencies": []
     }
     """
@@ -63,23 +63,23 @@ Feature: git
     And the file "metadata.json" should contain:
     """
     {
-      "name": "maestrodev-test",
-      "version": "1.0.2",
+      "name": "puppet-blacksmith-integration-test",
+      "version": "2.0.2",
       "dependencies": [
 
       ]
     }
     """
     When I run `git tag`
-    Then the output should match /^v1\.0\.1$/
+    Then the output should match /^v2\.0\.1$/
     When I run `git show --format=%s`
-    Then the output should match /^\[blacksmith\] Bump version to 1\.0\.2$/
+    Then the output should match /^\[blacksmith\] Bump version to 2\.0\.2$/
 
   Scenario: Tagging and commiting with custom patterns
-    Given I run `git clone https://github.com/maestrodev/puppet-test.git .`
-    And I run `git checkout -b test v1.0.0`
+    Given I run `git clone https://github.com/voxpupuli/puppet-blacksmith-integration-test .`
+    And I run `git checkout -b test v2.0.0`
     When I run `git tag`
-    Then the output should not match /^1\.0\.1$/
+    Then the output should not match /^2\.0\.1$/
     Given a file named "Rakefile" with:
     """
     require 'puppetlabs_spec_helper/rake_tasks'
@@ -93,8 +93,8 @@ Feature: git
     And a file named "metadata.json" with:
     """
     {
-      "name": "maestrodev-test",
-      "version": "1.0.1",
+      "name": "puppet-blacksmith-integration-test",
+      "version": "2.0.1",
       "dependencies": []
     }
     """
@@ -103,17 +103,17 @@ Feature: git
     And the file "metadata.json" should contain:
     """
     {
-      "name": "maestrodev-test",
-      "version": "1.0.2",
+      "name": "puppet-blacksmith-integration-test",
+      "version": "2.0.2",
       "dependencies": [
 
       ]
     }
     """
     When I run `git tag`
-    Then the output should match /^1\.0\.1$/
-    And the output should not match /^v1\.0\.1$/
+    Then the output should match /^2\.0\.1$/
+    And the output should not match /^v2\.0\.1$/
     When I run `git show --format=%s`
-    Then the output should match /^New version 1\.0\.2$/
+    Then the output should match /^New version 2\.0\.2$/
     When I run `git describe`
-    Then the output should match /^1\.0\.1$/
+    Then the output should match /^2\.0\.1$/
