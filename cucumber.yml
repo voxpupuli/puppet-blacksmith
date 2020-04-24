@@ -1,2 +1,2 @@
 ---
-default: --tags ~@skip
+default: --tags "not @skip"
