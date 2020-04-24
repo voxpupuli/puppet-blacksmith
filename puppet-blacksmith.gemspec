@@ -17,12 +17,11 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.required_ruby_version = '>= 2.4.0'
 
+  s.add_runtime_dependency 'puppet-modulebuilder', '~> 0.1'
   s.add_runtime_dependency 'rest-client', '~>2.0'
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'pdk', '>=1.17.0'
   s.add_development_dependency 'puppet', '>=2.7.16'
-  s.add_development_dependency 'puppetlabs_spec_helper'
   s.add_development_dependency 'cucumber'
   s.add_development_dependency 'aruba'
   s.add_development_dependency 'rspec', '>=3.0.0'

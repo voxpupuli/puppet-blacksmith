@@ -3,12 +3,12 @@ Feature: git
 
   Scenario: Tagging and commiting
     Given I run `git clone https://github.com/maestrodev/puppet-test.git .`
+    And I run `git config user.email "user@example.com"`
     And I run `git checkout -b test v1.0.0`
     When I run `git tag`
     Then the output should not match /^v1\.0\.1$/
     Given a file named "Rakefile" with:
     """
-    require 'puppetlabs_spec_helper/rake_tasks'
     require "#{__dir__}/../../lib/puppet_blacksmith/rake_tasks"
     """
     And a file named "metadata.json" with:
@@ -20,6 +20,7 @@ Feature: git
     }
     """
     When I run `rake module:tag module:bump_commit`
+    Then the output should not contain "rake aborted!"
     Then the exit status should be 0
     And the file "metadata.json" should contain:
     """
@@ -42,12 +43,12 @@ Feature: git
     Given a directory named "path with spaces"
     When I cd to "path with spaces"
     Given I run `git clone https://github.com/maestrodev/puppet-test.git .`
+    And I run `git config user.email "user@example.com"`
     And I run `git checkout -b test v1.0.0`
     When I run `git tag`
     Then the output should not match /^v1\.0\.1$/
     Given a file named "Rakefile" with:
     """
-    require 'puppetlabs_spec_helper/rake_tasks'
     require "#{__dir__}/../../../lib/puppet_blacksmith/rake_tasks"
     """
     And a file named "metadata.json" with:
@@ -59,6 +60,7 @@ Feature: git
     }
     """
     When I run `rake module:tag module:bump_commit`
+    Then the output should not contain "rake aborted!"
     Then the exit status should be 0
     And the file "metadata.json" should contain:
     """
@@ -77,12 +79,12 @@ Feature: git
 
   Scenario: Tagging and commiting with custom patterns
     Given I run `git clone https://github.com/maestrodev/puppet-test.git .`
+    And I run `git config user.email "user@example.com"`
     And I run `git checkout -b test v1.0.0`
     When I run `git tag`
     Then the output should not match /^1\.0\.1$/
     Given a file named "Rakefile" with:
     """
-    require 'puppetlabs_spec_helper/rake_tasks'
     require "#{__dir__}/../../lib/puppet_blacksmith/rake_tasks"
     Blacksmith::RakeTask.new do |t|
       t.tag_pattern = "%s"
@@ -99,6 +101,7 @@ Feature: git
     }
     """
     When I run `rake module:tag module:bump_commit`
+    Then the output should not contain "rake aborted!"
     Then the exit status should be 0
     And the file "metadata.json" should contain:
     """
