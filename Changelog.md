@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.0.0
+
+This module moves from [puppetlabs_spec_helper](https://github.com/puppetlabs/puppetlabs_spec_helper)'s `build` rake task to its own `module:build` task which uses [puppet-modulebuilder](https://github.com/puppetlabs/puppet-modulebuilder). This has the benefit that it no longer needs the Puppet face (Puppet < 6) or the PDK (Puppet >= 6) and becomes standalone.
+
+* Use puppet-modulebuilder to build modules
+
 ## 5.1.0
 
 * Enable Artifactory access via API key. This provides an additional authentication mechanism besides a password
