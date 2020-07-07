@@ -138,8 +138,8 @@ module Blacksmith
         task :push => :'module:build' do
           m = Blacksmith::Modulefile.new
           forge = Blacksmith::Forge.new
-          puts "Uploading to Puppet Forge #{m.author}/#{m.name}"
-          forge.push!(m.name, nil, m.author, m.version)
+          puts "Uploading to Puppet Forge #{m.namespace}/#{m.name}"
+          forge.push!(m.name, nil, m.namespace, m.version)
         end
 
         desc "Runs clean again"

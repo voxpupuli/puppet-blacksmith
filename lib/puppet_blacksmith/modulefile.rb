@@ -21,6 +21,9 @@ module Blacksmith
     def name
       metadata['name'].split('-',2)[1]
     end
+    def namespace
+      metadata['name'].split('-',2)[0]
+    end
     def author
       metadata['author'] || metadata['name'].split('-',2)[0]
     end
