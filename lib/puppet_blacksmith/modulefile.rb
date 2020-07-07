@@ -25,7 +25,7 @@ module Blacksmith
       metadata['name'].split('-',2)[0]
     end
     def author
-      metadata['author'] || metadata['name'].split('-',2)[0]
+      metadata['author'] || namespace
     end
     def version
       metadata['version']
