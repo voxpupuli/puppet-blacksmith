@@ -11,6 +11,32 @@ describe 'Blacksmith::Modulefile' do
     it { expect(subject.name).to eql("test") }
   end
 
+  context "using different author" do
+    let(:path) { "spec/data/metadata-different-author.json" }
+
+    subject { Blacksmith::Modulefile.new(path) }
+
+    it_behaves_like :metadata
+
+    describe "author and namespace" do
+      it { expect(subject.author).to eql("MaestroDev") }
+      it { expect(subject.namespace).to eql("maestrodev") }
+    end
+  end
+
+  context "using no author" do
+    let(:path) { "spec/data/metadata-no-author.json" }
+
+    subject { Blacksmith::Modulefile.new(path) }
+
+    it_behaves_like :metadata
+
+    describe "author and namespace" do
+      it { expect(subject.author).to eql("maestrodev") }
+      it { expect(subject.namespace).to eql("maestrodev") }
+    end
+  end
+
   context "using metadata.json" do
 
     it_behaves_like :metadata

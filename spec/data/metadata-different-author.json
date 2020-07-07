@@ -1,0 +1,36 @@
+{
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "4",
+        "5",
+        "6"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": "3.2.x"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": ">=2.7.20 <7.0.0"
+    }
+  ],
+  "name": "maestrodev-test",
+  "version": "1.0.0",
+  "source": "git://github.com/puppetlabs/puppetlabs-stdlib",
+  "author": "MaestroDev",
+  "license": "Apache 2.0",
+  "summary": "Puppet Module Standard Library",
+  "description": "Standard Library for Puppet Modules",
+  "project_page": "https://github.com/puppetlabs/puppetlabs-stdlib",
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 3.0.0"
+    }
+  ]
+}
