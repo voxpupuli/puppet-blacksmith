@@ -1,5 +1,15 @@
 # Changelog
 
+## 6.0.1
+
+* Drop old ruby code
+  * We had some code for Ruby 2.0 in the Gemfile. Since we require Ruby 2.4, we can drop the old code
+* Forge upload should always use namespace
+
+There is an author field in metadata.json, but `pdk build` always uses
+the module's namespace when building the tarball. Therefore, Blacksmith
+should do the same and not even use the author field.
+
 ## 6.0.0
 
 This module moves from [puppetlabs_spec_helper](https://github.com/puppetlabs/puppetlabs_spec_helper)'s `build` rake task to its own `module:build` task which uses [puppet-modulebuilder](https://github.com/puppetlabs/puppet-modulebuilder). This has the benefit that it no longer needs the Puppet face (Puppet < 6) or the PDK (Puppet >= 6) and becomes standalone.
