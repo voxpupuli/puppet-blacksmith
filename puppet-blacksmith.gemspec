@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.description = "Puppet module tools for development and Puppet Forge management"
   s.email = ["voxpupuli@groups.io"]
   s.homepage = "http://github.com/voxpupuli/puppet-blacksmith"
+  s.license = 'Apache-2.0'
   s.require_paths = ["lib"]
   s.required_ruby_version = '>= 2.4.0'
 
