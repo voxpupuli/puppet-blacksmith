@@ -1,11 +1,12 @@
 puppet-blacksmith
 =================
 
+[![License](https://img.shields.io/github/license/voxpupuli/puppet-blacksmith.svg)](https://github.com/voxpupuli/puppet-blacksmith/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/voxpupuli/puppet-blacksmith.svg?branch=master)](https://travis-ci.org/voxpupuli/puppet-blacksmith)
 
 Ruby Gem with several Puppet Module utilities
 
-![I don't always release my Puppet modules, but when I do I push them directly to the Forge](https://raw.github.com/maestrodev/puppet-blacksmith/gh-pages/dos-equis.jpg)
+![I don't always release my Puppet modules, but when I do I push them directly to the Forge](https://raw.github.com/voxpupuli/puppet-blacksmith/gh-pages/dos-equis.jpg)
 
 # Rake tasks
 
