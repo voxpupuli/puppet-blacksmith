@@ -118,7 +118,7 @@ export BLACKSMITH_FORGE_USERNAME=myuser
 export BLACKSMITH_FORGE_PASSWORD=mypassword
 ```
 
-Alternatively to username and password, Artifactory supports using an API Key obtained from its front-end. This can be set in the `puppetforge.yml`
+Alternatively to username and password, an API Key can be used and set in the `puppetforge.yml`. API keys are retrieved from the website, whether it's the Forge or Artifactory.
 
 ```yaml
 ---
