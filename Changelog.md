@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.1.0
+
+* Add support for Puppet Forge API keys
+* Add the full license text
+* Require puppet-modulebuilder ~> 0.2
+
 ## 6.0.1
 
 * Drop old ruby code
