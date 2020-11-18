@@ -60,7 +60,7 @@ module Blacksmith
         desc 'Build the module using puppet-modulebuilder'
         task :build do
           require 'puppet/modulebuilder'
-          builder = Puppet::Modulebuilder::Builder.new(Dir.pwd, nil, nil)
+          builder = Puppet::Modulebuilder::Builder.new(Dir.pwd)
           package_file = builder.build
           puts "Built #{package_file}"
         end
