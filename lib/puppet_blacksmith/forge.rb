@@ -83,7 +83,7 @@ module Blacksmith
           HEADERS.merge({'Authorization' => "Basic " + Base64.strict_encode64("#{username}:#{password}")})
         end
       else
-        HEADERS.merge({'Authorization' => "Bearer #{token || oauth_access_token}"})
+        HEADERS.merge({'Authorization' => "Bearer #{api_key || token || oauth_access_token}"})
       end
     end
 
