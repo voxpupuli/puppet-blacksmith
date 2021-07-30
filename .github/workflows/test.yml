@@ -1,0 +1,36 @@
+name: Test
+
+on:
+  - pull_request
+  - push
+
+env:
+  BUNDLE_WITHOUT: release
+
+jobs:
+  rspec:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - ruby: "2.4"
+          - ruby: "2.5"
+          - ruby: "2.6"
+          - ruby: "2.7"
+          - ruby: "3.0"
+            coverage: "yes"
+    env:
+      COVERAGE: ${{ matrix.coverage }}
+    name: RSpec - Ruby ${{ matrix.ruby }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Ruby ${{ matrix.ruby }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: spec tests
+        run: bundle exec rake
+      - name: Verify gem builds
+        run: gem build *.gemspec

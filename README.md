@@ -2,7 +2,12 @@ puppet-blacksmith
 =================
 
 [![License](https://img.shields.io/github/license/voxpupuli/puppet-blacksmith.svg)](https://github.com/voxpupuli/puppet-blacksmith/blob/master/LICENSE)
-[![Build Status](https://travis-ci.org/voxpupuli/puppet-blacksmith.svg?branch=master)](https://travis-ci.org/voxpupuli/puppet-blacksmith)
+[![Test](https://github.com/voxpupuli/puppet-blacksmith/actions/workflows/test.yml/badge.svg)](https://github.com/voxpupuli/puppet-blacksmith/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/voxpupuli/puppet-blacksmith/branch/master/graph/badge.svg)](https://codecov.io/gh/voxpupuli/puppet-blacksmith)
+[![Release](https://github.com/voxpupuli/puppet-blacksmith/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/puppet-blacksmith/actions/workflows/release.yml)
+[![RubyGem Version](https://img.shields.io/gem/v/puppet-blacksmith.svg)](https://rubygems.org/gems/puppet-blacksmith)
+[![RubyGem Downloads](https://img.shields.io/gem/dt/puppet-blacksmith.svg)](https://rubygems.org/gems/puppet-blacksmith)
+[![Donated by Carlos Sanchez](https://img.shields.io/badge/donated%20by-Carlos%20Sanchez-fb7047.svg)](#transfer-notice)
 
 Ruby Gem with several Puppet Module utilities
 
@@ -157,15 +162,31 @@ Blacksmith::RakeTask.new do |t|
 end
 ```
 
-# Building blacksmith
+# Testing blacksmith
 
 ```bash
 bundle install
 bundle exec rake
 ```
 
-To cut a release: builds the gem, tags with git, pushes to rubygems and bumps the version number
+## Transfer Notice
 
-```bash
-bundle exec rake module:release
-```
+This plugin was originally authored by [Carlos Sanchez](https://blog.csanchez.org/).
+The maintainer preferred that Vox Pupuli take ownership of the module for future improvement and maintenance.
+Existing pull requests and issues were transferred over, please fork and continue to contribute at https://github.com/voxpupuli/beaker-vmware
+
+Previously: https://github.com/puppetlabs/beaker-vmware
+
+## License
+
+This gem is licensed under the Apache-2 license.
+
+## Release information
+
+To make a new release, please do:
+* update the version in lib/puppet_blacksmith/version.rb
+* Install gems with `bundle install --with release --path .vendor`
+* generate the changelog with `bundle exec rake changelog`
+* Check if the new version matches the closed issues/PRs in the changelog
+* Create a PR with it
+* After it got merged, push a tag. GitHub actions will do the actual release to rubygems and GitHub Packages
