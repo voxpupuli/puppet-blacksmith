@@ -145,7 +145,14 @@ module Blacksmith
         desc "Runs clean again"
         task :clean do
           puts "Cleaning for module build"
-          Rake::Task["clean"].execute
+          if Rake::Task::task_defined?(:clean)
+            Rake::Task["clean"].execute
+          else
+            # identical to the clean task in puppetlabs_spec_helper on 2021-07-30
+            # https://github.com/puppetlabs/puppetlabs_spec_helper/blob/24d7b21280a26cc682146839f41dbf1c0793e494/lib/puppetlabs_spec_helper/rake_tasks.rb#L165-L168
+            require 'fileutils'
+            FileUtils.rm_rf('pkg/')
+          end
         end
 
         desc "Release the Puppet module, doing a clean, build, bump_commit, tag, push and git push."
