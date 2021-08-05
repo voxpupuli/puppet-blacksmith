@@ -7,3 +7,4 @@ tmp/
 .ruby-gemset
 .ruby-version
 *.code-workspace
+.vendor/
