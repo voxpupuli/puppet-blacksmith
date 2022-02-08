@@ -87,20 +87,19 @@ $ rake module:push
 
 #### Configuring to push a module to the Puppet Forge
 
-Configure your credentials in `~/.puppetforge.yml`
+Configure your credentials in `~/.puppetforge.yml`. You will need to generate a Forge API key on your user profile page.
 
 ```yaml
 ---
-username: myuser
-password: mypassword
+api_key: myAPIkey
 ```
 
-Or set the equivalent environment variables in your shell
+Or set the equivalent environment variable in your shell
 
 ```bash
-export BLACKSMITH_FORGE_USERNAME=myuser
-export BLACKSMITH_FORGE_PASSWORD=mypassword
+export BLACKSMITH_FORGE_API_KEY=myAPIkey
 ```
+
 
 #### Configuring to push a module to a JFrog Artifactory
 
@@ -123,7 +122,7 @@ export BLACKSMITH_FORGE_USERNAME=myuser
 export BLACKSMITH_FORGE_PASSWORD=mypassword
 ```
 
-Alternatively to username and password, an API Key can be used and set in the `puppetforge.yml`. API keys are retrieved from the website, whether it's the Forge or Artifactory.
+Alternatively, you can generate an API Key on the Artifactory profile page and us that in `puppetforge.yml`.
 
 ```yaml
 ---
