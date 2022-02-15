@@ -67,7 +67,7 @@ module Blacksmith
       when FORGE_TYPE_ARTIFACTORY
         "#{url}/#{author}/#{name}/#{File.basename(file)}"
       else
-        "#{url}/v2/releases"
+        "#{url}/v3/releases"
       end
     end
 

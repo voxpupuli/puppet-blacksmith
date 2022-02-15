@@ -69,7 +69,7 @@ describe 'Blacksmith::Forge' do
 
     context "when using a Forge API key" do
       before do
-        stub_request(:post, "#{forge}/v2/releases").with(
+        stub_request(:post, "#{forge}/v3/releases").with(
             :headers => headers.merge({'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer e52f78b62e97cb8d8db6659a73aa522cca0f5c74d4714e0ed0bdd10000000000', 'Content-Type'=>%r{\Amultipart/form-data;}})
           ) { |request |
             request.body =~ %r{Content-Disposition: form-data; name=\"file\"; filename=\"maestrodev-test.tar.gz\"\r\nContent-Type: application/gzip}
