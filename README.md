@@ -87,7 +87,8 @@ $ rake module:push
 
 #### Configuring to push a module to the Puppet Forge
 
-Configure your credentials in `~/.puppetforge.yml`. You will need to generate a Forge API key on your user profile page.
+Configure your credentials in `~/.puppetforge.yml`. Forge API keys may be created and revoked from a user's
+profile on the [Forge website](https://forge.puppet.com/), where other profile details are managed.
 
 ```yaml
 ---
