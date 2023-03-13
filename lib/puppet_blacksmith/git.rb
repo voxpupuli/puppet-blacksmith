@@ -51,7 +51,7 @@ module Blacksmith
     end
 
     def commit_modulefile!(version)
-      files = Blacksmith::Modulefile::FILES.select {|f| File.exists?(File.join(@path,f))}
+      files = Blacksmith::Modulefile::FILES.select {|f| File.exist?(File.join(@path,f))}
       message = commit_message_pattern % version
       s = exec_git ["add"] + files
       s += exec_git ["commit", "-m", message]
