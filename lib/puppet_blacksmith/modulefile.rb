@@ -8,7 +8,7 @@ module Blacksmith
     attr_reader :path
 
     def initialize(path = nil)
-      @path = path.nil? ? FILES.find {|f| File.exists? f} : path
+      @path = path.nil? ? FILES.find {|f| File.exist? f} : path
       raise Blacksmith::Error, "Unable to find any of #{FILES}" unless @path
     end
 
