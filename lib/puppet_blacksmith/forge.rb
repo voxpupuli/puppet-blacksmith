@@ -44,7 +44,7 @@ module Blacksmith
         raise Errno::ENOENT, "File not found in #{pkg} with regex #{regex}" if f.nil?
         package = File.join(pkg, f)
       end
-      raise Errno::ENOENT, "File does not exist: #{package}" unless File.exists?(package)
+      raise Errno::ENOENT, "File does not exist: #{package}" unless File.exist?(package)
 
       upload(user, name, package)
     end
@@ -151,7 +151,7 @@ password: mypassword
           File.join(Dir.pwd, CREDENTIALS_FILE_PROJECT),
           File.expand_path(CREDENTIALS_FILE_HOME)
       ]
-                             .select { |file| File.exists?(file) }
+                             .select { |file| File.exist?(file) }
                              .first
 
       if credentials_file

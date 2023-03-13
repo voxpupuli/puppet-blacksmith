@@ -20,10 +20,10 @@ describe 'Blacksmith::Forge' do
     it 'prefers env vars to file values' do
       stubbed_forge_password = 'asdf1234'
 
-      allow(File).to receive(:exists?).
+      allow(File).to receive(:exist?).
                       with('/home/mr_puppet/puppet-some-module/.puppetforge.yml').
                       and_return(false)
-      allow(File).to receive(:exists?).
+      allow(File).to receive(:exist?).
                       with('/home/mr_puppet/.puppetforge.yml').
                       and_return(true)
       allow(YAML).to receive(:load_file).
@@ -50,8 +50,8 @@ describe 'Blacksmith::Forge' do
     end
 
     it 'loads credentials from home dir' do
-      allow(File).to receive(:exists?).with('/home/mr_puppet/puppet-some-module/.puppetforge.yml') { false }
-      allow(File).to receive(:exists?).with('/home/mr_puppet/.puppetforge.yml') { true }
+      allow(File).to receive(:exist?).with('/home/mr_puppet/puppet-some-module/.puppetforge.yml') { false }
+      allow(File).to receive(:exist?).with('/home/mr_puppet/.puppetforge.yml') { true }
       allow(YAML).to receive(:load_file).with('/home/mr_puppet/.puppetforge.yml') { {'username'=> 'puppet-user'} }
 
       subject = Blacksmith::Forge.new(nil, password, forge)
@@ -59,8 +59,8 @@ describe 'Blacksmith::Forge' do
     end
 
     it 'loads credentials from project dir' do
-      allow(File).to receive(:exists?).with('/home/mr_puppet/puppet-some-module/.puppetforge.yml') { true }
-      allow(File).to receive(:exists?).with('/home/mr_puppet/.puppetforge.yml') { true }
+      allow(File).to receive(:exist?).with('/home/mr_puppet/puppet-some-module/.puppetforge.yml') { true }
+      allow(File).to receive(:exist?).with('/home/mr_puppet/.puppetforge.yml') { true }
       allow(YAML).to receive(:load_file).with('/home/mr_puppet/puppet-some-module/.puppetforge.yml') { {'username'=> 'puppet-other-user'} }
 
       subject = Blacksmith::Forge.new(nil, password, forge)
