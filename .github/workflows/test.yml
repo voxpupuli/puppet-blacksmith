@@ -1,8 +1,10 @@
 name: Test
 
 on:
-  - pull_request
-  - push
+  pull_request: {}
+  push:
+    branches:
+      - master
 
 env:
   BUNDLE_WITHOUT: release
@@ -26,7 +28,7 @@ jobs:
       COVERAGE: ${{ matrix.coverage }}
     name: RSpec - Ruby ${{ matrix.ruby }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install Ruby ${{ matrix.ruby }}
         uses: ruby/setup-ruby@v1
         with:
