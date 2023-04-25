@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.required_ruby_version = '>= 2.4.0'
 
-  s.add_runtime_dependency 'puppet-modulebuilder', '~> 0.2'
+  s.add_runtime_dependency 'puppet-modulebuilder', '>= 0.2', '< 2.0'
   s.add_runtime_dependency 'rest-client', '~>2.0'
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'rake'
