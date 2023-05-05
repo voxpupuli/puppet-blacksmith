@@ -18,12 +18,11 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'puppet-modulebuilder', '~> 1.0'
   s.add_runtime_dependency 'rest-client', '~>2.0'
-  s.add_development_dependency 'aruba'
-  s.add_development_dependency 'bundler'
-  s.add_development_dependency 'cucumber'
-  s.add_development_dependency 'puppet', '>=2.7.16'
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'rspec', '>=3.0.0'
+  s.add_development_dependency 'aruba', '~> 2.1'
+  s.add_development_dependency 'cucumber', '~> 8.0'
+  s.add_development_dependency 'puppet', '>= 7.24', '< 9'
+  s.add_development_dependency 'rake', '~> 13.0', '>= 13.0.6'
+  s.add_development_dependency 'rspec', '~> 3.12'
   s.add_development_dependency 'voxpupuli-rubocop', '~> 1.2'
   s.add_development_dependency 'webmock', '>= 2.0', '< 4'
 

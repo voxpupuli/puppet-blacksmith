@@ -53,4 +53,4 @@ jobs:
           GIT_AUTHOR_EMAIL: 'user@example.com'
         run: bundle exec rake
       - name: Verify gem builds
-        run: gem build *.gemspec
+        run: gem build --strict --verbose *.gemspec
