@@ -5,9 +5,8 @@ require 'base64'
 
 module Blacksmith
   class Forge
-
-    PUPPETLABS_FORGE = "https://forgeapi.puppetlabs.com"
-    CREDENTIALS_FILE_HOME = "~/.puppetforge.yml"
+    PUPPETLABS_FORGE = 'https://forgeapi.puppetlabs.com'
+    CREDENTIALS_FILE_HOME = '~/.puppetforge.yml'
     CREDENTIALS_FILE_PROJECT = '.puppetforge.yml'
     FORGE_TYPE_PUPPET = 'puppet'
     FORGE_TYPE_ARTIFACTORY = 'artifactory'
@@ -22,11 +21,11 @@ module Blacksmith
       self.password = password
       self.token = token
       self.api_key = api_key
-      RestClient.proxy = ENV['http_proxy']
+      RestClient.proxy = ENV.fetch('http_proxy', nil)
       load_credentials
       load_client_credentials_from_file
       self.url = url unless url.nil?
-      if self.url =~ %r{http(s)?://forge.puppetlabs.com}
+      if %r{http(s)?://forge.puppetlabs.com}.match?(self.url)
         puts "Ignoring url entry in .puppetforge.yml: must point to the api server at #{PUPPETLABS_FORGE}, not the Forge webpage"
         self.url = PUPPETLABS_FORGE
       end
@@ -39,9 +38,10 @@ module Blacksmith
       unless package
         v = version ? Regexp.escape(version) : '.*'
         regex = /^#{user}-#{name}-#{v}\.tar\.gz$/
-        pkg = File.expand_path("pkg")
-        f = Dir.new(pkg).select{|fn| fn.match(regex)}.last
+        pkg = File.expand_path('pkg')
+        f = Dir.new(pkg).select { |fn| fn.match(regex) }.last
         raise Errno::ENOENT, "File not found in #{pkg} with regex #{regex}" if f.nil?
+
         package = File.join(pkg, f)
       end
       raise Errno::ENOENT, "File does not exist: #{package}" unless File.exist?(package)
@@ -55,9 +55,9 @@ module Blacksmith
       url = http_url(author, name, file)
       case forge_type
       when FORGE_TYPE_ARTIFACTORY
-        RestClient::Request.execute(:method => :put, :url => url, :payload => File.new(file, 'rb'), :headers => http_headers)
+        RestClient::Request.execute(method: :put, url: url, payload: File.new(file, 'rb'), headers: http_headers)
       else
-        RestClient::Request.execute(:method => :post, :url => url, :payload => {:file => File.new(file, 'rb')}, :headers => http_headers)
+        RestClient::Request.execute(method: :post, url: url, payload: { file: File.new(file, 'rb') }, headers: http_headers)
       end
     rescue RestClient::Exception => e
       raise Blacksmith::Error, "Error uploading #{name} to the forge #{url} [#{e.message}]: #{e.response}"
@@ -76,26 +76,26 @@ module Blacksmith
       case forge_type
       when FORGE_TYPE_ARTIFACTORY
         if api_key
-          HEADERS.merge({'X-JFrog-Art-Api' => api_key})
+          HEADERS.merge({ 'X-JFrog-Art-Api' => api_key })
         elsif token
-          HEADERS.merge({'Authorization' => "Bearer #{token}"})
+          HEADERS.merge({ 'Authorization' => "Bearer #{token}" })
         else
-          HEADERS.merge({'Authorization' => "Basic " + Base64.strict_encode64("#{username}:#{password}")})
+          HEADERS.merge({ 'Authorization' => 'Basic ' + Base64.strict_encode64("#{username}:#{password}") })
         end
       else
-        HEADERS.merge({'Authorization' => "Bearer #{api_key || token || oauth_access_token}"})
+        HEADERS.merge({ 'Authorization' => "Bearer #{api_key || token || oauth_access_token}" })
       end
     end
 
     def oauth_access_token
       begin
         response = RestClient.post("#{url}/oauth/token", {
-          'client_id' => client_id,
-          'client_secret' => client_secret,
-          'username' => username,
-          'password' => password,
-          'grant_type' => 'password'
-        }, HEADERS)
+                                     'client_id' => client_id,
+                                     'client_secret' => client_secret,
+                                     'username' => username,
+                                     'password' => password,
+                                     'grant_type' => 'password',
+                                   }, HEADERS)
       rescue RestClient::Exception => e
         raise Blacksmith::Error, "Error login to the forge #{url} as #{username} [#{e.message}]: #{e.response}"
       end
@@ -122,83 +122,63 @@ module Blacksmith
       self.url = credentials['url'] if credentials['url']
       self.forge_type = credentials['forge_type'] if credentials['forge_type']
 
-      unless (self.username && self.password) || self.token || self.api_key
-        raise Blacksmith::Error, <<-eos
-Could not find Puppet Forge credentials!
+      unless (username && password) || token || api_key
+        raise Blacksmith::Error, <<~EOS
+          Could not find Puppet Forge credentials!
 
-Please set the environment variables
-BLACKSMITH_FORGE_URL
-BLACKSMITH_FORGE_TYPE
-BLACKSMITH_FORGE_USERNAME
-BLACKSMITH_FORGE_PASSWORD
-BLACKSMITH_FORGE_TOKEN
-BLACKSMITH_FORGE_API_KEY
+          Please set the environment variables
+          BLACKSMITH_FORGE_URL
+          BLACKSMITH_FORGE_TYPE
+          BLACKSMITH_FORGE_USERNAME
+          BLACKSMITH_FORGE_PASSWORD
+          BLACKSMITH_FORGE_TOKEN
+          BLACKSMITH_FORGE_API_KEY
 
-or create the file '#{CREDENTIALS_FILE_PROJECT}' or '#{CREDENTIALS_FILE_HOME}'
-with content similiar to:
+          or create the file '#{CREDENTIALS_FILE_PROJECT}' or '#{CREDENTIALS_FILE_HOME}'
+          with content similiar to:
 
----
-url: https://forgeapi.puppetlabs.com
-username: myuser
-password: mypassword
+          ---
+          url: https://forgeapi.puppetlabs.com
+          username: myuser
+          password: mypassword
 
-    eos
+        EOS
       end
     end
 
     def load_credentials_from_file
-      credentials_file = [
-          File.join(Dir.pwd, CREDENTIALS_FILE_PROJECT),
-          File.expand_path(CREDENTIALS_FILE_HOME)
-      ]
-                             .select { |file| File.exist?(file) }
-                             .first
+      credentials_file = [File.join(Dir.pwd, CREDENTIALS_FILE_PROJECT), File.expand_path(CREDENTIALS_FILE_HOME)].select { |file| File.exist?(file) }.first
 
       if credentials_file
-        credentials = YAML.load_file(credentials_file)
+        YAML.load_file(credentials_file)
       else
-        credentials = Hash.new
+        {}
       end
-
-      return credentials
     end
 
     def load_credentials_from_env
-      credentials = Hash.new
+      credentials = {}
 
-      if ENV['BLACKSMITH_FORGE_USERNAME']
-        credentials['username'] = ENV['BLACKSMITH_FORGE_USERNAME']
-      end
+      credentials['username'] = ENV['BLACKSMITH_FORGE_USERNAME'] if ENV['BLACKSMITH_FORGE_USERNAME']
 
-      if ENV['BLACKSMITH_FORGE_PASSWORD']
-        credentials['password'] = ENV['BLACKSMITH_FORGE_PASSWORD']
-      end
+      credentials['password'] = ENV['BLACKSMITH_FORGE_PASSWORD'] if ENV['BLACKSMITH_FORGE_PASSWORD']
 
-      if ENV['BLACKSMITH_FORGE_URL']
-        credentials['url'] = ENV['BLACKSMITH_FORGE_URL']
-      end
+      credentials['url'] = ENV['BLACKSMITH_FORGE_URL'] if ENV['BLACKSMITH_FORGE_URL']
 
-      if ENV['BLACKSMITH_FORGE_TYPE']
-        credentials['forge_type'] = ENV['BLACKSMITH_FORGE_TYPE']
-      end
+      credentials['forge_type'] = ENV['BLACKSMITH_FORGE_TYPE'] if ENV['BLACKSMITH_FORGE_TYPE']
 
-      if ENV['BLACKSMITH_FORGE_TOKEN']
-        credentials['token'] = ENV['BLACKSMITH_FORGE_TOKEN']
-      end
+      credentials['token'] = ENV['BLACKSMITH_FORGE_TOKEN'] if ENV['BLACKSMITH_FORGE_TOKEN']
 
-      if ENV['BLACKSMITH_FORGE_API_KEY']
-        credentials['api_key'] = ENV['BLACKSMITH_FORGE_API_KEY']
-      end
+      credentials['api_key'] = ENV['BLACKSMITH_FORGE_API_KEY'] if ENV['BLACKSMITH_FORGE_API_KEY']
 
-      return credentials
+      credentials
     end
 
     def load_client_credentials_from_file
-      credentials_file = File.expand_path(File.join(__FILE__, "..", "credentials.yml"))
+      credentials_file = File.expand_path(File.join(__FILE__, '..', 'credentials.yml'))
       credentials = YAML.load_file(credentials_file)
       self.client_id = credentials['client_id']
       self.client_secret = credentials['client_secret']
     end
   end
-
 end

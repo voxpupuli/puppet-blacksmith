@@ -10,15 +10,24 @@ env:
   BUNDLE_WITHOUT: release
 
 jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Ruby ${{ matrix.ruby }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+      - name: Run Rubocop
+        run: bundle exec rake rubocop
+
   rspec:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
       matrix:
         include:
-          - ruby: "2.4"
-          - ruby: "2.5"
-          - ruby: "2.6"
           - ruby: "2.7"
           - ruby: "3.0"
           - ruby: "3.1"

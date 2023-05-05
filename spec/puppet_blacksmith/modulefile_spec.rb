@@ -1,50 +1,47 @@
 require 'spec_helper'
 
 describe 'Blacksmith::Modulefile' do
-
-  let(:path) { "spec/data/metadata.json" }
-
   subject { Blacksmith::Modulefile.new(path) }
 
-  shared_examples_for :metadata do
-    it { expect(subject.version).to eql("1.0.0") }
-    it { expect(subject.name).to eql("test") }
+  let(:path) { 'spec/data/metadata.json' }
+
+  shared_examples_for 'metadata' do
+    it { expect(subject.version).to eql('1.0.0') }
+    it { expect(subject.name).to eql('test') }
   end
 
-  context "using different author" do
-    let(:path) { "spec/data/metadata-different-author.json" }
-
+  context 'using different author' do
     subject { Blacksmith::Modulefile.new(path) }
 
-    it_behaves_like :metadata
+    let(:path) { 'spec/data/metadata-different-author.json' }
 
-    describe "author and namespace" do
-      it { expect(subject.author).to eql("MaestroDev") }
-      it { expect(subject.namespace).to eql("maestrodev") }
+    it_behaves_like 'metadata'
+
+    describe 'author and namespace' do
+      it { expect(subject.author).to eql('MaestroDev') }
+      it { expect(subject.namespace).to eql('maestrodev') }
     end
   end
 
-  context "using no author" do
-    let(:path) { "spec/data/metadata-no-author.json" }
-
+  context 'using no author' do
     subject { Blacksmith::Modulefile.new(path) }
 
-    it_behaves_like :metadata
+    let(:path) { 'spec/data/metadata-no-author.json' }
 
-    describe "author and namespace" do
-      it { expect(subject.author).to eql("maestrodev") }
-      it { expect(subject.namespace).to eql("maestrodev") }
+    it_behaves_like 'metadata'
+
+    describe 'author and namespace' do
+      it { expect(subject.author).to eql('maestrodev') }
+      it { expect(subject.namespace).to eql('maestrodev') }
     end
   end
 
-  context "using metadata.json" do
-
-    it_behaves_like :metadata
+  context 'using metadata.json' do
+    it_behaves_like 'metadata'
 
     describe 'replace_version' do
-      it "should replace the version in metadata" do
-
-        expected = <<-eos
+      it 'replaces the version in metadata' do
+        expected = <<-EOS
           {
             "operatingsystem_support": [
               {
@@ -81,16 +78,15 @@ describe 'Blacksmith::Modulefile' do
                 }
             ]
           }
-        eos
+        EOS
 
-        expect(JSON.parse(subject.replace_version(File.read(path), "1.0.1"))).to eql(JSON.parse(expected))
+        expect(JSON.parse(subject.replace_version(File.read(path), '1.0.1'))).to eql(JSON.parse(expected))
       end
     end
 
     describe 'replace_dependency_version' do
-      it "should replace the version in metadata" do
-
-        expected = <<-eos
+      it 'replaces the version in metadata' do
+        expected = <<-EOS
           {
             "operatingsystem_support": [
               {
@@ -127,43 +123,43 @@ describe 'Blacksmith::Modulefile' do
                 }
             ]
           }
-        eos
+        EOS
 
-        expect(JSON.parse(subject.replace_dependency_version(File.read(path), 'puppetlabs-stdlib', '>= 4.0.0'))).to eql(JSON.parse(expected))
+        expect(JSON.parse(subject.replace_dependency_version(File.read(path), 'puppetlabs-stdlib',
+                                                             '>= 4.0.0'))).to eql(JSON.parse(expected))
       end
     end
-
   end
 
   describe 'bump_to_version' do
-    it { expect(subject.bump_to_version!("1.0.0")).to eql("1.0.0") }
+    it { expect(subject.bump_to_version!('1.0.0')).to eql('1.0.0') }
   end
 
   describe 'increase_version' do
-    it { expect(subject.increase_version("1.0.0")).to eql("1.0.1") }
-    it { expect(subject.increase_version("1.0.1")).to eql("1.0.2") }
-    it { expect { subject.increase_version("1.0") }.to raise_error(ArgumentError) }
-    it { expect { subject.increase_version("1.0.12qwe") }.to raise_error(ArgumentError) }
+    it { expect(subject.increase_version('1.0.0')).to eql('1.0.1') }
+    it { expect(subject.increase_version('1.0.1')).to eql('1.0.2') }
+    it { expect { subject.increase_version('1.0') }.to raise_error(ArgumentError) }
+    it { expect { subject.increase_version('1.0.12qwe') }.to raise_error(ArgumentError) }
   end
 
   describe 'bump patch version' do
-    it { expect(subject.increase_version("1.0.0", :patch)).to eql("1.0.1") }
-    it { expect(subject.increase_version("1.1.0", :patch)).to eql("1.1.1") }
-    it { expect(subject.increase_version("1.1.1", :patch)).to eql("1.1.2") }
-    it { expect(subject.increase_version("1.1.2-rc0", :patch)).to eql("1.1.2") }
+    it { expect(subject.increase_version('1.0.0', :patch)).to eql('1.0.1') }
+    it { expect(subject.increase_version('1.1.0', :patch)).to eql('1.1.1') }
+    it { expect(subject.increase_version('1.1.1', :patch)).to eql('1.1.2') }
+    it { expect(subject.increase_version('1.1.2-rc0', :patch)).to eql('1.1.2') }
   end
 
   describe 'bump minor version' do
-    it { expect(subject.increase_version("1.0.0", :minor)).to eql("1.1.0") }
-    it { expect(subject.increase_version("1.1.0", :minor)).to eql("1.2.0") }
-    it { expect(subject.increase_version("1.1.1", :minor)).to eql("1.2.0") }
-    it { expect(subject.increase_version("1.1.1-rc0", :minor)).to eql("1.2.0") }
+    it { expect(subject.increase_version('1.0.0', :minor)).to eql('1.1.0') }
+    it { expect(subject.increase_version('1.1.0', :minor)).to eql('1.2.0') }
+    it { expect(subject.increase_version('1.1.1', :minor)).to eql('1.2.0') }
+    it { expect(subject.increase_version('1.1.1-rc0', :minor)).to eql('1.2.0') }
   end
 
   describe 'bump major version' do
-    it { expect(subject.increase_version("1.0.0", :major)).to eql("2.0.0") }
-    it { expect(subject.increase_version("1.1.0", :major)).to eql("2.0.0") }
-    it { expect(subject.increase_version("1.1.1", :major)).to eql("2.0.0") }
-    it { expect(subject.increase_version("1.1.1-rc0", :major)).to eql("2.0.0") }
+    it { expect(subject.increase_version('1.0.0', :major)).to eql('2.0.0') }
+    it { expect(subject.increase_version('1.1.0', :major)).to eql('2.0.0') }
+    it { expect(subject.increase_version('1.1.1', :major)).to eql('2.0.0') }
+    it { expect(subject.increase_version('1.1.1-rc0', :major)).to eql('2.0.0') }
   end
 end
