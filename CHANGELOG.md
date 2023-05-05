@@ -1,8 +1,36 @@
 # Changelog
 
-## [6.1.1](https://github.com/voxpupuli/puppet-blacksmith/tree/6.1.1) (2021-08-05)
+## [7.0.0](https://github.com/voxpupuli/puppet-blacksmith/tree/7.0.0) (2023-05-09)
 
-[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v6.1.0...6.1.1)
+[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v6.1.1...7.0.0)
+
+**Breaking changes:**
+
+- Remove oauth username/password login [\#119](https://github.com/voxpupuli/puppet-blacksmith/pull/119) ([bastelfreak](https://github.com/bastelfreak))
+- Drop Ruby 2.4/2.5/2.6 support; Implement RuboCop [\#109](https://github.com/voxpupuli/puppet-blacksmith/pull/109) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Enable Tests on Ruby 3.1/3.2 [\#108](https://github.com/voxpupuli/puppet-blacksmith/pull/108) ([bastelfreak](https://github.com/bastelfreak))
+- Switch from {Dir,File}.exists? to exist? [\#107](https://github.com/voxpupuli/puppet-blacksmith/pull/107) ([tuxmea](https://github.com/tuxmea))
+- Update to API v3 [\#105](https://github.com/voxpupuli/puppet-blacksmith/pull/105) ([binford2k](https://github.com/binford2k))
+
+**Closed issues:**
+
+- Incompatible with ruby 3.2 \(and Puppet 8\) [\#106](https://github.com/voxpupuli/puppet-blacksmith/issues/106)
+- Tag creation in wrong order [\#57](https://github.com/voxpupuli/puppet-blacksmith/issues/57)
+
+**Merged pull requests:**
+
+- GCG: Add faraday-retry dep [\#117](https://github.com/voxpupuli/puppet-blacksmith/pull/117) ([bastelfreak](https://github.com/bastelfreak))
+- add dummy CI job we can depend on [\#116](https://github.com/voxpupuli/puppet-blacksmith/pull/116) ([bastelfreak](https://github.com/bastelfreak))
+- CI: Build gems with strictness and verbosity & gemspec: Add dependency version constraints [\#115](https://github.com/voxpupuli/puppet-blacksmith/pull/115) ([bastelfreak](https://github.com/bastelfreak))
+- puppet-modulebuilder: Switch to 1.x [\#114](https://github.com/voxpupuli/puppet-blacksmith/pull/114) ([bastelfreak](https://github.com/bastelfreak))
+- Bump actions/checkout from 2 to 3 [\#112](https://github.com/voxpupuli/puppet-blacksmith/pull/112) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v6.1.1](https://github.com/voxpupuli/puppet-blacksmith/tree/v6.1.1) (2021-08-05)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v6.1.0...v6.1.1)
 
 **Fixed bugs:**
 
