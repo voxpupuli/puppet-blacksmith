@@ -2,31 +2,33 @@ require 'puppet_blacksmith/version_helper'
 
 module Blacksmith
   class Modulefile
-
-    FILES = ["metadata.json"]
+    FILES = ['metadata.json']
 
     attr_reader :path
 
     def initialize(path = nil)
-      @path = path.nil? ? FILES.find {|f| File.exists? f} : path
+      @path = path.nil? ? FILES.find { |f| File.exist? f } : path
       raise Blacksmith::Error, "Unable to find any of #{FILES}" unless @path
     end
 
     def metadata
-      @metadata = JSON.parse(File.read(path)) unless @metadata
+      @metadata ||= JSON.parse(File.read(path))
       @metadata
     end
 
     # name in metadata.json is author-modulename
     def name
-      metadata['name'].split('-',2)[1]
+      metadata['name'].split('-', 2)[1]
     end
+
     def namespace
-      metadata['name'].split('-',2)[0]
+      metadata['name'].split('-', 2)[0]
     end
+
     def author
       metadata['author'] || namespace
     end
+
     def version
       metadata['version']
     end
@@ -34,7 +36,7 @@ module Blacksmith
     def bump_to_version!(new_version)
       text = File.read(path)
       text = replace_version(text, new_version)
-      File.open(path,"w") { |file| file.puts text }
+      File.open(path, 'w') { |file| file.puts text }
       new_version
     end
 
@@ -43,14 +45,14 @@ module Blacksmith
       bump_to_version!(new_version)
     end
 
-    [:major, :minor, :patch, :full].each do |level|
+    %i[major minor patch full].each do |level|
       define_method("bump_#{level}!") { bump!(level) }
     end
 
     def bump_dep!(module_name, version)
       text = File.read(path)
       text = replace_dependency_version(text, module_name, version)
-      File.open(path, "w") {|file| file.puts text}
+      File.open(path, 'w') { |file| file.puts text }
     end
 
     def replace_version(text, version)
@@ -65,7 +67,7 @@ module Blacksmith
     end
 
     def replace_dependency_version(text, module_name, version)
-      module_name = module_name.sub(/\//, '-')
+      module_name = module_name.sub(%r{/}, '-')
       json = JSON.parse(text)
       new_dep_list = []
       json['dependencies'].each do |dep|
