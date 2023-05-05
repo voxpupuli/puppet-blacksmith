@@ -68,7 +68,7 @@ describe 'Blacksmith::Forge' do
   describe 'push' do
     before { create_tarball }
 
-    context "when using a Forge API key" do
+    context 'when using a Forge API key' do
       before do
         stub_request(:post, "#{forge}/v3/releases").with(
           headers: headers.merge({ 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
@@ -78,12 +78,13 @@ describe 'Blacksmith::Forge' do
         end.to_return(status: 200, body: File.read(File.join(spec_data, 'response.json')), headers: {})
       end
 
-      it "should push the module" do
+      it 'push the module' do
         subject.api_key = api_key
         subject.url = forge
-        subject.push!(module_name, package)
+
+        resp = subject.push!(module_name, package)
+        expect(resp.code).to eq(200)
       end
     end
-
   end
 end
