@@ -14,7 +14,6 @@ RSpec.shared_context 'forge' do
   let(:username) { 'johndoe' }
   let(:password) { 'secret' }
   let(:forge) { 'https://forgestagingapi.puppetlabs.com' }
-  let(:module_name) { 'test' }
   let(:version) { '1.0.0' }
   let(:module_name) { 'maestrodev-test' }
   let(:spec_data) { File.join(__dir__, '..', 'data') }
