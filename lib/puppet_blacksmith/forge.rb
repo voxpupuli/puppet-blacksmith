@@ -14,7 +14,7 @@ module Blacksmith
     DEFAULT_CREDENTIALS = { 'url' => PUPPETLABS_FORGE, 'forge_type' => FORGE_TYPE_PUPPET }
     HEADERS = { 'User-Agent' => "Blacksmith/#{Blacksmith::VERSION} Ruby/#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL} (#{RUBY_RELEASE_DATE}; #{RUBY_PLATFORM})" }
 
-    attr_accessor :username, :password, :url, :client_id, :client_secret, :forge_type, :token, :api_key
+    attr_accessor :username, :password, :url, :forge_type, :token, :api_key
 
     def initialize(username = nil, password = nil, url = nil, forge_type = nil, token = nil, api_key = nil)
       self.username = username
@@ -23,7 +23,6 @@ module Blacksmith
       self.api_key = api_key
       RestClient.proxy = ENV.fetch('http_proxy', nil)
       load_credentials
-      load_client_credentials_from_file
       self.url = url unless url.nil?
       if %r{http(s)?://forge.puppetlabs.com}.match?(self.url)
         puts "Ignoring url entry in .puppetforge.yml: must point to the api server at #{PUPPETLABS_FORGE}, not the Forge webpage"
@@ -83,24 +82,8 @@ module Blacksmith
           HEADERS.merge({ 'Authorization' => 'Basic ' + Base64.strict_encode64("#{username}:#{password}") })
         end
       else
-        HEADERS.merge({ 'Authorization' => "Bearer #{api_key || token || oauth_access_token}" })
+        HEADERS.merge({ 'Authorization' => "Bearer #{api_key || token}" })
       end
-    end
-
-    def oauth_access_token
-      begin
-        response = RestClient.post("#{url}/oauth/token", {
-                                     'client_id' => client_id,
-                                     'client_secret' => client_secret,
-                                     'username' => username,
-                                     'password' => password,
-                                     'grant_type' => 'password',
-                                   }, HEADERS)
-      rescue RestClient::Exception => e
-        raise Blacksmith::Error, "Error login to the forge #{url} as #{username} [#{e.message}]: #{e.response}"
-      end
-      login_data = JSON.parse(response)
-      login_data['access_token']
     end
 
     def load_credentials
@@ -172,13 +155,6 @@ module Blacksmith
       credentials['api_key'] = ENV['BLACKSMITH_FORGE_API_KEY'] if ENV['BLACKSMITH_FORGE_API_KEY']
 
       credentials
-    end
-
-    def load_client_credentials_from_file
-      credentials_file = File.expand_path(File.join(__FILE__, '..', 'credentials.yml'))
-      credentials = YAML.load_file(credentials_file)
-      self.client_id = credentials['client_id']
-      self.client_secret = credentials['client_secret']
     end
   end
 end

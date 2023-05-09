@@ -10,10 +10,10 @@ end
 RSpec.shared_context 'forge' do
   subject { Blacksmith::Forge.new(username, password, forge) }
 
+  let(:api_key) { 'e52f78b62e97cb8d8db6659a73aa522cca0f5c74d4714e0ed0bdd10000000000' }
   let(:username) { 'johndoe' }
   let(:password) { 'secret' }
   let(:forge) { 'https://forgestagingapi.puppetlabs.com' }
-  let(:module_name) { 'test' }
   let(:version) { '1.0.0' }
   let(:module_name) { 'maestrodev-test' }
   let(:spec_data) { File.join(__dir__, '..', 'data') }
