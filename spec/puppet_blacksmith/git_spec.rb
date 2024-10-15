@@ -98,8 +98,8 @@ describe 'Blacksmith::Git' do
 
       context 'when git succeeds' do
         before do
-          allow(Open3).to receive(:popen3) \
-            .with('git', '--git-dir', File.join(path, '.git'), '--work-tree', path, *cmd) \
+          allow(Open3).to receive(:popen3)
+            .with('git', '--git-dir', File.join(path, '.git'), '--work-tree', path, *cmd)
             .and_yield(nil, double(read: stdout), double(read: stderr), wait_thr)
           expect { subject.send(:exec_git, cmd) }.not_to raise_error
         end

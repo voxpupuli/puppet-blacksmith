@@ -102,7 +102,7 @@ module Blacksmith
       end
 
       %i[major minor patch].each do |term|
-        define_method("#{term}!") { increment!(term) }
+        define_method(:"#{term}!") { increment!(term) }
       end
 
       def full!
@@ -118,7 +118,7 @@ module Blacksmith
       def increment!(term)
         new_version = clone
 
-        new_version.send("#{term}=", send(term) + 1) if term != :patch || @pre.nil?
+        new_version.send(:"#{term}=", send(term) + 1) if term != :patch || @pre.nil?
 
         new_version.minor = 0 if term == :major
         new_version.patch = 0 if %i[major minor].include?(term)
