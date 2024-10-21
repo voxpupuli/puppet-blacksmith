@@ -1,8 +1,20 @@
 # Changelog
 
-## [7.1.0](https://github.com/voxpupuli/puppet-blacksmith/tree/7.1.0) (2024-10-21)
+## [8.0.0](https://github.com/voxpupuli/puppet-blacksmith/tree/8.0.0) (2024-10-21)
 
-[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v7.0.0...7.1.0)
+[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v7.1.0...8.0.0)
+
+**Breaking changes:**
+
+- puppet-modulebuilder: Switch to 2.x; use file allowlist when building modules [\#125](https://github.com/voxpupuli/puppet-blacksmith/pull/125) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Add Ruby 3.3 to CI [\#129](https://github.com/voxpupuli/puppet-blacksmith/pull/129) ([bastelfreak](https://github.com/bastelfreak))
+
+## [v7.1.0](https://github.com/voxpupuli/puppet-blacksmith/tree/v7.1.0) (2024-10-21)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v7.0.0...v7.1.0)
 
 **Implemented enhancements:**
 
@@ -39,7 +51,6 @@
 - add dummy CI job we can depend on [\#116](https://github.com/voxpupuli/puppet-blacksmith/pull/116) ([bastelfreak](https://github.com/bastelfreak))
 - CI: Build gems with strictness and verbosity & gemspec: Add dependency version constraints [\#115](https://github.com/voxpupuli/puppet-blacksmith/pull/115) ([bastelfreak](https://github.com/bastelfreak))
 - puppet-modulebuilder: Switch to 1.x [\#114](https://github.com/voxpupuli/puppet-blacksmith/pull/114) ([bastelfreak](https://github.com/bastelfreak))
-- Bump actions/checkout from 2 to 3 [\#112](https://github.com/voxpupuli/puppet-blacksmith/pull/112) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [v6.1.1](https://github.com/voxpupuli/puppet-blacksmith/tree/v6.1.1) (2021-08-05)
 
