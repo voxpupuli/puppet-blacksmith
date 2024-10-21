@@ -3,7 +3,7 @@ require_relative 'forge_shared'
 require 'fileutils'
 
 # Run tests against the real Forge staging API
-describe 'Blacksmith::Forge', live: true do
+describe 'Blacksmith::Forge', :live do
   include_context 'forge'
   let(:username) { nil }
 
