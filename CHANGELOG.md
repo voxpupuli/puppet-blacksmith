@@ -1,8 +1,21 @@
 # Changelog
 
-## [7.0.0](https://github.com/voxpupuli/puppet-blacksmith/tree/7.0.0) (2023-05-09)
+## [7.1.0](https://github.com/voxpupuli/puppet-blacksmith/tree/7.1.0) (2024-10-21)
 
-[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v6.1.1...7.0.0)
+[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v7.0.0...7.1.0)
+
+**Implemented enhancements:**
+
+- voxpupuli-rubocop: Switch to 2.8.0 [\#126](https://github.com/voxpupuli/puppet-blacksmith/pull/126) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Update cucumber requirement from ~\> 8.0 to ~\> 9.0 [\#123](https://github.com/voxpupuli/puppet-blacksmith/pull/123) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update voxpupuli-rubocop requirement from ~\> 1.2 to ~\> 2.0 [\#121](https://github.com/voxpupuli/puppet-blacksmith/pull/121) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v7.0.0](https://github.com/voxpupuli/puppet-blacksmith/tree/v7.0.0) (2023-05-09)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v6.1.1...v7.0.0)
 
 **Breaking changes:**
 
