@@ -1,8 +1,20 @@
 # Changelog
 
-## [8.0.0](https://github.com/voxpupuli/puppet-blacksmith/tree/8.0.0) (2024-10-21)
+## [8.1.0](https://github.com/voxpupuli/puppet-blacksmith/tree/8.1.0) (2025-01-20)
 
-[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v7.1.0...8.0.0)
+[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v8.0.0...8.1.0)
+
+**Implemented enhancements:**
+
+- Add Ruby 3.4 support [\#132](https://github.com/voxpupuli/puppet-blacksmith/pull/132) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Update voxpupuli-rubocop requirement from ~\> 2.8.0 to ~\> 3.0.0 [\#131](https://github.com/voxpupuli/puppet-blacksmith/pull/131) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v8.0.0](https://github.com/voxpupuli/puppet-blacksmith/tree/v8.0.0) (2024-10-21)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v7.1.0...v8.0.0)
 
 **Breaking changes:**
 
