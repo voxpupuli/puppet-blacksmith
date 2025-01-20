@@ -16,9 +16,9 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.7.0'
 
-  s.add_runtime_dependency 'base64', '~> 0.2.0'
-  s.add_runtime_dependency 'puppet-modulebuilder', '~> 2.0', '>= 2.0.2'
-  s.add_runtime_dependency 'rest-client', '~>2.0'
+  s.add_dependency 'base64', '~> 0.2.0'
+  s.add_dependency 'puppet-modulebuilder', '~> 2.0', '>= 2.0.2'
+  s.add_dependency 'rest-client', '~>2.0'
   s.add_development_dependency 'aruba', '~> 2.1'
   s.add_development_dependency 'cucumber', '~> 9.0'
   s.add_development_dependency 'puppet', '>= 7.24', '< 9'
