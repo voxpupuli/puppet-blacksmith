@@ -27,9 +27,7 @@ Feature: git
     {
       "name": "maestrodev-test",
       "version": "1.0.2",
-      "dependencies": [
-
-      ]
+      "dependencies": []
     }
     """
     When I run `git tag`
@@ -67,9 +65,7 @@ Feature: git
     {
       "name": "maestrodev-test",
       "version": "1.0.2",
-      "dependencies": [
-
-      ]
+      "dependencies": []
     }
     """
     When I run `git tag`
@@ -108,9 +104,7 @@ Feature: git
     {
       "name": "maestrodev-test",
       "version": "1.0.2",
-      "dependencies": [
-
-      ]
+      "dependencies": []
     }
     """
     When I run `git tag`
