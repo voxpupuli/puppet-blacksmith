@@ -29,11 +29,8 @@ jobs:
           - ruby: "3.0"
           - ruby: "3.1"
           - ruby: "3.2"
-            coverage: "yes"
           - ruby: "3.3"
           - ruby: "3.4"
-    env:
-      COVERAGE: ${{ matrix.coverage }}
     name: RSpec - Ruby ${{ matrix.ruby }}
     steps:
       - uses: actions/checkout@v4

@@ -3,7 +3,6 @@ puppet-blacksmith
 
 [![License](https://img.shields.io/github/license/voxpupuli/puppet-blacksmith.svg)](https://github.com/voxpupuli/puppet-blacksmith/blob/master/LICENSE)
 [![Test](https://github.com/voxpupuli/puppet-blacksmith/actions/workflows/test.yml/badge.svg)](https://github.com/voxpupuli/puppet-blacksmith/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/voxpupuli/puppet-blacksmith/branch/master/graph/badge.svg)](https://codecov.io/gh/voxpupuli/puppet-blacksmith)
 [![Release](https://github.com/voxpupuli/puppet-blacksmith/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/puppet-blacksmith/actions/workflows/release.yml)
 [![RubyGem Version](https://img.shields.io/gem/v/puppet-blacksmith.svg)](https://rubygems.org/gems/puppet-blacksmith)
 [![RubyGem Downloads](https://img.shields.io/gem/dt/puppet-blacksmith.svg)](https://rubygems.org/gems/puppet-blacksmith)
