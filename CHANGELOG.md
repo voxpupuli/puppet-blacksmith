@@ -1,8 +1,16 @@
 # Changelog
 
-## [8.1.0](https://github.com/voxpupuli/puppet-blacksmith/tree/8.1.0) (2025-01-20)
+## [8.2.0](https://github.com/voxpupuli/puppet-blacksmith/tree/8.2.0) (2025-06-27)
 
-[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v8.0.0...8.1.0)
+[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v8.1.0...8.2.0)
+
+**Merged pull requests:**
+
+- Update base64 requirement from ~\> 0.2.0 to \>= 0.2, \< 0.4 [\#137](https://github.com/voxpupuli/puppet-blacksmith/pull/137) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v8.1.0](https://github.com/voxpupuli/puppet-blacksmith/tree/v8.1.0) (2025-01-20)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v8.0.0...v8.1.0)
 
 **Implemented enhancements:**
 
