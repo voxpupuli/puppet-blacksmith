@@ -15,8 +15,6 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.4'
-        env:
-          BUNDLE_WITHOUT: release
       - name: Build gem
         run: gem build --strict --verbose *.gemspec
       - name: Publish gem to rubygems.org
