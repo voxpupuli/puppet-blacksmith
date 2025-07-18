@@ -1,8 +1,20 @@
 # Changelog
 
-## [8.2.0](https://github.com/voxpupuli/puppet-blacksmith/tree/8.2.0) (2025-06-27)
+## [8.3.0](https://github.com/voxpupuli/puppet-blacksmith/tree/8.3.0) (2025-07-18)
 
-[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v8.1.0...8.2.0)
+[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v8.2.0...8.3.0)
+
+**Implemented enhancements:**
+
+- remove unused puppet testing dependency [\#141](https://github.com/voxpupuli/puppet-blacksmith/pull/141) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- cucumber: Allow 10.x [\#138](https://github.com/voxpupuli/puppet-blacksmith/pull/138) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v8.2.0](https://github.com/voxpupuli/puppet-blacksmith/tree/v8.2.0) (2025-06-27)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v8.1.0...v8.2.0)
 
 **Merged pull requests:**
 
