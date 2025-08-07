@@ -6,3 +6,6 @@ inherit_gem:
 
 Layout/LineLength:
   Max: 206
+
+AllCops:
+  TargetRubyVersion: 3.2

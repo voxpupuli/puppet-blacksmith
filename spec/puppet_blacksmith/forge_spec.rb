@@ -41,7 +41,7 @@ describe 'Blacksmith::Forge' do
     context 'when the credentials values are unset' do
       it 'raises an error' do
         expect do
-          foo = Blacksmith::Forge.new(nil, password, forge)
+          Blacksmith::Forge.new(nil, password, forge)
         end.to raise_error(/Could not find Puppet Forge credentials/)
       end
     end

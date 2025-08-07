@@ -10,6 +10,6 @@ describe 'Blacksmith::Forge', :live do
   describe 'push' do
     before { create_tarball }
 
-    include_examples 'forge_push'
+    it_behaves_like 'forge_push'
   end
 end

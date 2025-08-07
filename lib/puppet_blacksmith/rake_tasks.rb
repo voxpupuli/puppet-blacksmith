@@ -6,11 +6,11 @@ module Blacksmith
   class RakeTask < ::Rake::TaskLib
     attr_accessor :tag_pattern, :tag_message_pattern, :tag_sign, :commit_message_pattern, :build
 
-    def initialize(*args, &task_block)
+    def initialize(*args, &)
       @build = true
       @task_name = args.shift || 'blacksmith'
       @desc = args.shift || 'Puppet Forge utilities'
-      define(args, &task_block)
+      define(args, &)
     end
 
     def git
@@ -102,7 +102,7 @@ module Blacksmith
 
           %i[major minor patch].each do |level|
             desc "Get the next #{level.upcase} version"
-            task "next:#{level}".to_sym do
+            task :"next:#{level}" do
               m = Blacksmith::Modulefile.new
               puts m.increase_version(m.version, level)
             end
@@ -118,7 +118,7 @@ module Blacksmith
         namespace :bump_commit do
           %i[major minor patch full].each do |level|
             desc "Bump module version to the next #{level.upcase} version and git commit"
-            task level => "bump:#{level}".to_sym do
+            task level => :"bump:#{level}" do
               m = Blacksmith::Modulefile.new
               git.commit_modulefile!(m.version)
             end
