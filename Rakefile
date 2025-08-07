@@ -22,6 +22,7 @@ end
 Cucumber::Rake::Task.new(:cucumber) do |t|
 end
 
+desc 'bump the version'
 task :bump do
   v = Gem::Version.new("#{Blacksmith::VERSION}.0")
   raise("Unable to increase prerelease version #{Blacksmith::VERSION}") if v.prerelease?
