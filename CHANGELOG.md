@@ -1,8 +1,16 @@
 # Changelog
 
-## [8.3.0](https://github.com/voxpupuli/puppet-blacksmith/tree/8.3.0) (2025-07-18)
+## [9.0.0](https://github.com/voxpupuli/puppet-blacksmith/tree/9.0.0) (2025-09-26)
 
-[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v8.2.0...8.3.0)
+[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v8.3.0...9.0.0)
+
+**Breaking changes:**
+
+- Require Ruby 3.2 or newer [\#145](https://github.com/voxpupuli/puppet-blacksmith/pull/145) ([bastelfreak](https://github.com/bastelfreak))
+
+## [v8.3.0](https://github.com/voxpupuli/puppet-blacksmith/tree/v8.3.0) (2025-07-18)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v8.2.0...v8.3.0)
 
 **Implemented enhancements:**
 
