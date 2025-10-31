@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'cucumber', '>= 9', '< 11'
   s.add_development_dependency 'rake', '~> 13.0', '>= 13.0.6'
   s.add_development_dependency 'rspec', '~> 3.12'
-  s.add_development_dependency 'voxpupuli-rubocop', '~> 4.2.0'
+  s.add_development_dependency 'voxpupuli-rubocop', '~> 5.0.0'
   s.add_development_dependency 'webmock', '>= 2.0', '< 4'
 
   s.files = Dir.glob('lib/**/*') + %w[LICENSE]
