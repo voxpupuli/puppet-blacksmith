@@ -69,21 +69,43 @@ describe 'Blacksmith::Forge' do
     before { create_tarball }
 
     context 'when using a Forge API key' do
-      before do
-        stub_request(:post, "#{forge}/v3/releases").with(
-          headers: headers.merge({ 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-                                   'Authorization' => 'Bearer e52f78b62e97cb8d8db6659a73aa522cca0f5c74d4714e0ed0bdd10000000000', 'Content-Type' => %r{\Amultipart/form-data;}, }),
-        ) do |request|
-          request.body =~ %r{Content-Disposition: form-data; name="file"; filename="maestrodev-test.tar.gz"\r\nContent-Type: application/gzip}
-        end.to_return(status: 200, body: File.read(File.join(spec_data, 'response.json')), headers: {})
+      # WebMock doesn't support `set_form()` yet: https://github.com/bblimke/webmock/issues/959
+      # Disable it and use RSpec mocks instead
+      before { WebMock.disable! }
+      after { WebMock.enable! }
+
+      let(:http) do
+        http = instance_double(Net::HTTP)
+        allow(http).to receive(:use_ssl=)
+        http
+      end
+      let(:response_ok) do
+        resp = instance_double(Net::HTTPOK, body: '{}', code: 200, message: 'OK')
+        allow(resp).to receive(:is_a?).with(Net::HTTPSuccess).and_return(true)
+        resp
       end
 
       it 'push the module' do
         subject.api_key = api_key
         subject.url = forge
 
-        resp = subject.push!(module_name, package)
-        expect(resp.code).to eq(200)
+        allow(Net::HTTP).to receive(:new).and_return(http)
+        # Allow any POST and return OK always
+        allow(http).to receive(:request).with(instance_of(Net::HTTP::Post)).and_return(response_ok)
+
+        subject.push!(module_name, package)
+        # Ensure the connection is to the right host & port
+        expect(Net::HTTP).to have_received(:new).with('forgestagingapi.puppetlabs.com', 443)
+        # Ensure the expected request actually happens
+        expect(http).to have_received(:request).with(
+          satisfy do |req|
+            expect(req).to be_a(Net::HTTP::Post)
+            expect(req.path).to eq('/v3/releases')
+            expect(req['Content-Type']).to match(%r{multipart/form-data})
+            expect(req['Authorization']).to eq("Bearer #{api_key}")
+            expect(req['User-Agent']).to match(%r{^Blacksmith/#{Blacksmith::VERSION} Ruby/.* \(.*\)$}o)
+          end,
+        )
       end
     end
   end
