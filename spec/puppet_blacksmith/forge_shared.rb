@@ -21,8 +21,6 @@ RSpec.shared_context 'forge' do
   let(:target) { File.expand_path(File.join(__dir__, '..', '..', 'pkg', module_name)) }
   let(:package) { "#{target}.tar.gz" }
 
-  let(:headers) { { 'User-Agent' => %r{^Blacksmith/#{Blacksmith::VERSION} Ruby/.* \(.*\)$}o } }
-
   def create_tarball
     FileUtils.mkdir_p(target)
 
