@@ -57,23 +57,20 @@ module Blacksmith
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = (uri.scheme == 'https')
 
-      if forge_type == FORGE_TYPE_ARTIFACTORY
-        request = Net::HTTP::Put.new(uri.request_uri, http_headers)
-        request.body_stream = File.open(file, 'rb')
-      else
-        request = Net::HTTP::Post.new(uri.request_uri, http_headers)
-        request.set_form([
-                           ['file', File.open(file, 'rb'), { filename: File.basename(file) }],
-                         ], 'multipart/form-data')
+      response = File.open(file, 'rb') do |f|
+        if forge_type == FORGE_TYPE_ARTIFACTORY
+          request = Net::HTTP::Put.new(uri.request_uri, http_headers)
+          request.body_stream = f
+        else
+          request = Net::HTTP::Post.new(uri.request_uri, http_headers)
+          request.set_form([
+                             ['file', f, { filename: File.basename(file) }],
+                           ], 'multipart/form-data')
+        end
+        http.request(request)
       end
 
-      begin
-        response = http.request(request)
-      ensure
-        request.body_stream&.close if request.body_stream.is_a?(File)
-      end
-
-      raise Blacksmith::Error, "Error uploading #{name} to the forge #{target_url} [#{response.code} #{response.message}]: #{response.body}" unless response.code.to_i >= 200 && response.code.to_i < 300
+      raise Blacksmith::Error, "Error uploading #{name} to the forge #{target_url} [#{response.code} #{response.message}]: #{response.body}" unless response.is_a?(Net::HTTPSuccess)
     rescue Net::HTTPClientException => e
       raise Blacksmith::Error, "Error uploading #{name} to the forge #{target_url} [#{e.response.code} #{e.response.message}]: #{e.response.body}"
     rescue Net::HTTPFatalError => e
