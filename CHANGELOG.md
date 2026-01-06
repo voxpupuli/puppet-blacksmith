@@ -1,8 +1,17 @@
 # Changelog
 
-## [9.0.0](https://github.com/voxpupuli/puppet-blacksmith/tree/9.0.0) (2025-09-26)
+## [9.1.0](https://github.com/voxpupuli/puppet-blacksmith/tree/9.1.0) (2026-01-06)
 
-[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v8.3.0...9.0.0)
+[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v9.0.0...9.1.0)
+
+**Implemented enhancements:**
+
+- Add Ruby 4.0 support [\#157](https://github.com/voxpupuli/puppet-blacksmith/pull/157) ([dependabot[bot]](https://github.com/apps/dependabot))
+- refactor: replace rest-client with net/http [\#154](https://github.com/voxpupuli/puppet-blacksmith/pull/154) ([jay7x](https://github.com/jay7x))
+
+## [v9.0.0](https://github.com/voxpupuli/puppet-blacksmith/tree/v9.0.0) (2025-09-26)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-blacksmith/compare/v8.3.0...v9.0.0)
 
 **Breaking changes:**
 
