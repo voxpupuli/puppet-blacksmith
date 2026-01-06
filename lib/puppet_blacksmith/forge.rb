@@ -1,7 +1,8 @@
-require 'rest-client'
+require 'net/http'
 require 'json'
 require 'yaml'
 require 'base64'
+require 'uri'
 
 module Blacksmith
   class Forge
@@ -21,7 +22,6 @@ module Blacksmith
       self.password = password
       self.token = token
       self.api_key = api_key
-      RestClient.proxy = ENV.fetch('http_proxy', nil)
       load_credentials
       self.url = url unless url.nil?
       if %r{http(s)?://forge.puppetlabs.com}.match?(self.url)
@@ -51,15 +51,32 @@ module Blacksmith
     private
 
     def upload(author, name, file)
-      url = http_url(author, name, file)
-      case forge_type
-      when FORGE_TYPE_ARTIFACTORY
-        RestClient::Request.execute(method: :put, url: url, payload: File.new(file, 'rb'), headers: http_headers)
-      else
-        RestClient::Request.execute(method: :post, url: url, payload: { file: File.new(file, 'rb') }, headers: http_headers)
+      target_url = http_url(author, name, file)
+      uri = URI(target_url)
+
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = (uri.scheme == 'https')
+
+      response = File.open(file, 'rb') do |f|
+        if forge_type == FORGE_TYPE_ARTIFACTORY
+          request = Net::HTTP::Put.new(uri.request_uri, http_headers)
+          request.body_stream = f
+        else
+          request = Net::HTTP::Post.new(uri.request_uri, http_headers)
+          request.set_form([
+                             ['file', f, { filename: File.basename(file) }],
+                           ], 'multipart/form-data')
+        end
+        http.request(request)
       end
-    rescue RestClient::Exception => e
-      raise Blacksmith::Error, "Error uploading #{name} to the forge #{url} [#{e.message}]: #{e.response}"
+
+      raise Blacksmith::Error, "Error uploading #{name} to the forge #{target_url} [#{response.code} #{response.message}]: #{response.body}" unless response.is_a?(Net::HTTPSuccess)
+    rescue Net::HTTPClientException => e
+      raise Blacksmith::Error, "Error uploading #{name} to the forge #{target_url} [#{e.response.code} #{e.response.message}]: #{e.response.body}"
+    rescue Net::HTTPFatalError => e
+      raise Blacksmith::Error, "HTTP error during upload: #{e.message}"
+    rescue StandardError => e
+      raise Blacksmith::Error, "Error uploading #{name} to the forge #{target_url} [#{e.class} #{e.message}]"
     end
 
     def http_url(author, name, file)
