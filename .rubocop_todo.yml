@@ -120,7 +120,7 @@ RSpec/SubjectStub:
   Exclude:
     - 'spec/puppet_blacksmith/git_spec.rb'
 
-# Offense count: 4
+# Offense count: 2
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
 RSpec/VerifiedDoubles:
   Exclude:
