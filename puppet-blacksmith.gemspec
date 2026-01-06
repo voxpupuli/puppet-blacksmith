@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.license = 'Apache-2.0'
   s.require_paths = ['lib']
 
-  s.required_ruby_version = '>= 3.2.0', '< 4'
+  s.required_ruby_version = '>= 3.2.0', '< 5'
 
   s.add_dependency 'base64', '>= 0.2', '< 0.4'
   s.add_dependency 'puppet-modulebuilder', '~> 2.0', '>= 2.0.2'

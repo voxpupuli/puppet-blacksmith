@@ -26,7 +26,7 @@ jobs:
       - name: Run Rubocop
         run: bundle exec rake rubocop
       - id: ruby
-        uses: voxpupuli/ruby-version@v1
+        uses: voxpupuli/ruby-version@v2
 
   rspec:
     runs-on: ubuntu-24.04
